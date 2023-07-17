@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:onClick="onClickCheckOutside"
-        android:text="Check DB(set Text Outside)"
+        android:text="Check DB (set Text Outside)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_add" />
