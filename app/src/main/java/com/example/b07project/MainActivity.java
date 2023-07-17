@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
-    boolean isFound = false;
+    boolean isFound = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

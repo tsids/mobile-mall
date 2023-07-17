@@ -1,0 +1,43 @@
+"stores": [
+    {
+        "username": "",
+        "password": "",
+        "store": "",
+        "products": [
+            "ObjectId",
+            "ObjectId"
+        ],
+    },
+],
+"users": [
+    {
+        "username": "",
+        "password": "",
+        "cart": [
+            {
+                "object": {},
+                // extra fields
+                "quantity": "",
+                "ordered": false,
+                "verified": false,
+            },
+            {
+                "object": {},
+                // extra fields
+                "quantity": "",
+                "ordered": false,
+                "verified": false,
+            },
+        ],
+    },
+],
+"products": [
+    {
+        "id": "",
+        "store": "",
+        "title": "",
+        "description": "",
+        "image": "",
+        "price": 0,
+    },
+]
