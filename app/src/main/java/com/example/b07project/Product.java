@@ -1,12 +1,16 @@
 package com.example.b07project;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String imageURL;
     private String title;
     private float price;
     private String description;
     private int storeID;
     private int productID;
+
+    public Product() {}
 
     public Product(String imageURL, String title, float price, String description, int storeID, int productID) {
         this.imageURL = imageURL;
