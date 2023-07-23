@@ -1,43 +1,127 @@
-"stores": [
-    {
-        "username": "",
-        "password": "",
-        "store": "",
-        "products": [
-            "ObjectId",
-            "ObjectId"
-        ],
-    },
-],
-"users": [
-    {
-        "username": "",
-        "password": "",
-        "cart": [
-            {
-                "object": {},
-                // extra fields
-                "quantity": "",
-                "ordered": false,
-                "verified": false,
-            },
-            {
-                "object": {},
-                // extra fields
-                "quantity": "",
-                "ordered": false,
-                "verified": false,
-            },
-        ],
-    },
-],
-"products": [
-    {
-        "id": "",
-        "store": "",
-        "title": "",
-        "description": "",
-        "image": "",
-        "price": 0,
-    },
-]
+{
+    "stores": [
+        {
+            "username": "admin",
+            "email": "admin@gmail.com",
+            "password": "admin",
+            "store": "Apple",
+            "storeid": 10,
+            "category": "Electronics",
+            "products": [
+                {
+                    "productid": 1,
+                    "storeid": 10,
+                    "title": "iPhone 20",
+                    "description": "MAX IPHONE",
+                    "image": "",
+                    "price": 1000
+                },
+                {
+                    "productid": 2,
+                    "storeid": 10,
+                    "title": "MacBook Air Plus Ultra Extra",
+                    "description": "Some really advanced Macbook",
+                    "image": "",
+                    "price": 3000
+                }
+            ]
+        },
+        {
+            "username": "admin2",
+            "email": "admin2@gmail.com",
+            "password": "admin2",
+            "store": "Walmart",
+            "storeid": 20,
+            "category": "General",
+            "products": [
+                {
+                    "productid": 3,
+                    "storeid": 20,
+                    "title": "Bananas",
+                    "description": "A bunch of bananas",
+                    "image": "",
+                    "price": 15
+                },
+                {
+                    "productid": 4,
+                    "storeid": 20,
+                    "title": "Shirt",
+                    "description": "some random shirt",
+                    "image": "",
+                    "price": 10
+                }
+            ]
+        }
+    ],
+    "users": [
+        {
+            "username": "test",
+            "email": "test@gmail.com",
+            "password": "test",
+            "cart": [
+                {
+                    "storeid": 10,
+                    "productid": 1,
+                    "quantity": 4,
+                    "ordered": false,
+                    "verified": false,
+                    "pickedUp": false
+                },
+                {
+                    "storeid": 20,
+                    "productid": 3,
+                    "quantity": 1,
+                    "ordered": false,
+                    "verified": false,
+                    "pickedUp": false
+                }
+            ],
+            "pastOrders": [
+                {
+                    "orderid": 100,
+                    "storeid": 20,
+                    "productid": 4,
+                    "ordered": true,
+                    "verified": false,
+                    "pickedUp": false
+                }
+            ]
+        },
+        {
+            "username": "test2",
+            "email": "test2@gmail.com",
+            "password": "test2",
+            "cart": [
+                {
+                    "orderid": 100,
+                    "storeid": 10,
+                    "productid": 1,
+                    "quantity": 4,
+                    "ordered": false,
+                    "verified": false,
+                    "pickedUp": false
+                },
+                {
+                    "orderid": 200,
+                    "storeid": 10,
+                    "productid": 2,
+                    "quantity": 3,
+                    "ordered": false,
+                    "verified": false,
+                    "pickedUp": false
+                }
+            ],
+            "pastOrders": [
+                {
+                    "orderid": 200,
+                    "storeid": 10,
+                    "productid": 2,
+                    "quantity": 5,
+                    "ordered": true,
+                    "verified": false,
+                    "pickedUp": false
+                }
+            ]
+        }
+    ]
+}

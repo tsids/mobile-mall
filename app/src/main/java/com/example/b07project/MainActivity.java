@@ -1,105 +1,70 @@
 package com.example.b07project;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Button;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    FirebaseDatabase db;
-    boolean isFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
-    }
 
-    public void onClickAdd(View view){
-        DatabaseReference ref= db.getReference();
-        EditText userText = (EditText) findViewById(R.id.editTextTextPersonName);
-        String username = userText.getText().toString();
-        userText.setText("");
-        DatabaseReference query = ref.child("users").child(username);
-
-        query.addValueEventListener(new ValueEventListener() {
-
+        Button switchButton = findViewById(R.id.button_switch);
+        switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(!snapshot.exists())
-                {
-                    ref.child("users").child(username).child("username").setValue(username);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
+            public void onClick(View view) {
+                // Switch to the new activity
+                Intent intent = new Intent(MainActivity.this, StoreOwnerProducts.class);
+                startActivity(intent);
             }
         });
     }
 
-    public void onClickCheckOutside(View view){
-        DatabaseReference ref= db.getReference();
-        EditText userText = (EditText) findViewById(R.id.editTextTextPersonName);
-        String username = userText.getText().toString();
-        DatabaseReference query = ref.child("users").child(username);
-        this.isFound = false;
-
-        query.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                isFound = snapshot.exists();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-        setOutputText();
-    }
-
-    public void onClickCheckInside(View view){
-        DatabaseReference ref= db.getReference();
-        EditText userText = (EditText) findViewById(R.id.editTextTextPersonName);
-        String username = userText.getText().toString();
-        DatabaseReference query = ref.child("users").child(username);
-        this.isFound = false;
-
-        query.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                isFound = snapshot.exists();
-                setOutputText();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-    }
-
-    private void setOutputText()
-    {
-        TextView output = (TextView) findViewById(R.id.output);
-        if(isFound)
-        {
-            output.setText("Found it!");
-        }
-        else
-        {
-            output.setText("Didn't find it!");
-        }
-    }
-
+        //Writing to a realtime database
+/*DatabaseReference ref =
+FirebaseDatabase.getInstance("https://DATABASE_NAME.firebaseio.com").getRe
+ference(); //update URL!!!
+Student student = new Student(800, "dan");
+ref.child("students").child("s1").setValue(student);*/
+//Reading from a realtime database using a persistent listener
+//DatabaseReference ref =
+//FirebaseDatabase.getInstance("https://DATABASE_NAME.firebaseio.com").getRe
+//ference("students"); //update URL!!!
+//ValueEventListener listener = new ValueEventListener() {
+//@Override
+//public void onDataChange(DataSnapshot dataSnapshot) {
+//Log.i("demo", "data changed");
+//for(DataSnapshot child:dataSnapshot.getChildren()) {
+//Student student = child.getValue(Student.class);
+//Log.i("demo", student.toString());
+//}
+//}
+//@Override
+//public void onCancelled(DatabaseError databaseError) {
+//Log.w("warning", "loadPost:onCancelled",
+//databaseError.toException());
+//}
+//};
+//ref.addValueEventListener(listener);
+//Reading once from a realtime database
+//DatabaseReference ref =
+//FirebaseDatabase.getInstance("https://DATABASE_NAME.firebaseio.com").getRe
+//ference("students"); //update URL!!!
+//ref.child("s1").get().addOnCompleteListener(new
+//OnCompleteListener<DataSnapshot>() {
+//@Override
+//public void onComplete(@NonNull Task<DataSnapshot> task) {
+//if (!task.isSuccessful()) {
+//Log.e("demo", "Error getting data", task.getException());
+//}
+//else {
+//Log.i("demo", task.getResult().getValue().toString());
+//}
+//}
+//});
 }
