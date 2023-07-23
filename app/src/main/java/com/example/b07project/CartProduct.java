@@ -1,6 +1,6 @@
-import java.io.Serializable;
+// import java.io.Serializable; Don't need to implement this as Product already does
 
-public class CartProduct extends Product implements Serializable {
+public class CartProduct extends Product {
 
     private boolean ordered;
     private boolean verified;
