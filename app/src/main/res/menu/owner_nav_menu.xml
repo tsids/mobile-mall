@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Products"
+        android:icon="@drawable/sharp_inventory_2_24"
+        android:id="@+id/products"/>
+    <item android:title="Orders"
+        android:icon="@drawable/outline_inventory_24"
+        android:id="@+id/orders"/>
+</menu>
