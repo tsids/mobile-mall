@@ -1,6 +1,4 @@
-package com.example.b07project.ui.dashboard;
-
-import android.widget.TextView;
+package com.example.b07project.ui.products;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -8,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.b07project.Product;
-import com.example.b07project.R;
 import com.example.b07project.Store;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,11 +15,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class DashboardViewModel extends ViewModel {
+public class ProductsViewModel extends ViewModel {
+
     FirebaseDatabase db;
+
     private final MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public ProductsViewModel() {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/")
                 .getReference("stores").getDatabase();
 

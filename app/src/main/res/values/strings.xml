@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">b07project</string>
     <string name="title_activity_store_owner_products">StoreOwnerProducts</string>
-    <string name="title_home">Products</string>
-    <string name="title_dashboard">Orders</string>
+    <string name="title_products">Products</string>
+    <string name="title_orders">Orders</string>
     <string name="title_notifications">Notifications</string>
 </resources>
