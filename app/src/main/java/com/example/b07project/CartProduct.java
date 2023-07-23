@@ -1,3 +1,5 @@
+package com.example.b07project;
+
 // import java.io.Serializable; Don't need to implement this as Product already does
 
 public class CartProduct extends Product {
