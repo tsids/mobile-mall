@@ -16,7 +16,6 @@ public class UserNavActivity extends AppCompatActivity {
 
     ActivityUserNavBinding binding;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,6 @@ public class UserNavActivity extends AppCompatActivity {
 
             return true;
         });
-        switchToOwner();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -47,15 +45,4 @@ public class UserNavActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
-    private void switchToOwner() {
-        Button button = findViewById(R.id.switch_owner);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(UserNavActivity.this, OwnerNavActivity.class));
-            }
-        });
-    }
-
 }

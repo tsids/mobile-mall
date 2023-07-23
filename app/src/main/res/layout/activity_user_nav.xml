@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UserNavActivity">
 
-    <Button
-        android:id="@+id/switch_owner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="See owner view"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"

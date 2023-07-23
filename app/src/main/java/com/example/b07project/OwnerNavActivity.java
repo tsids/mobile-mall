@@ -34,7 +34,6 @@ public class OwnerNavActivity extends AppCompatActivity {
 
             return true;
         });
-        switchToUser();
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -43,15 +42,4 @@ public class OwnerNavActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
-    private void switchToUser() {
-        Button button = findViewById(R.id.switch_user);
-        button.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OwnerNavActivity.this, UserNavActivity.class));
-            }
-        });
-    }
-
 }
