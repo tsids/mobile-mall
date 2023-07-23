@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Stores"
+        android:icon="@drawable/baseline_store_24"
+        android:id="@+id/stores"/>
+    <item android:title="Cart"
+        android:icon="@drawable/outline_shopping_cart_24"
+        android:id="@+id/cart"/>
+    <item android:title="Past Orders"
+        android:icon="@drawable/outline_inventory_24"
+        android:id="@+id/orders"/>
+</menu>
