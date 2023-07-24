@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductPreview">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="338dp"
+            tools:srcCompat="@tools:sample/avatars"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/productTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="Product Title"
+            tools:layout_editor_absoluteX="144dp"
+            tools:layout_editor_absoluteY="348dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="Product Price"
+            tools:layout_editor_absoluteX="144dp"
+            tools:layout_editor_absoluteY="412dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/productDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:text="Product Description"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="475dp"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/addToCart"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/quantityLabel"
+            android:text="Add to Cart"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="625dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/quantityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productDescription"
+            android:layout_toLeftOf="@id/addToCart"
+            android:text="Quantity:"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="579dp" />
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="564dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
