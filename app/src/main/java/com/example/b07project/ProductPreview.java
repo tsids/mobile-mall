@@ -23,11 +23,15 @@ public class ProductPreview extends Fragment {
 
     private static final String ARG_PARAM3 = "param3";
 
+    private static final String ARG_PARAM4 = "param4";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private String mParam3;
+
+    private String mParam4;
 
     public ProductPreview() {
         // Required empty public constructor
@@ -43,12 +47,13 @@ public class ProductPreview extends Fragment {
      * @return A new instance of fragment ProductPreview.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductPreview newInstance(String title, String price, String description) {
+    public static ProductPreview newInstance(String title, String price, String description, String store) {
         ProductPreview fragment = new ProductPreview();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, title);
         args.putString(ARG_PARAM2, price);
         args.putString(ARG_PARAM3, description);
+        args.putString(ARG_PARAM4, store);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,6 +65,7 @@ public class ProductPreview extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getString(ARG_PARAM3);
+            mParam4 = getArguments().getString(ARG_PARAM4);
 
         }
     }
@@ -72,7 +78,7 @@ public class ProductPreview extends Fragment {
         return view;
     }
 
-    public void setText(String title, String price, String description) {
+    public void setText(String title, String price, String description, String store) {
         TextView prodTitle = (TextView) getView().findViewById(R.id.productTitle);
         prodTitle.setText(title);
 
@@ -81,5 +87,8 @@ public class ProductPreview extends Fragment {
 
         TextView prodDesc = (TextView) getView().findViewById(R.id.productDescription);
         prodDesc.setText(description);
+
+        TextView prodStore = (TextView) getView().findViewById(R.id.storeName);
+        prodStore.setText(store);
     }
 }
