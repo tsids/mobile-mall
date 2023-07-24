@@ -2,6 +2,7 @@ package com.example.b07project;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +26,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class ProductsFragment extends Fragment {
-
+    FirebaseDatabase db;
+    String KEY = "0";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -60,16 +69,14 @@ public class ProductsFragment extends Fragment {
     }
 
 
-    private void setProducts(){
-        //This way of assigning data is temporary, and will need to be connected to a database
-        String[] names = getResources().getStringArray(R.array.prod_names);
-        String[] descs = getResources().getStringArray(R.array.prod_descriptions);
-        String[] prices = getResources().getStringArray(R.array.prod_prices);
+    private void setProducts(DataSnapshot snapshot, RecyclerView recycler){
+        ArrayList<Product> products = new ArrayList<>();
+        for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+            Product product = postSnapshot.getValue(Product.class);
+            products.add(product);
 
-        for (int i = 0; i < names.length; i++) {
-            float price = Float.parseFloat(prices[i].substring(1));
-            products.add(new Product(null,names[i],price,descs[i],0,0));
         }
+        recycler.setAdapter(new OwnerProductRecyclerAdapter(this.getContext(),products));
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,12 +84,25 @@ public class ProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_products, container, false);
 
-        setProducts();
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        DatabaseReference ref= db.getReference();
+        //How the key is found will need to be updated
+        DatabaseReference query = ref.child("stores").child(KEY).child("products");
 
         RecyclerView recycler = v.findViewById(R.id.prod_recycler);
-        OwnerProductRecyclerAdapter adapter = new OwnerProductRecyclerAdapter(this.getContext(),products);
-        recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                setProducts(snapshot,recycler);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return v;
     }
 }
