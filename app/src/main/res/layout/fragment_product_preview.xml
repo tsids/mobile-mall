@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,28 +23,31 @@
             android:id="@+id/productTitle"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
+            android:layout_marginTop="28dp"
             android:text="Product Title"
+            app:layout_constraintTop_toBottomOf="@+id/storeName"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="149dp"
-            tools:layout_editor_absoluteY="352dp" />
+            tools:layout_editor_absoluteX="149dp" />
 
         <TextView
             android:id="@+id/productPrice"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
+            android:layout_marginTop="28dp"
             android:text="Product Price"
+            app:layout_constraintTop_toBottomOf="@+id/productTitle"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="144dp"
-            tools:layout_editor_absoluteY="437dp" />
+            tools:layout_editor_absoluteX="144dp" />
 
         <TextView
             android:id="@+id/productDescription"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
+            android:layout_marginTop="28dp"
             android:text="Product Description"
+            app:layout_constraintTop_toBottomOf="@+id/productPrice"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="502dp" />
+            tools:layout_editor_absoluteX="125dp" />
 
         <Button
             android:id="@+id/addToCart"
@@ -51,39 +55,41 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/quantityLabel"
             android:text="Add to Cart"
+            tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="625dp"
-            tools:ignore="MissingConstraints" />
+            tools:layout_editor_absoluteY="627dp" />
 
         <TextView
             android:id="@+id/quantityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/productDescription"
+            android:layout_marginTop="40dp"
             android:layout_toLeftOf="@id/addToCart"
             android:text="Quantity:"
+            app:layout_constraintTop_toBottomOf="@+id/productDescription"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="579dp" />
+            tools:layout_editor_absoluteX="16dp" />
 
         <EditText
             android:id="@+id/editTextNumber"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:ems="10"
             android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@+id/productDescription"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="564dp" />
+            tools:layout_editor_absoluteX="85dp" />
 
         <TextView
             android:id="@+id/storeName"
             android:layout_width="74dp"
             android:layout_height="24dp"
             android:text="Store"
-            tools:layout_editor_absoluteX="159dp"
-            tools:layout_editor_absoluteY="293dp"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="155dp"
+            tools:layout_editor_absoluteY="271dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
