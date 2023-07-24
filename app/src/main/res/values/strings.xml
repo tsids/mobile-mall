@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">b07project</string>
+    <string-array name="prod_names">
+        <item>Apple</item>
+        <item>Bannana</item>
+        <item>Watermelon</item>
+        <item>Pineapple</item>
+        <item>Kiwi</item>
+    </string-array>
+    <string-array name="prod_descriptions">
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+    </string-array>
+    <string-array name="prod_prices">
+        <item>$1.99</item>
+        <item>$2.99</item>
+        <item>$3.99</item>
+        <item>$4.99</item>
+        <item>$2.49</item>
+    </string-array>
 </resources>

@@ -3,10 +3,14 @@ package com.example.b07project;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +27,7 @@ public class ProductsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    ArrayList<Product> products = new ArrayList<>();
     public ProductsFragment() {
         // Required empty public constructor
     }
@@ -55,10 +59,30 @@ public class ProductsFragment extends Fragment {
         }
     }
 
+
+    private void setProducts(){
+        //This way of assigning data is temporary, and will need to be connected to a database
+        String[] names = getResources().getStringArray(R.array.prod_names);
+        String[] descs = getResources().getStringArray(R.array.prod_descriptions);
+        String[] prices = getResources().getStringArray(R.array.prod_prices);
+
+        for (int i = 0; i < names.length; i++) {
+            float price = Float.parseFloat(prices[i].substring(1));
+            products.add(new Product(null,names[i],price,descs[i],0,0));
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false);
+        View v = inflater.inflate(R.layout.fragment_products, container, false);
+
+        setProducts();
+
+        RecyclerView recycler = v.findViewById(R.id.prod_recycler);
+        OwnerProductRecyclerAdapter adapter = new OwnerProductRecyclerAdapter(this.getContext(),products);
+        recycler.setAdapter(adapter);
+        recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        return v;
     }
 }
