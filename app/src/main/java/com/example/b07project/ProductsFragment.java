@@ -1,5 +1,6 @@
 package com.example.b07project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,10 @@ import java.util.List;
  */
 public class ProductsFragment extends Fragment {
     FirebaseDatabase db;
+
+    //This needs to be replaced with a value from the store-activity (an intention)
     String KEY = "0";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,9 +78,8 @@ public class ProductsFragment extends Fragment {
         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             Product product = postSnapshot.getValue(Product.class);
             products.add(product);
-
         }
-        recycler.setAdapter(new OwnerProductRecyclerAdapter(this.getContext(),products));
+        recycler.setAdapter(new OwnerProductRecyclerAdapter(this.getContext(),products,this));
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,5 +107,35 @@ public class ProductsFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    public void loadEdit(int pos){
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("stores").child(KEY).child("products");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> keys = new ArrayList<>();
+
+                Intent intent = new Intent(getContext(), EditProductActivity.class);
+
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    String key = postSnapshot.getKey();
+                    keys.add(key);
+                }
+
+                intent.putExtra("prod_id", keys.get(pos));
+                intent.putExtra("store_id",KEY);
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //intent.putExtra("pos")
     }
 }

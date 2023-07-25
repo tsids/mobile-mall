@@ -6,10 +6,12 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/prod_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -17,9 +19,9 @@
                 android:id="@+id/prod_img"
                 android:layout_width="82dp"
                 android:layout_height="100dp"
+                android:src="@drawable/outline_shopping_cart_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/outline_shopping_cart_24" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/prod_price"
