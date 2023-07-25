@@ -18,7 +18,7 @@ public interface LoginContract {
         public void passwordMatches();
         public void validNewAccount();
         public void createAccount(String username, String userType, String password);
-        public void doNotCreateAccount(String message;
+        public void doNotCreateAccount(String message);
     }
 
     public interface View{
@@ -26,6 +26,8 @@ public interface LoginContract {
         public String getPassword();
         public String getUserType();
         public void setErrorText(String message);
+
+        void setViewAndActivity();
     }
 
 }

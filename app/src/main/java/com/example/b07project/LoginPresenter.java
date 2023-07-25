@@ -37,17 +37,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void login() {
-        Intent switchActivityIntent;
-        if (view.getUserType().equals("stores")) {
-            switchActivityIntent = new Intent(this, OwnerNavActivity.class);
-            setContentView(R.layout.activity_owner_nav);
-
-        } else {
-            switchActivityIntent = new Intent(this, OwnerNavActivity.class);
-            setContentView(R.layout.activity_user_nav);
-
-        }
-        startActivity(switchActivityIntent);
+        view.setViewAndActivity();
     }
 
     @Override

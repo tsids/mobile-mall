@@ -1,5 +1,6 @@
 package com.example.b07project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
 
     LoginContract.Presenter presenter;
     LoginContract.Model model;
+    Intent switchActivityIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,20 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         model = new LoginModel();
         presenter = new LoginPresenter(this, model);
         model.setPresenter(presenter);
+    }
+
+    @Override
+    public void setViewAndActivity() {
+        if (getUserType().equals("stores")) {
+            switchActivityIntent = new Intent(this, OwnerNavActivity.class);
+            setContentView(R.layout.activity_owner_nav);
+
+        } else {
+            switchActivityIntent = new Intent(this, UserNavActivity.class);
+            setContentView(R.layout.activity_user_nav);
+
+        }
+        startActivity(switchActivityIntent);
     }
 
     public void onClickLogin(View view){
