@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginView">
+
+    <TextView
+        android:id="@+id/create_new_account"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="74dp"
+        android:layout_marginBottom="30dp"
+        android:text="Create New Account"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/groupradioUsers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <RadioGroup
+        android:id="@+id/groupradioUsers"
+        android:layout_width="309dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:checkedButton="@id/radia_customer"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioButton
+            android:id="@+id/radia_customer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClicked"
+            android:text="Customer"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/username"
+            tools:layout_editor_absoluteX="58dp" />
+
+        <RadioButton
+            android:id="@+id/radia_storeowner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClicked"
+            android:text="Store Owner"
+            android:textSize="12dp"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="178dp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="131dp"
+        android:layout_height="32dp"
+        android:text="Username"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/editUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editUsername"
+        android:layout_width="300dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/username"
+        app:layout_constraintVertical_bias="0.246" />
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/editPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editUsername"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="300dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/storeName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/password"
+        app:layout_constraintVertical_bias="0.246" />
+
+    <TextView
+        android:id="@+id/storeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Store Name"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/editStoreName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPassword"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editStoreName"
+        android:layout_width="300dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape"
+        android:clickable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/storeName"
+        app:layout_constraintVertical_bias="0.246" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/editCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editStoreName"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editCategory"
+        android:layout_width="300dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape"
+        android:clickable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/redirect_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/category"
+        app:layout_constraintVertical_bias="0.246" />
+
+    <TextView
+        android:id="@+id/redirect_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onClickSwitchToLogin"
+        android:text="Already have an account? Log in"
+        app:layout_constraintBottom_toTopOf="@+id/errorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCategory" />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#EF0A0A"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/create_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/redirect_login"
+        app:layout_constraintVertical_bias="0.456" />
+
+    <Button
+        android:id="@+id/create_account"
+        android:layout_width="155dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="onClickCreateAccount"
+        android:text="Create Account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf=""
+        app:layout_constraintVertical_bias="0.81" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
