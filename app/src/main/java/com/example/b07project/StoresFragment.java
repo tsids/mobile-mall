@@ -48,7 +48,7 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.activity_display_store, container, false);
+        View v = inflater.inflate(R.layout.fragment_display_store, container, false);
 
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();

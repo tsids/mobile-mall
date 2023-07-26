@@ -29,15 +29,6 @@
             android:exported="true" >
 
         </activity>
-        <activity android:name=".DisplayStoreActivity"
-            android:exported="true">
-
-        </activity>
-        <activity android:name=".DisplayProductsActivity"
-            android:exported="true">
-
-
-        </activity>
 
 
     </application>

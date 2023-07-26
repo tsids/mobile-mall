@@ -18,12 +18,12 @@ public class OwnerNavActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityOwnerNavBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new ProductsFragment());
+        replaceFragment(new UserProductsFragment());
 
         binding.ownerNavigationView.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.products) {
-                replaceFragment(new ProductsFragment());
+                replaceFragment(new UserProductsFragment());
             }
             else if (item.getItemId() == R.id.orders) {
                 replaceFragment(new OrdersFragment());
