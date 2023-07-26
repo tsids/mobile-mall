@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,20 +22,27 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StoresFragment extends Fragment implements RecyclerViewInterface {
+public class UserProductsFragment extends Fragment implements RecyclerViewInterface {
 
+    private static final String ARG_PARAM1 = "param1";
 
-    List<List<String>> storesInfo = new ArrayList<>();
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+
+    List<Product> products = new ArrayList<>();
     FirebaseDatabase db;
-    public StoresFragment() {
-        // Required empty public constructor
+
+
+    public UserProductsFragment() {
+
     }
 
 
-    // TODO: Rename and change types and number of parameters
-    public static StoresFragment newInstance() {
-        StoresFragment fragment = new StoresFragment();
+
+    public static UserProductsFragment newInstance(String param1) {
+        UserProductsFragment fragment = new UserProductsFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,28 +56,41 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_display_store, container, false);
+        View v = inflater.inflate(R.layout.fragment_display_products, container, false);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+        }
+
+        Toolbar toolbar = v.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
 
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores");
+        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
 
-        RecyclerView recyclerView = v.findViewById(R.id.store_recylerview);
+        RecyclerView recyclerView = v.findViewById(R.id.product_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<List<String>> storesInfo = new ArrayList<>();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    String name = postSnapshot.child("store").getValue(String.class);
-                    String category = postSnapshot.child("category").getValue(String.class);
-                    List<String> storeInfo = new ArrayList<>();
-                    storeInfo.add(name);
-                    storeInfo.add(category);
-                    storesInfo.add(storeInfo);
+                    Product product = postSnapshot.getValue(Product.class);
+                    products.add(product);
+
                 }
-                recyclerView.setAdapter(new StoreAdapter(StoresFragment.this.getContext(), storesInfo, StoresFragment.this));
+                recyclerView.setAdapter(new ProductAdapter(UserProductsFragment.this.getContext(), products, UserProductsFragment.this));
             }
 
             @Override
@@ -83,7 +104,7 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
     @Override
     public void onItemClick(int position) {
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores");
+        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
         List<String> keys = new ArrayList<>();
 
         query.addValueEventListener(new ValueEventListener() {
@@ -96,7 +117,7 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
                     keys.add(key);
                 }
 
-                UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position));
+                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position));
 
 // Then, you can add this fragment to your activity using FragmentManager
                 FragmentManager fragmentManager = getParentFragmentManager();
@@ -112,5 +133,6 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
             }
         });
+
     }
 }

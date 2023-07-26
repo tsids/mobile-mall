@@ -9,5 +9,5 @@
         android:id="@+id/cart"/>
     <item android:title="Past Orders"
         android:icon="@drawable/outline_inventory_24"
-        android:id="@+id/orders"/>
+        android:id="@+id/past_orders"/>
 </menu>
