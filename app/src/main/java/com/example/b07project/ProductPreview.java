@@ -2,12 +2,24 @@ package com.example.b07project;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,39 +33,24 @@ public class ProductPreview extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final String ARG_PARAM3 = "param3";
-
-    private static final String ARG_PARAM4 = "param4";
+    FirebaseDatabase db;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private String mParam3;
 
-    private String mParam4;
 
     public ProductPreview() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param title Parameter 1.
-     * @param price Parameter 2.
-     * @param description Parameter 3
-     * @return A new instance of fragment ProductPreview.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProductPreview newInstance(String title, String price, String description, String store) {
+
+    public static ProductPreview newInstance(String param1, String param2) {
         ProductPreview fragment = new ProductPreview();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, title);
-        args.putString(ARG_PARAM2, price);
-        args.putString(ARG_PARAM3, description);
-        args.putString(ARG_PARAM4, store);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,9 +61,6 @@ public class ProductPreview extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            mParam3 = getArguments().getString(ARG_PARAM3);
-            mParam4 = getArguments().getString(ARG_PARAM4);
-
         }
     }
 
@@ -74,21 +68,55 @@ public class ProductPreview extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_product_preview, container, false);
-        return view;
+        View v = inflater.inflate(R.layout.fragment_product_preview, container, false);
+
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("stores").child(mParam1);
+
+        Toolbar toolbar = v.findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                UserProductsFragment fragment = UserProductsFragment.newInstance(mParam1);
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment);
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Product product = snapshot.child("products").child(mParam2).getValue(Product.class);
+                setText(product.getTitle(), Float.toString(product.getPrice()), product.getDescription(), snapshot.child("store").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return v;
     }
 
     public void setText(String title, String price, String description, String store) {
-        TextView prodTitle = (TextView) getView().findViewById(R.id.productTitle);
+        TextView prodTitle = (TextView) getView().findViewById(R.id.preview_product_title);
         prodTitle.setText(title);
 
-        TextView prodPrice = (TextView) getView().findViewById(R.id.productPrice);
+        TextView prodPrice = (TextView) getView().findViewById(R.id.preview_product_price);
         prodPrice.setText(price);
 
-        TextView prodDesc = (TextView) getView().findViewById(R.id.productDescription);
+        TextView prodDesc = (TextView) getView().findViewById(R.id.preview_product_description);
         prodDesc.setText(description);
 
-        TextView prodStore = (TextView) getView().findViewById(R.id.storeName);
+        TextView prodStore = (TextView) getView().findViewById(R.id.preview_store_name);
         prodStore.setText(store);
     }
 }

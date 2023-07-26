@@ -10,64 +10,79 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="352dp"
-            android:layout_height="248dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="29dp"
-            tools:layout_editor_absoluteY="0dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="Preview"
+            app:titleTextColor="@color/white" />
 
         <TextView
-            android:id="@+id/productTitle"
+            android:id="@+id/preview_product_title"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="40dp"
             android:text="Product Title"
-            app:layout_constraintTop_toBottomOf="@+id/storeName"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="149dp" />
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_store_name"
+            tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/productPrice"
+            android:id="@+id/preview_product_price"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="36dp"
             android:text="Product Price"
-            app:layout_constraintTop_toBottomOf="@+id/productTitle"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="144dp" />
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_title"
+            tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/productDescription"
+            android:id="@+id/preview_product_description"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
             android:layout_marginTop="28dp"
             android:text="Product Description"
-            app:layout_constraintTop_toBottomOf="@+id/productPrice"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="125dp" />
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_price"
+            tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/addToCart"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
             android:layout_toRightOf="@id/quantityLabel"
             android:text="Add to Cart"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="627dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/quantityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/productDescription"
-            android:layout_marginTop="40dp"
+            android:layout_below="@id/preview_product_description"
+            android:layout_marginTop="68dp"
             android:layout_toLeftOf="@id/addToCart"
             android:text="Quantity:"
-            app:layout_constraintTop_toBottomOf="@+id/productDescription"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_description"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp" />
 
@@ -75,21 +90,27 @@
             android:id="@+id/editTextNumber"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="56dp"
             android:ems="10"
             android:inputType="number"
-            app:layout_constraintTop_toBottomOf="@+id/productDescription"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="85dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_description"
+            tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/storeName"
+            android:id="@+id/preview_store_name"
             android:layout_width="74dp"
             android:layout_height="24dp"
+            android:layout_marginTop="48dp"
             android:text="Store"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="155dp"
-            tools:layout_editor_absoluteY="271dp" />
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -23,7 +23,7 @@ public class UserNavActivity extends AppCompatActivity {
         binding.userNavActivity.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.stores) {
-                replaceFragment(new ProductsFragment());
+                replaceFragment(new StoresFragment());
             }
             else if (item.getItemId() == R.id.cart) {
                 replaceFragment(new CartFragment());

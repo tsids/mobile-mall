@@ -58,7 +58,7 @@ public class DisplayProductsActivity extends AppCompatActivity implements Recycl
                     products.add(product);
 
                 }
-                recyclerView.setAdapter(new ProductAdapter(getApplicationContext(), products));
+                recyclerView.setAdapter(new ProductAdapter(getApplicationContext(), products, DisplayProductsActivity.this));
             }
 
             @Override

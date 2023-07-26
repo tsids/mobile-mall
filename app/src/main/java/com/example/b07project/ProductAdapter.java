@@ -14,17 +14,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     Context context;
     List<Product> products;
+    RecyclerViewInterface recyclerViewInterface;
 
-    public ProductAdapter(Context context, List<Product> products) {
+    public ProductAdapter(Context context, List<Product> products, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.products = products;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ProductViewHolder(LayoutInflater.from(context).inflate(R.layout.product_view, parent,  false));
+        return new ProductViewHolder(LayoutInflater.from(context).inflate(R.layout.product_view, parent,  false), recyclerViewInterface);
     }
 
     @Override
