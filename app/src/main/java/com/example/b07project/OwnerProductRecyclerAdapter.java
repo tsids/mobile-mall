@@ -58,10 +58,17 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
             price = itemView.findViewById(R.id.prod_price);
             desciption = itemView.findViewById(R.id.prod_description);
             img = itemView.findViewById(R.id.prod_img);
-            itemView.findViewById(R.id.prod_card).setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.prod_edit).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     caller.loadEdit(getAdapterPosition());
+                }
+            });
+
+            itemView.findViewById(R.id.prod_delete).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO Delete product function
                 }
             });
         }
