@@ -1,7 +1,5 @@
 package com.example.b07project;
 
-import android.widget.TextView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,23 +11,27 @@ public class LoginModel implements LoginContract.Model {
     FirebaseDatabase db;
     DatabaseReference ref;
     public LoginModel() {
-        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        this.db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
     }
 
     public void setPresenter(LoginContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
-    public void usernameExists(String userName, String userType) {
+    public void usernameExists(String username, String userType) {
 
-        ref= db.getReference();
-        DatabaseReference query = ref.child(userType).child(userName); //userType is either 'stores' or 'users'
-        query.addValueEventListener(new ValueEventListener() {
+        this.ref= this.db.getReference();
+        DatabaseReference query = this.ref.child(userType); //userType is either 'stores' or 'users'
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    presenter.usernameExists();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()){
+                    String name = postSnapshot.child("username").getValue(String.class);
+                    if (name != null && name.equals(username)) {
+                        presenter.usernameExists();
+                        break;
+                    }
                 }
             }
 
@@ -41,14 +43,22 @@ public class LoginModel implements LoginContract.Model {
 
     public void passwordMatches(String username, String userType, String password) {
 
-        ref = db.getReference();
-        DatabaseReference query = ref.child(userType).child(username).child(password);
-        query.addValueEventListener(new ValueEventListener() {
+        this.ref = this.db.getReference();
+        DatabaseReference query = this.ref.child(userType);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    presenter.passwordMatches();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()){
+                    String name = postSnapshot.child("username").getValue(String.class);
+
+                    if (name.equals(username)) {
+                        String pass = postSnapshot.child("password").getValue(String.class);
+                        if (pass.equals(password)) {
+                            presenter.passwordMatches();
+                            break;
+                        }
+                    }
                 }
 
             }
@@ -60,5 +70,31 @@ public class LoginModel implements LoginContract.Model {
 
     }
 
+    public void checkLogin(String username, String password, String userType) {
+        this.ref = db.getReference();
+        DatabaseReference query = this.ref.child(userType);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot: snapshot.getChildren()){
+                    String name = postSnapshot.child("username").getValue(String.class);
+                    String pass = postSnapshot.child("password").getValue(String.class);
+
+
+                    if (name != null && name.equals(username) && pass.equals(password)) {
+//                        presenter.usernameExists();
+//                        presenter.passwordMatches();
+                        presenter.login();
+                        break;
+                    }
+                }
+                presenter.invalidLogin();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
+    }
 }

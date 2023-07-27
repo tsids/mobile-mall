@@ -1,7 +1,5 @@
 package com.example.b07project;
 
-import android.content.Intent;
-
 public class LoginPresenter implements LoginContract.Presenter {
 
 
@@ -22,18 +20,23 @@ public class LoginPresenter implements LoginContract.Presenter {
         String userType = view.getUserType();
         String password = view.getPassword();
 
-        usernameExists = false;
-        passwordMatches = false;
+//        this.usernameExists = false;
+//        this.passwordMatches = false;
 
-        model.usernameExists(username, userType);
-        model.passwordMatches(username, userType, password);
+//        model.usernameExists(username, userType);
+//        model.passwordMatches(username, userType, password);
+        model.checkLogin(username, password, userType);
 
-        if (usernameExists && passwordMatches) {
-            login();
-        } else {
-            doNotLogIn("Incorrect username or password. Please try again");
-        }
+//        boolean check = false;
+
+//        if (check) {
+//            view.setErrorText("");
+//        } else {
+            view.setErrorText("");
+//        }
+//        System.out.println("");
     }
+
 
     @Override
     public void login() {
@@ -41,10 +44,10 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void doNotLogIn(String message) {
-        view.setErrorText(message);
-
+    public void invalidLogin()  {
+        view.setErrorText("Incorrect username or password. Please try again");
     }
+
 
     public void usernameExists() {
         usernameExists = true;
@@ -66,11 +69,15 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         model.usernameExists(username, userType);
         if (username.equals("") || password.equals("")) {
-          doNotCreateAccount("Username or password cannot be empty");
+            view.setErrorText("Username or password cannot be empty");
         } else if (usernameExists) {
-            doNotCreateAccount("Username is already taken, please choose a different one.");
+            view.setErrorText("Username is already taken, please choose a different one.");
+
         } else {
+
             createAccount(username, userType, password);
+            view.accountSuccessfulRedirect();
+            view.setSuccessText("Account successfully created. Please log in");
         }
     }
 
@@ -80,9 +87,5 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     }
 
-    @Override
-    public void doNotCreateAccount(String message) {
-        view.setErrorText(message);
 
-    }
 }

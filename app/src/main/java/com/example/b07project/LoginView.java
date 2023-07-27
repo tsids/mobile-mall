@@ -1,6 +1,7 @@
 package com.example.b07project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
 
 public class LoginView extends AppCompatActivity implements LoginContract.View {
 
@@ -23,6 +23,8 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         model = new LoginModel();
         presenter = new LoginPresenter(this, model);
         model.setPresenter(presenter);
+        //RadioButton rb_customer = (RadioButton) findViewById(R.id.radia_customer);
+        //rb_customer.setChecked(true);
     }
 
     @Override
@@ -40,17 +42,17 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
     }
 
     public void onClickLogin(View view){
-        emptyFields();
-        TextView error = (TextView)findViewById(R.id.errorText);
-        error.setText("");
+        setErrorText("");
         presenter.validLogin();
+//        emptyFields();
+
     }
 
     public void onClickCreateAccount(View view){
+
+        setErrorText("");
+        presenter.validNewAccount();
         emptyFields();
-        TextView error = (TextView)findViewById(R.id.errorText);
-        error.setText("");
-        presenter.validLogin();
     }
 
     public void onRadioButtonClicked(View view) {
@@ -60,7 +62,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         EditText editStoreName = (EditText) findViewById(R.id.editStoreName);
         EditText editCategory = (EditText) findViewById(R.id.editCategory);
 
-        if (rb_customer.isSelected()) {
+        if (rb_customer.isChecked()) {
             storeName.setVisibility(View.INVISIBLE);
             category.setVisibility(View.INVISIBLE);
             editStoreName.setVisibility(View.INVISIBLE);
@@ -78,15 +80,19 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         }
     }
 
+
+    @Override
     public void onClickSwitchToNewAccount(View view) {
         emptyFields();
         setContentView(R.layout.register);
-
     }
 
+    @Override
     public void onClickSwitchToLogin(View view) {
         emptyFields();
         setContentView(R.layout.login);
+        RadioButton rb_customer = (RadioButton) findViewById(R.id.radia_customer);
+        rb_customer.setChecked(true);
     }
 
     public void emptyFields() {
@@ -109,7 +115,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
     @Override
     public String getUserType() {
         RadioButton rb_customer = (RadioButton) findViewById(R.id.radia_customer);
-        if (rb_customer.isSelected()) {
+        if (rb_customer.isChecked()) {
             return "users";
         } else  {
             return "stores";
@@ -118,7 +124,22 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
 
     public void setErrorText(String message) {
         TextView errorText = (TextView) findViewById(R.id.errorText);
+        errorText.setTextColor(Color.RED);
         errorText.setText(message);
+    }
+
+    public void setSuccessText(String message) {
+        TextView errorText = (TextView) findViewById(R.id.errorText);
+        errorText.setTextColor(Color.GREEN);
+        errorText.setText(message);
+    }
+
+
+
+
+    @Override
+    public void accountSuccessfulRedirect() {
+        setContentView(R.layout.login);
     }
 
 

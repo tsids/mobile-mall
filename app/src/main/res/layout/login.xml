@@ -28,6 +28,7 @@
         android:layout_width="309dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
+        android:checkedButton="@id/radia_customer"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,13 +118,13 @@
         android:id="@+id/redirect_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="onClickSwitchToNewAccount"
         android:text="New User? Click here to create a new account"
         app:layout_constraintBottom_toTopOf="@+id/errorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword"
-        android:onClick="onClickSwitchToNewAccount"
-        android:clickable="true" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
 
     <TextView
@@ -150,8 +151,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.897"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
