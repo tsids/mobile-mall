@@ -18,59 +18,55 @@ public class LoginModel implements LoginContract.Model {
         this.presenter = presenter;
     }
 
-    public void usernameExists(String username, String userType) {
-
-        this.ref= this.db.getReference();
+    public void usernameExists(String username, String userType, LoginContract.UsernameExistsCallback callback) {
+        this.ref = this.db.getReference();
         DatabaseReference query = this.ref.child(userType); //userType is either 'stores' or 'users'
         query.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()){
                     String name = postSnapshot.child("username").getValue(String.class);
                     if (name != null && name.equals(username)) {
-                        presenter.usernameExists();
-                        break;
+                        callback.onUsernameExists(true);
+                        return; // No need to continue the loop after finding a match
                     }
                 }
+                callback.onUsernameExists(false); // No match found
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
+                callback.onUsernameExists(false); // Error occurred, treat as no match found
             }
         });
     }
 
-    public void passwordMatches(String username, String userType, String password) {
-
+    public void passwordMatches(String username, String userType, String password, LoginContract.PasswordMatchesCallback callback) {
         this.ref = this.db.getReference();
-        DatabaseReference query = this.ref.child(userType);
+        DatabaseReference query = this.ref.child(userType); //userType is either 'stores' or 'users'
         query.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot: snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     String name = postSnapshot.child("username").getValue(String.class);
+                    String storedPassword = postSnapshot.child("password").getValue(String.class);
 
-                    if (name.equals(username)) {
-                        String pass = postSnapshot.child("password").getValue(String.class);
-                        if (pass.equals(password)) {
-                            presenter.passwordMatches();
-                            break;
-                        }
+                    if (name != null && name.equals(username) && storedPassword != null && storedPassword.equals(password)) {
+                        callback.onPasswordMatches(true);
+                        return; // No need to continue the loop after finding a match
                     }
                 }
-
+                callback.onPasswordMatches(false); // No match found
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
+                callback.onPasswordMatches(false); // Error occurred, treat as no match found
             }
         });
-
     }
 
-    public void checkLogin(String username, String password, String userType) {
+    /*public void checkLogin(String username, String password, String userType) {
         this.ref = db.getReference();
         DatabaseReference query = this.ref.child(userType);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -96,5 +92,5 @@ public class LoginModel implements LoginContract.Model {
             public void onCancelled(DatabaseError error) {
             }
         });
-    }
+    }*/
 }

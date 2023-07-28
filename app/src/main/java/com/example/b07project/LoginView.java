@@ -19,6 +19,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //emptyFields();
         setContentView(R.layout.login);
         model = new LoginModel();
         presenter = new LoginPresenter(this, model);
@@ -44,8 +45,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
     public void onClickLogin(View view){
         setErrorText("");
         presenter.validLogin();
-//        emptyFields();
-
+        //emptyFields();
     }
 
     public void onClickCreateAccount(View view){
@@ -133,9 +133,6 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         errorText.setTextColor(Color.GREEN);
         errorText.setText(message);
     }
-
-
-
 
     @Override
     public void accountSuccessfulRedirect() {
