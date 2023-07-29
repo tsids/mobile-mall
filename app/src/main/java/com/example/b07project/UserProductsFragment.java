@@ -3,6 +3,7 @@ package com.example.b07project;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,6 +131,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
 
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -151,4 +153,34 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
             }
         });
     }
+
+
+    public void onAddToCartClick(int position, int quantity) {
+        Product product = products.get(position);
+        Log.d("Quantity", "" + quantity);
+        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
+
+        DatabaseReference ref = db.getReference();
+        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + "-" + product.getProductID());
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Product already exists in the cart, update the quantity
+                    CartProduct existingProduct = snapshot.getValue(CartProduct.class);
+                    int currentQuantity = existingProduct.getQuantity();
+                    cartProduct.setQuantity(currentQuantity + quantity);
+                }
+                // Set the cartProduct with the updated or initial quantity
+                query.setValue(cartProduct);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled if needed
+            }
+        });
+    }
+
 }

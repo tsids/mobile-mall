@@ -11,9 +11,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,8 @@ public class ProductPreview extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     FirebaseDatabase db;
+
+    Product product;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -72,6 +76,19 @@ public class ProductPreview extends Fragment {
         View v = inflater.inflate(R.layout.fragment_product_preview, container, false);
 
 
+        v.findViewById(R.id.addToCart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText editText = v.findViewById(R.id.editTextNumber);
+
+// Get the text from the EditText as a String
+                String inputText = editText.getText().toString();
+                addToCart(Integer.parseInt(inputText));
+            }
+        });
+
+
+
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         DatabaseReference query = ref.child("stores").child(mParam1);
@@ -83,7 +100,7 @@ public class ProductPreview extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Product product = snapshot.child("products").child(mParam2).getValue(Product.class);
+                product = snapshot.child("products").child(mParam2).getValue(Product.class);
                 setText(product.getTitle(), Float.toString(product.getPrice()), product.getDescription(), snapshot.child("store").getValue(String.class));
             }
 
@@ -109,6 +126,7 @@ public class ProductPreview extends Fragment {
         prodStore.setText(store);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -132,4 +150,33 @@ public class ProductPreview extends Fragment {
             }
         });
     }
+
+
+    private void addToCart(int quantity) {
+        Log.d("Quantity", "" + quantity);
+        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
+
+        DatabaseReference ref = db.getReference();
+        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + "-" + product.getProductID());
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Product already exists in the cart, update the quantity
+                    CartProduct existingProduct = snapshot.getValue(CartProduct.class);
+                    int currentQuantity = existingProduct.getQuantity();
+                    cartProduct.setQuantity(currentQuantity + quantity);
+                }
+                // Set the cartProduct with the updated or initial quantity
+                query.setValue(cartProduct);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled if needed
+            }
+        });
+    }
+
 }

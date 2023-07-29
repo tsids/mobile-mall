@@ -14,7 +14,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    public ProductViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+    public ProductViewHolder(@NonNull View itemView, UserProductsFragment userProductsFragment) {
         super(itemView);
         productNameView = itemView.findViewById(R.id.product_name);
         priceView = itemView.findViewById(R.id.price);
@@ -26,14 +26,28 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         itemView.findViewById(R.id.preview_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (recyclerViewInterface != null) {
+                if (userProductsFragment != null) {
                     int pos = getAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION) {
-                        recyclerViewInterface.onItemClick(pos);
+                        userProductsFragment.onItemClick(pos);
+                    }
+                }
+            }
+        });
+
+        itemView.findViewById(R.id.add_to_cart_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userProductsFragment != null) {
+                    int pos = getAdapterPosition();
+
+                    if (pos != RecyclerView.NO_POSITION) {
+                        userProductsFragment.onAddToCartClick(pos, Integer.parseInt(quantityView.getText().toString()));
                     }
                 }
             }
         });
     }
+
 }
