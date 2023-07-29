@@ -14,11 +14,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
     private final RecyclerViewInterface recyclerViewInterface;
 
     Context context;
-    List<List<String>> storesInfo;
+    List<Store> stores;
 
-    public StoreAdapter(Context context, List<List<String>> storesInfo, RecyclerViewInterface recyclerViewInterface) {
+    public StoreAdapter(Context context, List<Store> stores, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
-        this.storesInfo = storesInfo;
+        this.stores = stores;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
@@ -31,12 +31,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
-        holder.storeNameView.setText(storesInfo.get(position).get(0));
-        holder.categoryView.setText(storesInfo.get(position).get(1));
+        holder.storeNameView.setText(stores.get(position).getStore());
+        holder.categoryView.setText(stores.get(position).getCategory());
     }
 
     @Override
     public int getItemCount() {
-        return storesInfo.size();
+        return stores.size();
     }
 }

@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,7 +27,6 @@ import java.util.List;
 public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
 
-    List<List<String>> storesInfo = new ArrayList<>();
     FirebaseDatabase db;
     public StoresFragment() {
         // Required empty public constructor
@@ -50,6 +52,9 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_display_store, container, false);
 
+
+
+
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         DatabaseReference query = ref.child("stores");
@@ -60,16 +65,12 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<List<String>> storesInfo = new ArrayList<>();
+                List<Store> stores = new ArrayList<>();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    String name = postSnapshot.child("store").getValue(String.class);
-                    String category = postSnapshot.child("category").getValue(String.class);
-                    List<String> storeInfo = new ArrayList<>();
-                    storeInfo.add(name);
-                    storeInfo.add(category);
-                    storesInfo.add(storeInfo);
+                    Store store = postSnapshot.getValue(Store.class);
+                    stores.add(store);
                 }
-                recyclerView.setAdapter(new StoreAdapter(StoresFragment.this.getContext(), storesInfo, StoresFragment.this));
+                recyclerView.setAdapter(new StoreAdapter(StoresFragment.this.getContext(), stores, StoresFragment.this));
             }
 
             @Override
@@ -112,5 +113,19 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
             }
         });
+
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+        toolbar.setTitle("Stores");
+        toolbar.setNavigationIcon(null);
+    }
+
+
+
 }
