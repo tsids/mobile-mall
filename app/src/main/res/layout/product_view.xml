@@ -46,7 +46,7 @@
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/decrement_btn"
         android:textAlignment="center"
@@ -60,10 +60,10 @@
         android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
-        android:layout_marginLeft="23dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="0dp"
-        android:layout_toRightOf="@id/quantity"
         android:layout_marginRight="40dp"
+        android:layout_toRightOf="@id/quantity"
         android:paddingLeft="0dp"
         android:paddingTop="0dp"
         android:paddingRight="0dp"
@@ -76,7 +76,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
-        android:layout_marginLeft="130dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="0dp"
         android:text="Add to Cart" />
 
     <Button

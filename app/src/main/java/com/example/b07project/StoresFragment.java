@@ -123,6 +123,7 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle("Stores");
+        toolbar.setNavigationIcon(null);
     }
 
 
