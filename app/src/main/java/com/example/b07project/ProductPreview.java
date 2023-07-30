@@ -17,12 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,8 +85,13 @@ public class ProductPreview extends Fragment {
                 EditText editText = v.findViewById(R.id.editTextNumber);
 
 // Get the text from the EditText as a String
-                String inputText = editText.getText().toString();
-                addToCart(Integer.parseInt(inputText));
+                int quantity = Integer.parseInt(editText.getText().toString());
+                if (quantity <= 0) {
+                    StyleableToast.makeText(getContext(), "Quantity must be greater than zero", Toast.LENGTH_LONG, R.style.quantityWarning).show();
+                } else {
+                    addToCart(quantity);
+                }
+
             }
         });
 
@@ -157,7 +165,7 @@ public class ProductPreview extends Fragment {
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + "-" + product.getProductID());
+        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -167,6 +175,9 @@ public class ProductPreview extends Fragment {
                     CartProduct existingProduct = snapshot.getValue(CartProduct.class);
                     int currentQuantity = existingProduct.getQuantity();
                     cartProduct.setQuantity(currentQuantity + quantity);
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
+                } else {
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
                 query.setValue(cartProduct);

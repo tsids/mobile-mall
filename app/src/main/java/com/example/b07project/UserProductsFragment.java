@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -26,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class UserProductsFragment extends Fragment implements RecyclerViewInterface {
 
@@ -161,7 +164,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + "-" + product.getProductID());
+        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -170,7 +173,10 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
                     // Product already exists in the cart, update the quantity
                     CartProduct existingProduct = snapshot.getValue(CartProduct.class);
                     int currentQuantity = existingProduct.getQuantity();
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
                     cartProduct.setQuantity(currentQuantity + quantity);
+                } else {
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
                 query.setValue(cartProduct);

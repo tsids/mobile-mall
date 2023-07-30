@@ -19,9 +19,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StoresFragment extends Fragment implements RecyclerViewInterface {
@@ -70,6 +72,9 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
                     Store store = postSnapshot.getValue(Store.class);
                     stores.add(store);
                 }
+
+
+
                 recyclerView.setAdapter(new StoreAdapter(StoresFragment.this.getContext(), stores, StoresFragment.this));
             }
 
