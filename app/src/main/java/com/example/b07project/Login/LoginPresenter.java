@@ -1,10 +1,7 @@
-package com.example.b07project;
+package com.example.b07project.Login;
 
+import com.example.b07project.Stores.Store;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class LoginPresenter implements LoginContract.Presenter {
 

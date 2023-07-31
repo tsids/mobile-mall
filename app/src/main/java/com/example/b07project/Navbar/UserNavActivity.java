@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.Navbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +13,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.b07project.Cart.CartFragment;
+import com.example.b07project.UserOrders.PastOrdersFragment;
+import com.example.b07project.R;
+import com.example.b07project.Stores.StoresFragment;
 import com.example.b07project.databinding.ActivityUserNavBinding;
 
 public class UserNavActivity extends AppCompatActivity {

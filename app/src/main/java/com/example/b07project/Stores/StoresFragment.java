@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.Stores;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -15,6 +14,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.R;
+import com.example.b07project.RecyclerViewInterface;
+import com.example.b07project.UserProducts.UserProductsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,6 +72,9 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
                     Store store = postSnapshot.getValue(Store.class);
                     stores.add(store);
                 }
+
+
+
                 recyclerView.setAdapter(new StoreAdapter(StoresFragment.this.getContext(), stores, StoresFragment.this));
             }
 
