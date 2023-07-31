@@ -67,6 +67,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
             itemView.findViewById(R.id.prod_edit).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    EditProductActivity.newProd = false;
                     caller.loadEdit(getAdapterPosition());
                 }
             });
@@ -78,7 +79,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
                             getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/").
                             getReference();
                     db.child("stores").child(ProductsFragment.KEY).
-                            child("products").child(prod_id).removeValue();
+                            child("products").child(getAdapterPosition()+"").removeValue();
                 }
             });
         }

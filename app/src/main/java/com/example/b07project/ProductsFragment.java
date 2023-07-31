@@ -116,8 +116,9 @@ public class ProductsFragment extends Fragment {
                         int newID=genID();
 
                         DatabaseReference newProd = children.child(queryLen+"");
-                        newProd.setValue(new Product("", "New Product", 69.69f,
-                                "T", Integer.parseInt(KEY), newID));
+                        newProd.setValue(new Product("", "Product Title", 0f,
+                                "Product Description", Integer.parseInt(KEY), newID));
+                        EditProductActivity.newProd = true;
                         loadEdit(queryLen);
                     }
 
