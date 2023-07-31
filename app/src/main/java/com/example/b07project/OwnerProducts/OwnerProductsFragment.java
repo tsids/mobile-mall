@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.OwnerProducts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.Product;
+import com.example.b07project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +25,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProductsFragment#newInstance} factory method to
+ * Use the {@link OwnerProductsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductsFragment extends Fragment {
+public class OwnerProductsFragment extends Fragment {
     FirebaseDatabase db;
 
     //This needs to be replaced with a value from the store-activity (an intention)
@@ -41,7 +43,7 @@ public class ProductsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Product> products = new ArrayList<>();
-    public ProductsFragment() {
+    public OwnerProductsFragment() {
         // Required empty public constructor
     }
 
@@ -54,8 +56,8 @@ public class ProductsFragment extends Fragment {
      * @return A new instance of fragment ProductsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductsFragment newInstance(String param1, String param2) {
-        ProductsFragment fragment = new ProductsFragment();
+    public static OwnerProductsFragment newInstance(String param1, String param2) {
+        OwnerProductsFragment fragment = new OwnerProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

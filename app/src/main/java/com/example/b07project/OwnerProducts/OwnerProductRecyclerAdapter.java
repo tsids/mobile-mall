@@ -1,9 +1,6 @@
-package com.example.b07project;
-
-import static androidx.core.content.ContextCompat.startActivity;
+package com.example.b07project.OwnerProducts;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.Product;
+import com.example.b07project.R;
+
 import java.util.ArrayList;
 
 public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProductRecyclerAdapter.CustomViewHolder>{
     Context context;
     ArrayList<Product> products;
-    ProductsFragment caller;
+    OwnerProductsFragment caller;
 
-    public OwnerProductRecyclerAdapter(Context context, ArrayList<Product> products,ProductsFragment caller) {
+    public OwnerProductRecyclerAdapter(Context context, ArrayList<Product> products, OwnerProductsFragment caller) {
         this.context = context;
         this.products = products;
         this.caller = caller;
@@ -52,7 +52,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
     public static class CustomViewHolder extends RecyclerView.ViewHolder{
         TextView name,price,desciption;
         ImageView img;
-        public CustomViewHolder(@NonNull View itemView,ProductsFragment caller) {
+        public CustomViewHolder(@NonNull View itemView, OwnerProductsFragment caller) {
             super(itemView);
             name = itemView.findViewById(R.id.prod_name);
             price = itemView.findViewById(R.id.prod_price);

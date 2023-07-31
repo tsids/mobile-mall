@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.UserProducts;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.b07project.Product;
+import com.example.b07project.R;
 
 import java.util.List;
 

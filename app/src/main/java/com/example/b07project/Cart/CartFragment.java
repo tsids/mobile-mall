@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.Cart;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.R;
+import com.example.b07project.Stores.StoresFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -92,10 +94,10 @@ public class CartFragment extends Fragment {
             }
         });
     }
-
+    
     public void checkout() {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("users").child(mParam1).child("products");
+        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
     }
 }

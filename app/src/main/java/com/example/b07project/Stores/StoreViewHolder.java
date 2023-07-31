@@ -1,10 +1,13 @@
-package com.example.b07project;
+package com.example.b07project.Stores;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.b07project.R;
+import com.example.b07project.RecyclerViewInterface;
 
 public class StoreViewHolder extends RecyclerView.ViewHolder {
 

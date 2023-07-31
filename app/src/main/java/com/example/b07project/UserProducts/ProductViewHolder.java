@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.UserProducts;
 
 import android.view.View;
 import android.widget.Button;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.b07project.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
 

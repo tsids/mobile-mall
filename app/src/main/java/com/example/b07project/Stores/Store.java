@@ -1,4 +1,6 @@
-package com.example.b07project;
+package com.example.b07project.Stores;
+
+import com.example.b07project.Product;
 
 import java.util.List;
 import java.io.Serializable;

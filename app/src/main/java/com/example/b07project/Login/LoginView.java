@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.Login;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +9,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.b07project.Navbar.OwnerNavActivity;
+import com.example.b07project.R;
+import com.example.b07project.Navbar.UserNavActivity;
 
 
 public class LoginView extends AppCompatActivity implements LoginContract.View {

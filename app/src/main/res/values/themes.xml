@@ -31,4 +31,16 @@
         <item name="stRadius">5dp</item>
     </style>
 
+    <style name="successfulOrder">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">#2EEF0D</item>
+        <item name="stSolidBackground">false</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stLength">SHORT</item>
+        <item name="stRadius">5dp</item>
+    </style>
+
 </resources>
