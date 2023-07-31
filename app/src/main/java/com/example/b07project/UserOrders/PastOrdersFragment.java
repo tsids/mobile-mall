@@ -76,17 +76,6 @@ public class PastOrdersFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle("My Orders");
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
-                fragmentTransaction.commit();
-
-            }
-        });
+        toolbar.setNavigationIcon(null);
     }
 }

@@ -2,6 +2,7 @@ package com.example.b07project.CartPackage;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,11 +12,17 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,23 +88,55 @@ public class CartFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle("Cart");
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
-                fragmentTransaction.commit();
-
-            }
-        });
+        toolbar.setNavigationIcon(null);
     }
     
-    public void checkout() {
+    public void onCheckout(View view) {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
+        DatabaseReference pastOrders = ref.child("users").child(mParam1).child("pastOrders");
+        DatabaseReference cart = ref.child("users").child(mParam1).child("cart");
+
+        pastOrders.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Cart exists
+                    StyleableToast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_LONG, R.style.success).show();
+                    // Set the pastOrders with the cart
+                    pastOrders.setValue(cart);
+                } else {
+                    StyleableToast.makeText(getContext(), "Cart cannot be empty!", Toast.LENGTH_LONG, R.style.error).show();
+                }
+                clearCart();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled if needed
+            }
+        });
+
+    }
+
+    public void clearCart() {
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        DatabaseReference ref= db.getReference();
+        DatabaseReference cart = ref.child("users").child(mParam1).child("cart");
+
+        cart.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Clear cart
+//                    cart.setValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled if needed
+            }
+        });
     }
 }

@@ -162,7 +162,7 @@ public class ProductPreview extends Fragment {
 
     private void addToCart(int quantity) {
         Log.d("Quantity", "" + quantity);
-        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
+        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
         DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
