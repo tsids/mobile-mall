@@ -74,15 +74,4 @@
         android:gravity="start|top"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/edit_prod_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save_edits" />
-
-    <Button
-        android:id="@+id/edit_prod_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cancel" />
 </LinearLayout>
