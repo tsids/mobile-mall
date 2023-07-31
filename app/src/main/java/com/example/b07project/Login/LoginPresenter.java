@@ -46,7 +46,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
                         // Perform login check after both username and password checks are done
                         if (usernameExists && passwordMatches) {
-                            view.setViewAndActivity();
+                            view.setViewAndActivity(username);
                         } else {
                             view.setErrorText("Incorrect username or password. Please try again");
                         }

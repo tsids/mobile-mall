@@ -33,7 +33,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
     }
 
     @Override
-    public void setViewAndActivity() {
+    public void setViewAndActivity(String username) {
         if (getUserType().equals("stores")) {
             switchActivityIntent = new Intent(this, OwnerNavActivity.class);
             setContentView(R.layout.activity_owner_nav);
@@ -43,6 +43,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
             setContentView(R.layout.activity_user_nav);
 
         }
+        switchActivityIntent.putExtra("USERNAME", username);
         startActivity(switchActivityIntent);
     }
 

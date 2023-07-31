@@ -30,7 +30,7 @@ public interface LoginContract {
         public void setSuccessText(String message);
         public void onClickSwitchToLogin(android.view.View view);
         public void onClickSwitchToNewAccount(android.view.View view);
-        void setViewAndActivity();
+        void setViewAndActivity(String username);
         void accountSuccessfulRedirect();
         public String getCategory();
         public String getStoreName();
