@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.b07project.Navbar.OwnerNavActivity;
 import com.example.b07project.R;
 import com.example.b07project.Navbar.UserNavActivity;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 
 public class LoginView extends AppCompatActivity implements LoginContract.View {
@@ -144,15 +147,16 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         errorText.setText(message);
     }
 
-    public void setSuccessText(String message) {
+    /*public void setSuccessText(String message) {
         TextView errorText = (TextView) findViewById(R.id.errorText);
         errorText.setTextColor(Color.GREEN);
         errorText.setText(message);
-    }
+    }*/
 
     @Override
     public void accountSuccessfulRedirect() {
         setContentView(R.layout.login);
+        StyleableToast.makeText(this.getBaseContext(), "Successfully created account", Toast.LENGTH_LONG, R.style.success).show();
     }
 
 

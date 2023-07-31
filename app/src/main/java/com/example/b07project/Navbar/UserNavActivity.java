@@ -1,5 +1,7 @@
 package com.example.b07project.Navbar;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -86,7 +88,7 @@ public class UserNavActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
-            StyleableToast.makeText(getContext(), "Successfully logged out!", Toast.LENGTH_LONG, R.style.success).show();
+            StyleableToast.makeText(this.getBaseContext(), "Successfully logged out!", Toast.LENGTH_LONG, R.style.success).show();
             Intent switchActivityIntent = new Intent(this, LoginView.class);
             setContentView(R.layout.login);
             startActivity(switchActivityIntent);

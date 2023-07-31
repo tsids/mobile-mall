@@ -93,7 +93,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 } else {
                     createAccount(username, userType, password, storeName, category);
                     view.accountSuccessfulRedirect();
-                    view.setSuccessText("Account successfully created. Please log in");
+                    view.setErrorText("");
                 }
             }
         });
