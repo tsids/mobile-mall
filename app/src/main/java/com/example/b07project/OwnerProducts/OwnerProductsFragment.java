@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,9 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
 import com.example.b07project.R;
-import com.example.b07project.Stores.StoresFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -100,10 +98,7 @@ public class OwnerProductsFragment extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         //How the key is found will need to be updated
-
-        DatabaseReference query = ref.child("stores").
-                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                child("products");
+        DatabaseReference query = ref.child("stores").child(username).child("products");
 
         RecyclerView recycler = v.findViewById(R.id.prod_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -175,9 +170,7 @@ public class OwnerProductsFragment extends Fragment {
 
     public void loadEdit(int pos){
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores").
-                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                child("products");
+        DatabaseReference query = ref.child("stores").child(username).child("products");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -192,7 +185,7 @@ public class OwnerProductsFragment extends Fragment {
                 }
 
                 intent.putExtra("prod_id", keys.get(pos));
-                intent.putExtra("store_id",getActivity().getIntent().getExtras().get("USERNAME").toString());
+                intent.putExtra("store_id", username);
 
                 startActivity(intent);
             }

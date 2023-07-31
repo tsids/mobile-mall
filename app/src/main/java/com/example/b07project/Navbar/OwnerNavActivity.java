@@ -25,10 +25,15 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class OwnerNavActivity extends AppCompatActivity {
 
     ActivityOwnerNavBinding binding;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME");
+
         binding = ActivityOwnerNavBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

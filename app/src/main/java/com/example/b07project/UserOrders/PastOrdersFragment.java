@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
 
@@ -21,6 +22,8 @@ import com.example.b07project.Stores.StoresFragment;
  * create an instance of this fragment.
  */
 public class PastOrdersFragment extends Fragment {
+
+    String username = ((UserNavActivity) requireActivity()).getUsername();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

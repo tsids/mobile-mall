@@ -31,9 +31,15 @@ public class UserNavActivity extends AppCompatActivity {
 
     ActivityUserNavBinding binding;
 
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME");
+
         binding = ActivityUserNavBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
@@ -42,12 +48,6 @@ public class UserNavActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.getOverflowIcon().setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
-
-
-
-
-
-
 
         binding.userNavActivity.setOnItemSelectedListener(item -> {
 
@@ -100,4 +100,7 @@ public class UserNavActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public String getUsername() {
+        return username;
+    }
 }

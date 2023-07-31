@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
@@ -32,6 +35,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class CartFragment extends Fragment {
 
     FirebaseDatabase db;
+    String username = ((UserNavActivity) requireActivity()).getUsername();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,8 +98,8 @@ public class CartFragment extends Fragment {
     public void onCheckout(View view) {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
-        DatabaseReference pastOrders = ref.child("users").child(mParam1).child("pastOrders");
-        DatabaseReference cart = ref.child("users").child(mParam1).child("cart");
+        DatabaseReference pastOrders = ref.child("users").child(username).child("pastOrders");
+        DatabaseReference cart = ref.child("users").child(username).child("cart");
 
         pastOrders.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -122,14 +126,14 @@ public class CartFragment extends Fragment {
     public void clearCart() {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
-        DatabaseReference cart = ref.child("users").child(mParam1).child("cart");
+        DatabaseReference cart = ref.child("users").child(username).child("cart");
 
         cart.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     // Clear cart
-//                    cart.setValue();
+                    cart.setValue(new ArrayList<Object>());
                 }
             }
 

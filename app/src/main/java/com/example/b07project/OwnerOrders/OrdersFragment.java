@@ -20,6 +20,7 @@ import com.example.b07project.R;
 import com.example.b07project.UserOrders.UserOrder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.example.b07project.Navbar.UserNavActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -37,6 +38,8 @@ import com.example.b07project.Stores.StoresFragment;
 public class OrdersFragment extends Fragment {
 
     FirebaseDatabase db;
+
+    String username = ((UserNavActivity) requireActivity()).getUsername();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -16,7 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.CartPackage.CartProduct;
+import com.example.b07project.Cart.CartProduct;
+import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
 import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
@@ -36,6 +37,8 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class UserProductsFragment extends Fragment implements RecyclerViewInterface {
 
     private static final String ARG_PARAM1 = "param1";
+
+    String username = ((UserNavActivity) requireActivity()).getUsername();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -167,7 +170,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
+        DatabaseReference query = ref.child("users").child(username).child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

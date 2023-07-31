@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.UserProducts.UserProductsFragment;
