@@ -164,7 +164,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
     public void onAddToCartClick(int position, int quantity) {
         Product product = products.get(position);
         Log.d("Quantity", "" + quantity);
-        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
+        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
         DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
