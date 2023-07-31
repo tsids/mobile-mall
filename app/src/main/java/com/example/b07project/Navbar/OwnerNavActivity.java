@@ -39,8 +39,6 @@ public class OwnerNavActivity extends AppCompatActivity {
 
         replaceFragment(new OwnerProductsFragment());
 
-
-
         binding.ownerNavigationView.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.products) {
