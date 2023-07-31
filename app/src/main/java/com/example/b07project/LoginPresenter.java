@@ -1,12 +1,10 @@
 package com.example.b07project;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
@@ -15,6 +13,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     LoginContract.Model model;
     public boolean usernameExists;
     public boolean passwordMatches;
+    public boolean storeIDExists;
     FirebaseDatabase db;
 
     public LoginPresenter(LoginContract.View view, LoginContract.Model model) {
@@ -73,9 +72,15 @@ public class LoginPresenter implements LoginContract.Presenter {
         String username = view.getUsername();
         String userType = view.getUserType();
         String password = view.getPassword();
+        String storeName = view.getStoreName();
+        String category = view.getCategory();
 
         if (username.equals("") || password.equals("")) {
             view.setErrorText("Username or password cannot be empty");
+            return;
+        }
+        if (userType.equals("stores") && (category.equals("") || storeName.equals(""))) {
+            view.setErrorText("Category or store name cannot be empty");
             return;
         }
 
@@ -89,7 +94,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 if (usernameExists) {
                     view.setErrorText("Username is already taken, please choose a different one.");
                 } else {
-                    createAccount(username, userType, password);
+                    createAccount(username, userType, password, storeName, category);
                     view.accountSuccessfulRedirect();
                     view.setSuccessText("Account successfully created. Please log in");
                 }
@@ -98,28 +103,38 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void createAccount (String username, String userType, String password) {
+    public void createAccount(String username, String userType, String password, String storeName, String category) {
         //add username, password to database and switch to user navigation
-        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
-        DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("users").child(username);
+        if (userType.equals("users")) {
+            //List<Product> cart = new ArrayList<Product>();
+            //List<Product> pastOrders = new ArrayList<Product>();
+            User user = new User(null, password, null, username);
+            model.addAccount(user, userType, username);
+        } else {
+            //List<Product> products = new ArrayList<Product>();
+            /*Random random = new Random();
+            int id = random.nextInt(1000000);
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                query.child("username").setValue(username);
-                query.child("password").setValue(password);
-            }
+            storeIDExists(id);
+            while (storeIDExists) {
+                id = random.nextInt(1000000);
+                storeIDExists(id);
+            }*/
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            Store store = new Store(category, password, null, storeName, username);
+            model.addAccount(store, userType, username);
+        }
+    }
+    /*public void storeIDExists(int id) {
+        setStoreIDExists(false);
+        model.storeIDExists(id, new LoginContract.StoreIDExistsCallback() {
+            public void onStoreIDExists(boolean exists) {
+                setStoreIDExists(exists);
             }
         });
+    }*/
 
-
-
+    public void setStoreIDExists(boolean exists) {
+        this.storeIDExists = exists;
     }
-
-
 }

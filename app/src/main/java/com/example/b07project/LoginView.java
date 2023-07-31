@@ -19,8 +19,8 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //emptyFields();
         setContentView(R.layout.login);
+        //emptyFields();
         model = new LoginModel();
         presenter = new LoginPresenter(this, model);
         model.setPresenter(presenter);
@@ -120,6 +120,17 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
         } else  {
             return "stores";
         }
+    }
+
+    public String getStoreName() {
+        EditText storeName = (EditText) findViewById(R.id.editStoreName);
+        return storeName.getText().toString();
+    }
+
+    public String getCategory() {
+        EditText category = (EditText) findViewById(R.id.editCategory);
+        return category.getText().toString();
+
     }
 
     public void setErrorText(String message) {

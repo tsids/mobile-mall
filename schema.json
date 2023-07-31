@@ -1,11 +1,13 @@
 {
-    "stores": [
-        {
-            "category": "Electronics",
-            "email": "admin@gmail.com",
+    "stores": {
+        "admin":{
+            "username": "admin",
             "password": "admin",
-            "products": [
-                {
+            "category": "Electronics",
+            "store": "Apple",
+            "storeid": 10,
+            "products": {
+                "1":{
                     "description": "MAX IPHONE",
                     "image": "",
                     "price": 1000,
@@ -13,7 +15,7 @@
                     "storeid": 10,
                     "title": "iPhone 20"
                 },
-                {
+                "2":{
                     "description": "Some really advanced Macbook",
                     "image": "",
                     "price": 3000,
@@ -21,17 +23,19 @@
                     "storeid": 10,
                     "title": "MacBook Air Plus Ultra Extra"
                 }
-            ],
-            "store": "Apple",
-            "storeid": 10,
-            "username": "admin"
+            }
+            
+            
+            
         },
-        {
-            "category": "General",
-            "email": "admin2@gmail.com",
+        "admin2": {
+            "username": "admin2",
             "password": "admin2",
-            "products": [
-                {
+            "category": "General",
+            "store": "Walmart",
+            "storeid": 20,
+            "products": {
+                "3":{
                     "description": "A bunch of bananas",
                     "image": "",
                     "price": 15,
@@ -39,7 +43,7 @@
                     "storeid": 20,
                     "title": "Bananas"
                 },
-                {
+                "4":{
                     "description": "some random shirt",
                     "image": "",
                     "price": 10,
@@ -47,16 +51,15 @@
                     "storeid": 20,
                     "title": "Shirt"
                 }
-            ],
-            "store": "Walmart",
-            "storeid": 20,
-            "username": "admin2"
+            }
         }
-    ],
-    "users": [
-        {
-            "cart": [
-                {
+    },
+    "users": {
+        "test":{
+            "username": "test",
+            "password": "test",
+            "cart": {
+                "10:1":{
                     "ordered": false,
                     "pickedUp": false,
                     "productid": 1,
@@ -64,7 +67,7 @@
                     "storeid": 10,
                     "verified": false
                 },
-                {
+                "20:3": {
                     "ordered": false,
                     "pickedUp": false,
                     "productid": 3,
@@ -72,11 +75,9 @@
                     "storeid": 20,
                     "verified": false
                 }
-            ],
-            "email": "test@gmail.com",
-            "password": "test",
-            "pastOrders": [
-                {
+            },            
+            "pastOrders": {
+                "100:20:4": {
                     "ordered": true,
                     "orderid": 100,
                     "pickedUp": false,
@@ -84,12 +85,14 @@
                     "storeid": 20,
                     "verified": false
                 }
-            ],
-            "username": "test"
+            }   
+            
         },
-        {
-            "cart": [
-                {
+        "test2":{
+            "username": "test2",
+            "password": "test2",
+            "cart": {
+                "10:1": {
                     "ordered": false,
                     "orderid": 100,
                     "pickedUp": false,
@@ -98,7 +101,7 @@
                     "storeid": 10,
                     "verified": false
                 },
-                {
+                "10:2": {
                     "ordered": false,
                     "orderid": 200,
                     "pickedUp": false,
@@ -107,11 +110,10 @@
                     "storeid": 10,
                     "verified": false
                 }
-            ],
-            "email": "test2@gmail.com",
-            "password": "test2",
-            "pastOrders": [
-                {
+            },
+            
+            "pastOrders": {
+                "200:10:2": {
                     "ordered": true,
                     "orderid": 200,
                     "pickedUp": false,
@@ -120,8 +122,8 @@
                     "storeid": 10,
                     "verified": false
                 }
-            ],
-            "username": "test2"
+            }
+            
         }
-    ]
+    }
 }

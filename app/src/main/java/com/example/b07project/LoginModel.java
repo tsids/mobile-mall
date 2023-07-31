@@ -1,5 +1,9 @@
 package com.example.b07project;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,11 +63,58 @@ public class LoginModel implements LoginContract.Model {
                 callback.onPasswordMatches(false); // No match found
             }
 
+
             @Override
             public void onCancelled(DatabaseError error) {
                 callback.onPasswordMatches(false); // Error occurred, treat as no match found
             }
         });
+    }
+
+    /*public void storeIDExists(int id, LoginContract.StoreIDExistsCallback callback) {
+
+        this.ref = this.db.getReference();
+        DatabaseReference query = this.ref.child("stores");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    int storeID = postSnapshot.child("storeid").getValue();
+
+
+                    if (storeID == id) {
+                        callback.onStoreIDExists(true);
+                        return; // No need to continue the loop after finding a match
+                    }
+                }
+                callback.onStoreIDExists(false); // No match found
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                callback.onStoreIDExists(false); // Error occurred, treat as no match found
+            }
+        });
+
+    }*/
+
+    public void addAccount(Object newAccount, String userType, String username) {
+
+        this.ref= this.db.getReference();
+
+
+        ref.child(userType).child(username).setValue(newAccount)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //System.out.println("Username added to the 'users' array.");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //System.out.println("Failed to add username to the 'users' array: " + e.getMessage());
+                    }
+                });
     }
 
     /*public void checkLogin(String username, String password, String userType) {

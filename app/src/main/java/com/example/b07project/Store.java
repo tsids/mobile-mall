@@ -5,23 +5,21 @@ import java.io.Serializable;
 
 public class Store implements Serializable{
         private String category;
-        private String email;
         private String password;
         private List<Product> products;
         private String store;
-        private int storeID;
+        //private int storeID;
         private String username;
 
         public Store() {
         }
 
-        public Store(String category, String email, String password, List<Product> products, String store, int storeID, String username) {
+        public Store(String category, String password, List<Product> products, String store, String username) {
                 this.category = category;
-                this.email = email;
                 this.password = password;
                 this.products = products;
                 this.store = store;
-                this.storeID = storeID;
+                //this.storeID = storeID;
                 this.username = username;
         }
 
@@ -31,14 +29,6 @@ public class Store implements Serializable{
 
         public void setCategory(String category) {
                 this.category = category;
-        }
-
-        public String getEmail() {
-                return email;
-        }
-
-        public void setEmail(String email) {
-                this.email = email;
         }
 
         public String getPassword() {
@@ -65,13 +55,13 @@ public class Store implements Serializable{
                 this.store = store;
         }
 
-        public int getStoreID() {
+        /*public int getStoreID() {
                 return storeID;
         }
 
         public void setStoreID(int storeID) {
                 this.storeID = storeID;
-        }
+        }*/
 
         public String getUsername() {
                 return username;

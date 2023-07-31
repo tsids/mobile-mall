@@ -6,7 +6,10 @@ public interface LoginContract {
     public interface Model{
         public void usernameExists(String username, String userType, LoginContract.UsernameExistsCallback callback);
         public void passwordMatches(String username, String userType, String password, LoginContract.PasswordMatchesCallback callback);
+        //public void storeIDExists(int id, LoginContract.StoreIDExistsCallback callback);
         public void setPresenter(LoginContract.Presenter presenter);
+
+        public void addAccount(Object newAccount, String userType, String username);
         //public void checkLogin(String username, String userType, String password);
     }
 
@@ -16,8 +19,7 @@ public interface LoginContract {
         //public void usernameExists();
         //public void passwordMatches();
         public void validNewAccount();
-        public void createAccount(String username, String userType, String password);
-
+        void createAccount(String username, String userType, String password, String storeName, String category);
     }
 
     public interface View{
@@ -30,6 +32,8 @@ public interface LoginContract {
         public void onClickSwitchToNewAccount(android.view.View view);
         void setViewAndActivity();
         void accountSuccessfulRedirect();
+        public String getCategory();
+        public String getStoreName();
     }
 
     public interface UsernameExistsCallback {
@@ -38,6 +42,9 @@ public interface LoginContract {
 
     public interface PasswordMatchesCallback {
         void onPasswordMatches(boolean matches);
+    }
+    public interface StoreIDExistsCallback {
+        void onStoreIDExists(boolean matches);
     }
 
 }
