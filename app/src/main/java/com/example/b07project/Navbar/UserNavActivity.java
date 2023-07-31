@@ -73,7 +73,6 @@ public class UserNavActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("OptionsMenu", "onCreateOptionsMenu called");
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.option_menu, menu);
         return true;

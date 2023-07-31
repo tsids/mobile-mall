@@ -46,6 +46,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
             setContentView(R.layout.activity_user_nav);
 
         }
+        StyleableToast.makeText(this.getBaseContext(), "Successfully logged in", Toast.LENGTH_LONG, R.style.success).show();
         switchActivityIntent.putExtra("USERNAME", username);
         startActivity(switchActivityIntent);
     }
