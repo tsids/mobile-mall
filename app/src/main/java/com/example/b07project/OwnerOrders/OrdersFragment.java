@@ -3,9 +3,13 @@ package com.example.b07project.OwnerOrders;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +33,8 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class OrdersFragment extends Fragment {
+
+    FirebaseDatabase db;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -115,5 +121,33 @@ public class OrdersFragment extends Fragment {
 
 
         return v;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+        toolbar.setTitle("Cart");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+    }
+
+    public void checkout() {
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("users").child(mParam1).child("products");
     }
 }
