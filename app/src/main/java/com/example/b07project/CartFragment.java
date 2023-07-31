@@ -2,11 +2,18 @@ package com.example.b07project;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +21,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class CartFragment extends Fragment {
+
+    FirebaseDatabase db;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +69,33 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+        toolbar.setTitle("Cart");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+    }
+
+    public void checkout() {
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("users").child(mParam1).child("products");
     }
 }
