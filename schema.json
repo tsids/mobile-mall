@@ -1,43 +1,129 @@
-"stores": [
-    {
-        "username": "",
-        "password": "",
-        "store": "",
-        "products": [
-            "ObjectId",
-            "ObjectId"
-        ],
+{
+    "stores": {
+        "admin":{
+            "username": "admin",
+            "password": "admin",
+            "category": "Electronics",
+            "store": "Apple",
+            "storeid": 10,
+            "products": {
+                "1":{
+                    "description": "MAX IPHONE",
+                    "image": "",
+                    "price": 1000,
+                    "productid": 1,
+                    "storeid": 10,
+                    "title": "iPhone 20"
+                },
+                "2":{
+                    "description": "Some really advanced Macbook",
+                    "image": "",
+                    "price": 3000,
+                    "productid": 2,
+                    "storeid": 10,
+                    "title": "MacBook Air Plus Ultra Extra"
+                }
+            }
+            
+            
+            
+        },
+        "admin2": {
+            "username": "admin2",
+            "password": "admin2",
+            "category": "General",
+            "store": "Walmart",
+            "storeid": 20,
+            "products": {
+                "3":{
+                    "description": "A bunch of bananas",
+                    "image": "",
+                    "price": 15,
+                    "productid": 3,
+                    "storeid": 20,
+                    "title": "Bananas"
+                },
+                "4":{
+                    "description": "some random shirt",
+                    "image": "",
+                    "price": 10,
+                    "productid": 4,
+                    "storeid": 20,
+                    "title": "Shirt"
+                }
+            }
+        }
     },
-],
-"users": [
-    {
-        "username": "",
-        "password": "",
-        "cart": [
-            {
-                "object": {},
-                // extra fields
-                "quantity": "",
-                "ordered": false,
-                "verified": false,
+    "users": {
+        "test":{
+            "username": "test",
+            "password": "test",
+            "cart": {
+                "10:1":{
+                    "ordered": false,
+                    "pickedUp": false,
+                    "productid": 1,
+                    "quantity": 4,
+                    "storeid": 10,
+                    "verified": false
+                },
+                "20:3": {
+                    "ordered": false,
+                    "pickedUp": false,
+                    "productid": 3,
+                    "quantity": 1,
+                    "storeid": 20,
+                    "verified": false
+                }
+            },            
+            "pastOrders": {
+                "100:20:4": {
+                    "ordered": true,
+                    "orderid": 100,
+                    "pickedUp": false,
+                    "productid": 4,
+                    "storeid": 20,
+                    "verified": false
+                }
+            }   
+            
+        },
+        "test2":{
+            "username": "test2",
+            "password": "test2",
+            "cart": {
+                "10:1": {
+                    "ordered": false,
+                    "orderid": 100,
+                    "pickedUp": false,
+                    "productid": 1,
+                    "quantity": 4,
+                    "storeid": 10,
+                    "verified": false
+                },
+                "10:2": {
+                    "ordered": false,
+                    "orderid": 200,
+                    "pickedUp": false,
+                    "productid": 2,
+                    "quantity": 3,
+                    "storeid": 10,
+                    "verified": false
+                }
             },
-            {
-                "object": {},
-                // extra fields
-                "quantity": "",
-                "ordered": false,
-                "verified": false,
-            },
-        ],
-    },
-],
-"products": [
-    {
-        "id": "",
-        "store": "",
-        "title": "",
-        "description": "",
-        "image": "",
-        "price": 0,
-    },
-]
+            
+            "pastOrders": {
+                "200:10:2": {
+                    "ordered": true,
+                    "orderid": 200,
+                    "pickedUp": false,
+                    "productid": 2,
+                    "quantity": 5,
+                    "storeid": 10,
+                    "verified": false
+                }
+            }
+            
+        }
+    }
+}
