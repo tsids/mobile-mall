@@ -29,7 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,7 +176,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child(mParam2).child("cart");
+        DatabaseReference query = ref.child("users").child(mParam2).child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -192,12 +191,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
                     StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
-                ArrayList cart = snapshot.getValue(ArrayList.class);
-                if (cart == null) {
-                    cart = new ArrayList<CartProduct>();
-                }
-                cart.add(cartProduct);
-                query.setValue(cart);
+                query.setValue(cartProduct);
             }
 
             @Override

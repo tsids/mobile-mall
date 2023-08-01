@@ -5,25 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Order;
 import com.example.b07project.R;
 import com.example.b07project.Stores.Store;
-import com.example.b07project.Stores.StoresFragment;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -116,38 +108,41 @@ public class CartFragment extends Fragment {
                             StyleableToast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_LONG, R.style.success).show();
                             SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'");
                             String now = ISO_8601_FORMAT.format(new Date());
-                            Object products = snapshot.getValue();
+
+                            // get all products
+                            ArrayList<CartProduct> products = new ArrayList<>();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                products.add(dataSnapshot.getValue(CartProduct.class));
+                            }
 
                             Order order = new Order(products, now);
-
                             // Save the cart in pastOrders
-                            pastOrders.push().setValue(order);
+                            pastOrders.child(now).setValue(order);
 
-                            // loop over all products
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                CartProduct product = dataSnapshot.getValue(CartProduct.class);
-                                int storeID = product.getStoreID();
-
-                                // loop over all stores and find where the storeID matches the correct store
-                                stores.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        for (DataSnapshot ds: dataSnapshot.getChildren()) {
-                                            Store store = ds.getValue(Store.class);
-                                            if (storeID == store.getStoreID()) {
-                                                DatabaseReference storeOrder = ref.child("stores").child(store.getUsername()).child("orders");
-                                                storeOrder.setValue(order);
+                            // loop over all stores and find where each storeID matches the correct store
+                            stores.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                        ArrayList<CartProduct> cartProducts = new ArrayList<>();
+                                        Store store = ds.getValue(Store.class); // grab each store
+                                        for (CartProduct product : products) { //
+                                            if (product.getStoreID() == store.getStoreID()) { // if product id matches store id
+                                                cartProducts.add(product); // add product
                                             }
                                         }
+                                        // objects ordered from the same store get put in one order
+                                        DatabaseReference ordersRef = ref.child("stores").child(store.getUsername()).child("orders");
+                                        Order storeOrder = new Order(cartProducts, now);
+                                        ordersRef.child(now).setValue(storeOrder);
                                     }
+                                }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
 
-                                    }
-                                });
-
-                            }
+                                }
+                            });
 
                         } else {
                             StyleableToast.makeText(getContext(), "Cart cannot be empty!", Toast.LENGTH_LONG, R.style.error).show();

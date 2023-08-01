@@ -165,12 +165,11 @@ public class ProductPreview extends Fragment {
 
 
     private void addToCart(int quantity) {
-        Product product = products.get(position);
         Log.d("Quantity", "" + quantity);
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child(mParam2).child("cart");
+        DatabaseReference query = ref.child("users").child(mParam2).child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -179,18 +178,13 @@ public class ProductPreview extends Fragment {
                     // Product already exists in the cart, update the quantity
                     CartProduct existingProduct = snapshot.getValue(CartProduct.class);
                     int currentQuantity = existingProduct.getQuantity();
-                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                     cartProduct.setQuantity(currentQuantity + quantity);
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 } else {
                     StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
-                ArrayList cart = snapshot.getValue(ArrayList.class);
-                if (cart == null) {
-                    cart = new ArrayList<CartProduct>();
-                }
-                cart.add(cartProduct);
-                query.setValue(cart);
+                query.setValue(cartProduct);
             }
 
             @Override
