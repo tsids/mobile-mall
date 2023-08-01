@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.Cart;
 
 import java.io.Serializable;
 import java.util.ArrayList;

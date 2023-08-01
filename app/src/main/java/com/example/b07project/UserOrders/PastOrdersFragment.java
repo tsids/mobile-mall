@@ -1,23 +1,26 @@
-package com.example.b07project;
+package com.example.b07project.UserOrders;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.example.b07project.R;
+import com.example.b07project.Stores.StoresFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProductsFragment#newInstance} factory method to
+ * Use the {@link PastOrdersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductsFragment extends Fragment {
+public class PastOrdersFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,8 +30,8 @@ public class ProductsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList<Product> products = new ArrayList<>();
-    public ProductsFragment() {
+
+    public PastOrdersFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +41,11 @@ public class ProductsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProductsFragment.
+     * @return A new instance of fragment PastOrdersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductsFragment newInstance(String param1, String param2) {
-        ProductsFragment fragment = new ProductsFragment();
+    public static PastOrdersFragment newInstance(String param1, String param2) {
+        PastOrdersFragment fragment = new PastOrdersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,30 +62,31 @@ public class ProductsFragment extends Fragment {
         }
     }
 
-
-    private void setProducts(){
-        //This way of assigning data is temporary, and will need to be connected to a database
-        String[] names = getResources().getStringArray(R.array.prod_names);
-        String[] descs = getResources().getStringArray(R.array.prod_descriptions);
-        String[] prices = getResources().getStringArray(R.array.prod_prices);
-
-        for (int i = 0; i < names.length; i++) {
-            float price = Float.parseFloat(prices[i].substring(1));
-            products.add(new Product(null,names[i],price,descs[i],0,0));
-        }
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_products, container, false);
+        return inflater.inflate(R.layout.fragment_past_orders, container, false);
+    }
 
-        setProducts();
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        RecyclerView recycler = v.findViewById(R.id.prod_recycler);
-        OwnerProductRecyclerAdapter adapter = new OwnerProductRecyclerAdapter(this.getContext(),products);
-        recycler.setAdapter(adapter);
-        recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        return v;
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+        toolbar.setTitle("My Orders");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
     }
 }

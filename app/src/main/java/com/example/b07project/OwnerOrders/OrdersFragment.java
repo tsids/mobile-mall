@@ -1,19 +1,24 @@
-package com.example.b07project;
+package com.example.b07project.OwnerOrders;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.R;
+
+import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link StoresFragment#newInstance} factory method to
+ * Use the {@link OrdersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoresFragment extends Fragment {
+public class OrdersFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,8 +29,8 @@ public class StoresFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public StoresFragment() {
-        // Required empty public constructor
+    public OrdersFragment() {
+       // Required empty public constructor
     }
 
     /**
@@ -34,11 +39,11 @@ public class StoresFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StoresFragment.
+     * @return A new instance of fragment OrdersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StoresFragment newInstance(String param1, String param2) {
-        StoresFragment fragment = new StoresFragment();
+    public static OrdersFragment newInstance(String param1, String param2) {
+        OrdersFragment fragment = new OrdersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -55,10 +60,22 @@ public class StoresFragment extends Fragment {
         }
     }
 
+
+//    private void setProducts(){
+//        //This way of assigning data is temporary, and will need to be connected to a database
+//        String[] names = getResources().getStringArray(R.array.prod_names);
+//        String[] descs = getResources().getStringArray(R.array.prod_descriptions);
+//        String[] prices = getResources().getStringArray(R.array.prod_prices);
+//
+//        for (int i = 0; i < names.length; i++) {
+//            float price = Float.parseFloat(prices[i].substring(1));
+//            products.add(new Product(null,names[i],price,descs[i],0,0));
+//        }
+//    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stores, container, false);
+        return inflater.inflate(R.layout.fragment_orders, container, false);
     }
 }

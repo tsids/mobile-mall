@@ -46,4 +46,15 @@ public class Product implements Serializable {
 
     public void setProductID(int productID) { this.productID = productID; }
 
+    @Override
+    public int hashCode() { return (storeID * 13 + productID * 31); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) { return false; }
+        if (!(obj instanceof Product)) { return false; }
+        Product otherProd = (Product) obj;
+        return ((this.productID == otherProd.productID) && (this.storeID == otherProd.storeID));
+    }
+
 }

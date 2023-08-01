@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductPreview">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <TextView
+            android:id="@+id/preview_product_title"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="40dp"
+            android:text="Product Title"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_store_name"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/preview_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="36dp"
+            android:text="Product Price"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_title"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/preview_product_description"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginTop="28dp"
+            android:text="Product Description"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_price"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/addToCart"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:layout_toRightOf="@id/quantityLabel"
+            android:text="Add to Cart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/quantityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/preview_product_description"
+            android:layout_marginTop="68dp"
+            android:layout_toLeftOf="@id/addToCart"
+            android:text="Quantity:"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_description"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_product_description"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/preview_store_name"
+            android:layout_width="74dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="48dp"
+            android:text="Store"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
