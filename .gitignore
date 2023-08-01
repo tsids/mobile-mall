@@ -47,4 +47,7 @@ google-services.json
 .externalNativeBuild
 .cxx
 local.properties
+<<<<<<< HEAD
 ./schema.json
+=======
+>>>>>>> b3a92e2 (Added add item, delete item, edit item functionality)

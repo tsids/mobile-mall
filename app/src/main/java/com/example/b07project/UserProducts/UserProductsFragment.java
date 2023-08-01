@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.Cart.CartProduct;
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.Product;
 import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
