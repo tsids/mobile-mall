@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".Navbar.OwnerNavActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,6 +16,7 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white" />
+
 
     <FrameLayout
         android:id="@+id/frameLayout"

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.example.b07project.Cart.CartFragment;
 import com.example.b07project.Login.LoginView;
+=======
+import com.example.b07project.CartPackage.CartFragment;
+>>>>>>> a0ac3a3 (Fixed even more merge conflicts)
 import com.example.b07project.UserOrders.PastOrdersFragment;
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
