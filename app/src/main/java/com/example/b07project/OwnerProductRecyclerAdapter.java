@@ -46,7 +46,6 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
         holder.price.setText(price);
 
         holder.prod_id = products.get(position).getProductID()+"";
-        System.out.println(products.get(position).getTitle());
     }
 
     @Override
