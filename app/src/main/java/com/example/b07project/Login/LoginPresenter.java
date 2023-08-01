@@ -1,5 +1,6 @@
 package com.example.b07project.Login;
 
+import com.example.b07project.Product;
 import com.example.b07project.Stores.Store;
 import com.google.firebase.database.FirebaseDatabase;
 

@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +38,13 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class UserProductsFragment extends Fragment implements RecyclerViewInterface {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-    String username = ((UserNavActivity) requireActivity()).getUsername();
+    String username = "0"; // ((UserNavActivity) requireActivity()).getUsername();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+    private String mParam2;
 
     List<Product> products = new ArrayList<>();
     FirebaseDatabase db;
@@ -53,10 +56,11 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
 
 
 
-    public static UserProductsFragment newInstance(String param1) {
+    public static UserProductsFragment newInstance(String param1, String param2) {
         UserProductsFragment fragment = new UserProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,6 +78,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
 
@@ -121,7 +126,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
                     keys.add(key);
                 }
 
-                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position));
+                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position), mParam2);
 
 // Then, you can add this fragment to your activity using FragmentManager
                 FragmentManager fragmentManager = getParentFragmentManager();
@@ -154,9 +159,11 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
             @Override
             public void onClick(View view) {
 
+                StoresFragment fragment = StoresFragment.newInstance(mParam2);
+
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.replace(R.id.frameLayout, fragment);
                 fragmentTransaction.commit();
 
             }
@@ -170,7 +177,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child(username).child("cart").child(product.getStoreID() + ":" + product.getProductID());
+        DatabaseReference query = ref.child("users").child(mParam2).child("cart");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -185,7 +192,12 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
                     StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
-                query.setValue(cartProduct);
+                ArrayList cart = snapshot.getValue(ArrayList.class);
+                if (cart == null) {
+                    cart = new ArrayList<CartProduct>();
+                }
+                cart.add(cartProduct);
+                query.setValue(cart);
             }
 
             @Override

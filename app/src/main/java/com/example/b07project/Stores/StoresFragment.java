@@ -29,7 +29,9 @@ import java.util.List;
 
 public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
+    private static final String ARG_PARAM1 = "param1";
 
+    private String mParam1;
     FirebaseDatabase db;
     public StoresFragment() {
         // Required empty public constructor
@@ -37,16 +39,21 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
 
     // TODO: Rename and change types and number of parameters
-    public static StoresFragment newInstance() {
+    public static StoresFragment newInstance(String param1) {
         StoresFragment fragment = new StoresFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+        }
     }
 
     @Override
@@ -103,7 +110,7 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
                     keys.add(key);
                 }
 
-                UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position));
+                UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position), mParam1);
 
 // Then, you can add this fragment to your activity using FragmentManager
                 FragmentManager fragmentManager = getParentFragmentManager();

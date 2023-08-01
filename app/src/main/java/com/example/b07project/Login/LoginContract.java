@@ -10,6 +10,8 @@ public interface LoginContract {
         public void setPresenter(LoginContract.Presenter presenter);
 
         public void addAccount(Object newAccount, String userType, String username);
+
+        void storeIDExists(int id, StoreIDExistsCallback storeIDExistsCallback);
         //public void checkLogin(String username, String userType, String password);
     }
 

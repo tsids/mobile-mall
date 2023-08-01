@@ -16,7 +16,7 @@ public class Store implements Serializable{
         public Store() {
         }
 
-        public Store(String category, String password, List<Product> products, String store, int storeID, String username) {
+        public Store(String category, String password, List<Product> products, String store, int StoreID, String username) {
                 this.category = category;
                 this.password = password;
                 this.products = products;

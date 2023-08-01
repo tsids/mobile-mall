@@ -38,6 +38,7 @@ public class ProductPreview extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
 
     FirebaseDatabase db;
 
@@ -46,6 +47,7 @@ public class ProductPreview extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String mParam3;
 
 
 
@@ -54,11 +56,12 @@ public class ProductPreview extends Fragment {
     }
 
 
-    public static ProductPreview newInstance(String param1, String param2) {
+    public static ProductPreview newInstance(String param1, String param2, String param3) {
         ProductPreview fragment = new ProductPreview();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,6 +72,7 @@ public class ProductPreview extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam3 = getArguments().getString(ARG_PARAM3);
         }
     }
 
@@ -148,7 +152,7 @@ public class ProductPreview extends Fragment {
             @Override
             public void onClick(View view) {
 
-                UserProductsFragment fragment = UserProductsFragment.newInstance(mParam1);
+                UserProductsFragment fragment = UserProductsFragment.newInstance(mParam1, mParam3);
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -161,11 +165,12 @@ public class ProductPreview extends Fragment {
 
 
     private void addToCart(int quantity) {
+        Product product = products.get(position);
         Log.d("Quantity", "" + quantity);
         CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
+        DatabaseReference query = ref.child("users").child(mParam2).child("cart");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -174,13 +179,18 @@ public class ProductPreview extends Fragment {
                     // Product already exists in the cart, update the quantity
                     CartProduct existingProduct = snapshot.getValue(CartProduct.class);
                     int currentQuantity = existingProduct.getQuantity();
-                    cartProduct.setQuantity(currentQuantity + quantity);
                     StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
+                    cartProduct.setQuantity(currentQuantity + quantity);
                 } else {
                     StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
-                query.setValue(cartProduct);
+                ArrayList cart = snapshot.getValue(ArrayList.class);
+                if (cart == null) {
+                    cart = new ArrayList<CartProduct>();
+                }
+                cart.add(cartProduct);
+                query.setValue(cart);
             }
 
             @Override

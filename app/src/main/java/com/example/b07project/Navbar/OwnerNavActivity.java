@@ -36,21 +36,19 @@ public class OwnerNavActivity extends AppCompatActivity {
 
         binding = ActivityOwnerNavBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        replaceFragment(OwnerProductsFragment.newInstance(username));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.getOverflowIcon().setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
 
-        replaceFragment(new OwnerProductsFragment());
-
         binding.ownerNavigationView.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.products) {
-                replaceFragment(new OwnerProductsFragment());
+                replaceFragment(OwnerProductsFragment.newInstance(username));
             }
             else if (item.getItemId() == R.id.orders) {
-                replaceFragment(new OrdersFragment());
+                replaceFragment(OrdersFragment.newInstance(username));
             }
 
             return true;
