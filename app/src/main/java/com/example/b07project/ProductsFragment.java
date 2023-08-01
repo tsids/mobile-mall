@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +78,7 @@ public class ProductsFragment extends Fragment {
 
 
     private void setProducts(DataSnapshot snapshot, RecyclerView recycler){
-        ArrayList<Product> products = new ArrayList<>();
+        products = new ArrayList<>();
         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             Product product = postSnapshot.getValue(Product.class);
             products.add(product);
@@ -111,11 +112,13 @@ public class ProductsFragment extends Fragment {
                 children.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int prod_id = (int) (snapshot.getChildrenCount());
-                        DatabaseReference newProd = children.child(prod_id+"");
-                        newProd.setValue(new Product("", "Test", 69.69f,
-                                "T", Integer.parseInt(KEY), prod_id));
-                        loadEdit(prod_id);
+                        int queryLen = (int) (snapshot.getChildrenCount());
+                        int newID=genID();
+
+                        DatabaseReference newProd = children.child(queryLen+"");
+                        newProd.setValue(new Product("", "New Product", 69.69f,
+                                "T", Integer.parseInt(KEY), newID));
+                        loadEdit(queryLen);
                     }
 
                     @Override
@@ -139,6 +142,23 @@ public class ProductsFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    private int genID() {
+        int newID=0;
+        boolean unique = false;
+        Random r = new Random();
+
+        while (!unique){
+            newID = r.nextInt();
+            unique = true;
+            for(Product p:products){
+                if (p.getProductID() == newID)
+                    unique = false;
+            }
+        }
+
+        return newID;
     }
 
     public void loadEdit(int pos){
