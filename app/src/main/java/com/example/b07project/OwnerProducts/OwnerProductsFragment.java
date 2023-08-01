@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
 import com.example.b07project.R;
 import com.google.firebase.database.DataSnapshot;
@@ -94,7 +93,7 @@ public class OwnerProductsFragment extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         //How the key is found will need to be updated
-        DatabaseReference query = ref.child("stores").child(username).child("products");
+        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
 
         RecyclerView recycler = v.findViewById(R.id.prod_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -166,7 +165,7 @@ public class OwnerProductsFragment extends Fragment {
 
     public void loadEdit(int pos){
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores").child(username).child("products");
+        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -181,7 +180,7 @@ public class OwnerProductsFragment extends Fragment {
                 }
 
                 intent.putExtra("prod_id", keys.get(pos));
-                intent.putExtra("store_id", username);
+                intent.putExtra("store_id", mParam1);
 
                 startActivity(intent);
             }
