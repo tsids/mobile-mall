@@ -1,11 +1,16 @@
 package com.example.b07project.CartPackage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +19,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.b07project.Order;
+import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
+import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.Stores.Store;
+import com.example.b07project.UserProducts.ProductAdapter;
+import com.example.b07project.UserProducts.UserProductsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
@@ -33,7 +43,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements RecyclerViewInterface {
 
     FirebaseDatabase db;
 
@@ -90,16 +100,39 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        DatabaseReference ref= db.getReference();
+        DatabaseReference pastOrders = ref.child("users").child(mParam1).child("pastOrders");
+        DatabaseReference cart = ref.child("users").child(mParam1).child("cart");
+        DatabaseReference stores = ref.child("stores");
+
+        RecyclerView recyclerView = v.findViewById(R.id.cart_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+
+        cart.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<CartProduct> cartProducts = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    cartProducts.add(dataSnapshot.getValue(CartProduct.class));
+                }
+
+                recyclerView.setAdapter(new CartAdapter(CartFragment.this.getContext(), cartProducts, CartFragment.this));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        // Checkout Logic
         Button checkout = v.findViewById(R.id.checkout);
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
-                DatabaseReference ref= db.getReference();
-                DatabaseReference pastOrders = ref.child("users").child(mParam1).child("pastOrders");
-                DatabaseReference cart = ref.child("users").child(mParam1).child("cart");
-                DatabaseReference stores = ref.child("stores");
-
                 cart.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -126,7 +159,7 @@ public class CartFragment extends Fragment {
                                     for (DataSnapshot ds : snapshot.getChildren()) {
                                         ArrayList<CartProduct> cartProducts = new ArrayList<>();
                                         Store store = ds.getValue(Store.class); // grab each store
-                                        for (CartProduct product : products) { //
+                                        for (CartProduct product : products) {
                                             if (product.getStoreID() == store.getStoreID()) { // if product id matches store id
                                                 cartProducts.add(product); // add product
                                             }
@@ -180,5 +213,41 @@ public class CartFragment extends Fragment {
                 // Handle onCancelled if needed
             }
         });
+    }
+
+    // Recycler View stuff
+    @Override
+    public void onItemClick(int position) {
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
+        List<String> keys = new ArrayList<>();
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    String key = postSnapshot.getKey();
+                    keys.add(key);
+                }
+
+                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position), mParam1);
+
+// Then, you can add this fragment to your activity using FragmentManager
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, fragment);
+                fragmentTransaction.commit();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }

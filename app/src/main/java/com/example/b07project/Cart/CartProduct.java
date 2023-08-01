@@ -8,11 +8,7 @@ public class CartProduct extends Product {
 
     private boolean verified;
     private boolean pickedUp;
-
-
-
     private int quantity;
-
     public CartProduct() {}
 
     public CartProduct(String imageURL, String title, float price, String description, int storeID, int productID, int quantity, boolean verified, boolean pickedUp) {
