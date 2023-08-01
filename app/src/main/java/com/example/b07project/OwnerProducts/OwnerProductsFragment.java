@@ -32,7 +32,7 @@ public class OwnerProductsFragment extends Fragment {
     FirebaseDatabase db;
 
     //This needs to be replaced with a value from the store-activity (an intention)
-    String KEY = "0";
+    public static String KEY = "admin";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
