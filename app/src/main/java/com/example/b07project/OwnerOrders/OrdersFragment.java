@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link com.example.b07project.OrdersFragment#newInstance} factory method to
+ * Use the {@link com.example.b07project.OwnerOrders.OrdersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class OrdersFragment extends Fragment {

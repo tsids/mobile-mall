@@ -93,7 +93,14 @@ public class OwnerProductsFragment extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         //How the key is found will need to be updated
+<<<<<<< HEAD
         DatabaseReference query = ref.child("stores").child(mParam1).child("products");
+=======
+
+        DatabaseReference query = ref.child("stores").
+                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                child("products");
+>>>>>>> 041190f (Converted owner view to use username for database access)
 
         RecyclerView recycler = v.findViewById(R.id.prod_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -109,11 +116,19 @@ public class OwnerProductsFragment extends Fragment {
                         child(getActivity().getIntent().getExtras().get("USERNAME").toString());
 
                 DatabaseReference children = store.child("products");
+<<<<<<< HEAD
                 store.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         DataSnapshot prods = snapshot.child("products");
                         int storeID = Integer.parseInt(snapshot.child("storeID").getValue().toString());
+=======
+                store.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        DataSnapshot prods = snapshot.child("products");
+                        int storeID = Integer.parseInt(snapshot.child("storeID").toString());
+>>>>>>> 041190f (Converted owner view to use username for database access)
                         int queryLen = (int) (prods.getChildrenCount());
                         int newID=genID();
 
@@ -165,7 +180,9 @@ public class OwnerProductsFragment extends Fragment {
 
     public void loadEdit(int pos){
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
+        DatabaseReference query = ref.child("stores").
+                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                child("products");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -180,7 +197,7 @@ public class OwnerProductsFragment extends Fragment {
                 }
 
                 intent.putExtra("prod_id", keys.get(pos));
-                intent.putExtra("store_id", mParam1);
+                intent.putExtra("store_id",getActivity().getIntent().getExtras().get("USERNAME").toString());
 
                 startActivity(intent);
             }
