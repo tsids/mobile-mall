@@ -47,7 +47,7 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
     public void onBindViewHolder(@NonNull OwnerOrderRecyclerAdapter.CustomViewHolder holder, int position) {
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference query = db.getReference().child("stores").
-                child(OwnerProductsFragment.KEY);
+                child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

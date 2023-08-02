@@ -76,8 +76,9 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
                     DatabaseReference db = FirebaseDatabase.
                             getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/").
                             getReference();
-                    db.child("stores").child(OwnerProductsFragment.KEY).
-                            child("products").child(getAdapterPosition()+"").removeValue();
+                    db.child("stores").
+                            child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                            child("products").child(getBindingAdapterPosition()+"").removeValue();
                 }
             });
         }

@@ -1,5 +1,7 @@
 package com.example.b07project.OwnerProducts;
 
+import static android.content.Intent.getIntent;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -33,8 +35,6 @@ import java.util.Random;
 public class OwnerProductsFragment extends Fragment {
     FirebaseDatabase db;
 
-    //This needs to be replaced with a value from the store-activity (an intention)
-    public static String KEY = "admin";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,7 +94,10 @@ public class OwnerProductsFragment extends Fragment {
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         //How the key is found will need to be updated
-        DatabaseReference query = ref.child("stores").child(KEY).child("products");
+
+        DatabaseReference query = ref.child("stores").
+                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                child("products");
 
         RecyclerView recycler = v.findViewById(R.id.prod_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -103,21 +106,24 @@ public class OwnerProductsFragment extends Fragment {
         //addProd.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN); //Change color to theme colour
 
         addProd.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 System.out.println("Clicked");
-                DatabaseReference children = db.getReference().child("stores").child(KEY).
-                        child("products");
-                children.addListenerForSingleValueEvent(new ValueEventListener() {
+                DatabaseReference store = db.getReference().child("stores").
+                        child(getActivity().getIntent().getExtras().get("USERNAME").toString());
+
+                DatabaseReference children = store.child("products");
+                store.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int queryLen = (int) (snapshot.getChildrenCount());
+                        DataSnapshot prods = snapshot.child("products");
+                        int storeID = Integer.parseInt(snapshot.child("storeID").toString());
+                        int queryLen = (int) (prods.getChildrenCount());
                         int newID=genID();
 
                         DatabaseReference newProd = children.child(queryLen+"");
                         newProd.setValue(new Product("", "Product Title", 0f,
-                                "Product Description", Integer.parseInt(KEY), newID));
+                                "Product Description", storeID, newID));
                         EditProductActivity.newProd = true;
                         loadEdit(queryLen);
                     }
@@ -127,7 +133,6 @@ public class OwnerProductsFragment extends Fragment {
 
                     }
                 });
-
             }
         });
 
@@ -164,7 +169,9 @@ public class OwnerProductsFragment extends Fragment {
 
     public void loadEdit(int pos){
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores").child(KEY).child("products");
+        DatabaseReference query = ref.child("stores").
+                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                child("products");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -179,7 +186,7 @@ public class OwnerProductsFragment extends Fragment {
                 }
 
                 intent.putExtra("prod_id", keys.get(pos));
-                intent.putExtra("store_id",KEY);
+                intent.putExtra("store_id",getActivity().getIntent().getExtras().get("USERNAME").toString());
 
                 startActivity(intent);
             }

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link com.example.b07project.OrdersFragment#newInstance} factory method to
+ * Use the {@link com.example.b07project.OwnerOrders.OrdersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class OrdersFragment extends Fragment {
@@ -91,7 +91,8 @@ public class OrdersFragment extends Fragment {
         View v =inflater.inflate(R.layout.fragment_orders, container, false);
         // Inflate the layout for this fragment
         DatabaseReference query = db.getReference().child("stores")
-                .child(OwnerProductsFragment.KEY).child("orders");
+                .child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                child("orders");
 
         RecyclerView recycler = v.findViewById(R.id.order_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
