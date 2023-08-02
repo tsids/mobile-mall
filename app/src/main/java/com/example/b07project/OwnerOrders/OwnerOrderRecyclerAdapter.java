@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.OwnerProducts.OwnerProductsFragment;
 import com.example.b07project.Product;
 import com.example.b07project.R;
 import com.example.b07project.UserOrders.UserOrder;
@@ -24,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRecyclerAdapter.CustomViewHolder>{
+    FirebaseDatabase db;
     Context context;
     ArrayList<UserOrder> userOrders;
     OrdersFragment caller;
@@ -32,6 +32,7 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         this.context = context;
         this.userOrders = userOrders;
         this.caller = caller;
+        this.db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
     }
 
     @NonNull
@@ -45,38 +46,39 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
 
     @Override
     public void onBindViewHolder(@NonNull OwnerOrderRecyclerAdapter.CustomViewHolder holder, int position) {
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference query = db.getReference().child("stores").
                 child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString());
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("orders").getChildrenCount() > 0){
-                    UserOrder orders = userOrders.get(holder.getAdapterPosition());
-                    Order o = orders.getOrders().get(0);
+                    UserOrder orders = userOrders.get(holder.getBindingAdapterPosition());
+                    Order o;
                     TableRow r;
                     TextView itemName;
                     TextView itemAmount;
                     Product p;
 
-                    holder.name.setText(o.getUserID()+""); //Swap this for actual data looked up from database
+                    holder.name.setText(orders.getUserID()); //Swap this for actual data looked up from database
 
                     for (int i = 0; i < orders.getOrders().size(); i++) {
                         o = orders.getOrders().get(i);
-                        p = snapshot.child("products").child(String.valueOf(o.getProductID())).getValue(Product.class);
+                        p = getProduct(snapshot,o.getProductID());
 
 
                         r = new TableRow(caller.getContext());
                         itemName = new TextView(caller.getContext());
                         itemAmount = new TextView(caller.getContext());
+                        if (p!=null){
 
-                        itemName.setText(p.getTitle());
-                        itemAmount.setText(o.getAmount() +"");
+                            itemName.setText(p.getTitle());
+                            itemAmount.setText(o.getQuantity() + "");
 
 
-                        r.addView(itemName);
-                        r.addView(itemAmount);
-                        holder.table.addView(r);
+                            r.addView(itemName);
+                            r.addView(itemAmount);
+                            holder.table.addView(r);
+                        }
                     }
 
                 }
@@ -87,6 +89,16 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
 
             }
         });
+    }
+
+    private Product getProduct(DataSnapshot snapshot, int productID) {
+        for (DataSnapshot prodSnap:snapshot.child("products").getChildren()){
+            Product p = prodSnap.getValue(Product.class);
+            if (p != null && p.getProductID() == productID){
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override

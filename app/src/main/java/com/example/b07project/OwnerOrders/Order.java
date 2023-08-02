@@ -1,16 +1,16 @@
 package com.example.b07project.OwnerOrders;
 
 public class Order {
-    int productID,storeID,userID,amount;
+    int productID,storeID,userID, quantity;
 
     public Order() {
     }
 
-    public Order(int productID, int storeID, int userID, int amount) {
+    public Order(int productID, int storeID, int userID, int quantity) {
         this.productID = productID;
         this.storeID = storeID;
         this.userID = userID;
-        this.amount = amount;
+        this.quantity = quantity;
     }
 
     public int getProductID() {
@@ -25,7 +25,7 @@ public class Order {
         return userID;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getQuantity() {
+        return quantity;
     }
 }

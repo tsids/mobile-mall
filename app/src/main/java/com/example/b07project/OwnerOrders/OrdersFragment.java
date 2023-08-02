@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,13 +66,19 @@ public class OrdersFragment extends Fragment {
 
     public void setOrders(DataSnapshot snapshot, RecyclerView recycler){
         userOrders = new ArrayList<UserOrder>();
-        for (int i = 0; i < snapshot.getChildrenCount(); i++) {
-            userOrders.add(new UserOrder());
-            for (int j = 0; j < snapshot.child(i+"").getChildrenCount(); j++) {
-                userOrders.get(userOrders.size()-1).getOrders().add(snapshot.child(i+"").child(j+"").getValue(Order.class));
+        for (DataSnapshot orderBundle:snapshot.getChildren()){
+            UserOrder userOrder = new UserOrder();
+            userOrders.add(userOrder);
+            for (DataSnapshot itemOrder:orderBundle.child("orders").getChildren()){
+                Order o = itemOrder.getValue(Order.class);
+                if (o != null) {
+                    if (Objects.equals(userOrder.getUserID(), "")) {
+                        userOrder.setUserID(String.valueOf(o.userID));
+                    }
+                    userOrder.getOrders().add(o);
+                }
             }
         }
-
         recycler.setAdapter(new OwnerOrderRecyclerAdapter(getContext(), userOrders,this));
     }
 
