@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.OwnerOrders;
 
 public class Order {
     int productID,storeID,userID,amount;

@@ -1,4 +1,6 @@
-package com.example.b07project;
+package com.example.b07project.UserOrders;
+
+import com.example.b07project.OwnerOrders.Order;
 
 import java.util.ArrayList;
 

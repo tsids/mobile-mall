@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.b07project.Product;
 import com.example.b07project.R;
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,6 +99,38 @@ public class OwnerProductsFragment extends Fragment {
         RecyclerView recycler = v.findViewById(R.id.prod_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        ImageView addProd = v.findViewById(R.id.prod_add_new);
+        //addProd.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN); //Change color to theme colour
+
+        addProd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked");
+                DatabaseReference children = db.getReference().child("stores").child(KEY).
+                        child("products");
+                children.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int queryLen = (int) (snapshot.getChildrenCount());
+                        int newID=genID();
+
+                        DatabaseReference newProd = children.child(queryLen+"");
+                        newProd.setValue(new Product("", "Product Title", 0f,
+                                "Product Description", Integer.parseInt(KEY), newID));
+                        EditProductActivity.newProd = true;
+                        loadEdit(queryLen);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
+
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -109,6 +143,23 @@ public class OwnerProductsFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    private int genID() {
+        int newID=0;
+        boolean unique = false;
+        Random r = new Random();
+
+        while (!unique){
+            newID = r.nextInt();
+            unique = true;
+            for(Product p:products){
+                if (p.getProductID() == newID)
+                    unique = false;
+            }
+        }
+
+        return newID;
     }
 
     public void loadEdit(int pos){
