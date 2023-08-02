@@ -12,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.OwnerOrders.OrdersFragment;
 import com.example.b07project.OwnerProducts.OwnerProductsFragment;
+import com.example.b07project.Product;
+import com.example.b07project.R;
+import com.example.b07project.UserOrders.UserOrder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -82,11 +84,20 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         holder.price.setText("Total: $"+total);
     }
 
-    private Product getProduct(DataSnapshot snapshot, int productID) {
-        for (DataSnapshot prodSnap:snapshot.child("products").getChildren()){
-            Product p = prodSnap.getValue(Product.class);
-            if (p != null && p.getProductID() == productID){
-                return p;
+                        r = new TableRow(caller.getContext());
+                        itemName = new TextView(caller.getContext());
+                        itemAmount = new TextView(caller.getContext());
+
+                        itemName.setText(p.getTitle());
+                        itemAmount.setText(o.getAmount() +"");
+
+
+                        r.addView(itemName);
+                        r.addView(itemAmount);
+                        holder.table.addView(r);
+                    }
+
+                }
             }
         }
         return null;

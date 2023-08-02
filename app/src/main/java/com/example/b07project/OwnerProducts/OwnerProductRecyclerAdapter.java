@@ -47,7 +47,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
         String price = "$"+products.get(position).getPrice();
         holder.price.setText(price);
 
-        holder.prod_key = products.get(position).getKey();
+        holder.prod_id = products.get(position).getProductID()+"";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
     public static class CustomViewHolder extends RecyclerView.ViewHolder{
         TextView name,price,desciption;
         ImageView img;
-        String prod_key;
+        String prod_id;
         public CustomViewHolder(@NonNull View itemView,OwnerProductsFragment caller) {
             super(itemView);
             name = itemView.findViewById(R.id.prod_name);
@@ -70,16 +70,18 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
                 @Override
                 public void onClick(View view) {
                     EditProductActivity.newProd = false;
-                    caller.loadEdit(getAbsoluteAdapterPosition());
+                    caller.loadEdit(getAdapterPosition());
                 }
             });
 
             itemView.findViewById(R.id.prod_delete).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    db.child("stores").
-                            child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                            child("products").child(prod_key).removeValue();
+                    DatabaseReference db = FirebaseDatabase.
+                            getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/").
+                            getReference();
+                    db.child("stores").child(OwnerProductsFragment.KEY).
+                            child("products").child(getAdapterPosition()+"").removeValue();
                 }
             });
         }
