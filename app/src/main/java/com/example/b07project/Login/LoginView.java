@@ -61,7 +61,7 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
 
         setErrorText("");
         presenter.validNewAccount();
-        emptyFields();
+        //emptyFields();
     }
 
     public void onRadioButtonClicked(View view) {

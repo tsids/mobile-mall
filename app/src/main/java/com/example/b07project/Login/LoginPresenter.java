@@ -72,12 +72,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         String storeName = view.getStoreName();
         String category = view.getCategory();
 
-        if (username.equals("") || password.equals("")) {
-            view.setErrorText("Username or password cannot be empty");
-            return;
-        }
-        if (userType.equals("stores") && (category.equals("") || storeName.equals(""))) {
-            view.setErrorText("Category or store name cannot be empty");
+        if (username.equals("") || password.equals("") || (userType.equals("stores") && (category.equals("") || storeName.equals("")))) {
+            view.setErrorText("All fields must be filled in");
             return;
         }
 
