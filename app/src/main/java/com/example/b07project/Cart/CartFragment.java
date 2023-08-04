@@ -16,8 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.b07project.Cart.CartAdapter;
+import com.example.b07project.Cart.CartProduct;
 import com.example.b07project.Order;
 import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
@@ -100,6 +103,12 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        Button checkout = v.findViewById(R.id.checkout);
+        TextView cart_empty = v.findViewById(R.id.cart_empty_text);
+        checkout.setVisibility(View.INVISIBLE);
+        cart_empty.setVisibility(View.INVISIBLE);
+
+
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
         DatabaseReference ref= db.getReference();
         DatabaseReference pastOrders = ref.child("users").child(mParam1).child("pastOrders");
@@ -113,9 +122,19 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
         cart.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int count = 0;
                 List<CartProduct> cartProducts = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     cartProducts.add(dataSnapshot.getValue(CartProduct.class));
+                    count++;
+                }
+
+                if (count == 0) {
+                    checkout.setVisibility(View.INVISIBLE);
+                    cart_empty.setVisibility(View.VISIBLE);
+                } else {
+                    checkout.setVisibility(View.VISIBLE);
+                    cart_empty.setVisibility(View.INVISIBLE);
                 }
 
                 recyclerView.setAdapter(new CartAdapter(CartFragment.this.getContext(), cartProducts, CartFragment.this));
@@ -129,7 +148,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
 
 
         // Checkout Logic
-        Button checkout = v.findViewById(R.id.checkout);
+
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,7 +238,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
     @Override
     public void onItemClick(int position) {
         DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("stores").child(mParam1).child("products");
+        DatabaseReference query = ref.child("users").child(mParam1).child("cart");
         List<String> keys = new ArrayList<>();
 
         query.addValueEventListener(new ValueEventListener() {
@@ -232,7 +251,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                     keys.add(key);
                 }
 
-                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position), mParam1);
+                CartProductPreview fragment = CartProductPreview.newInstance(keys.get(position), mParam1);
 
 // Then, you can add this fragment to your activity using FragmentManager
                 FragmentManager fragmentManager = getParentFragmentManager();
