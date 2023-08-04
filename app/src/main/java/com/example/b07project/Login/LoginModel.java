@@ -71,7 +71,7 @@ public class LoginModel implements LoginContract.Model {
         });
     }
 
-    /*public void storeIDExists(int id, LoginContract.StoreIDExistsCallback callback) {
+    public void storeIDExists(int id, LoginContract.StoreIDExistsCallback callback) {
 
         this.ref = this.db.getReference();
         DatabaseReference query = this.ref.child("stores");
@@ -79,7 +79,7 @@ public class LoginModel implements LoginContract.Model {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    int storeID = postSnapshot.child("storeid").getValue();
+                    int storeID = Integer.parseInt(postSnapshot.child("storeID").getValue().toString());
 
 
                     if (storeID == id) {
@@ -95,7 +95,7 @@ public class LoginModel implements LoginContract.Model {
             }
         });
 
-    }*/
+    }
 
     public void addAccount(Object newAccount, String userType, String username) {
 

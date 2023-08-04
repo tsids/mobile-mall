@@ -6,7 +6,7 @@ public interface LoginContract {
     public interface Model{
         public void usernameExists(String username, String userType, LoginContract.UsernameExistsCallback callback);
         public void passwordMatches(String username, String userType, String password, LoginContract.PasswordMatchesCallback callback);
-        //public void storeIDExists(int id, LoginContract.StoreIDExistsCallback callback);
+        public void storeIDExists(int id, LoginContract.StoreIDExistsCallback callback);
         public void setPresenter(LoginContract.Presenter presenter);
 
         public void addAccount(Object newAccount, String userType, String username);

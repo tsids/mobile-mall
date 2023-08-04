@@ -3,6 +3,8 @@ package com.example.b07project.Login;
 import com.example.b07project.Stores.Store;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Random;
+
 public class LoginPresenter implements LoginContract.Presenter {
 
 
@@ -105,27 +107,27 @@ public class LoginPresenter implements LoginContract.Presenter {
             model.addAccount(user, userType, username);
         } else {
             //List<Product> products = new ArrayList<Product>();
-            /*Random random = new Random();
+            Random random = new Random();
             int id = random.nextInt(1000000);
 
             storeIDExists(id);
             while (storeIDExists) {
                 id = random.nextInt(1000000);
                 storeIDExists(id);
-            }*/
+            }
 
-            Store store = new Store(category, password, null, storeName, username);
+            Store store = new Store(category, password, null, storeName, id, username);
             model.addAccount(store, userType, username);
         }
     }
-    /*public void storeIDExists(int id) {
+    public void storeIDExists(int id) {
         setStoreIDExists(false);
         model.storeIDExists(id, new LoginContract.StoreIDExistsCallback() {
             public void onStoreIDExists(boolean exists) {
                 setStoreIDExists(exists);
             }
         });
-    }*/
+    }
 
     public void setStoreIDExists(boolean exists) {
         this.storeIDExists = exists;
