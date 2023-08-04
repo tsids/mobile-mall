@@ -1,6 +1,5 @@
 package com.example.b07project;
 
-import com.example.b07project.Cart.Cart;
 import com.example.b07project.Cart.CartProduct;
 
 import java.io.Serializable;

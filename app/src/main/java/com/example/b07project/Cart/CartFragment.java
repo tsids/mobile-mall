@@ -169,6 +169,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                                         Order storeOrder = new Order(cartProducts, now);
                                         ordersRef.child(now).setValue(storeOrder);
                                     }
+                                    clearCart();
                                 }
 
                                 @Override
@@ -180,7 +181,6 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                         } else {
                             StyleableToast.makeText(getContext(), "Cart cannot be empty!", Toast.LENGTH_LONG, R.style.error).show();
                         }
-                        clearCart();
                     }
 
                     @Override
