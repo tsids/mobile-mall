@@ -1,5 +1,7 @@
 package com.example.b07project.Navbar;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -13,12 +15,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.b07project.Cart.CartFragment;
+import com.example.b07project.Login.LoginView;
 import com.example.b07project.UserOrders.PastOrdersFragment;
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
 import com.example.b07project.databinding.ActivityUserNavBinding;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class UserNavActivity extends AppCompatActivity {
 
@@ -67,7 +73,6 @@ public class UserNavActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("OptionsMenu", "onCreateOptionsMenu called");
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.option_menu, menu);
         return true;
@@ -82,6 +87,12 @@ public class UserNavActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
+            StyleableToast.makeText(this.getBaseContext(), "Successfully logged out!", Toast.LENGTH_LONG, R.style.success).show();
+            Intent switchActivityIntent = new Intent(this, LoginView.class);
+            setContentView(R.layout.login);
+            startActivity(switchActivityIntent);
+
+
             return true;
         }
 
