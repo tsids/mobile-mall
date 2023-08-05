@@ -198,6 +198,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                                         DatabaseReference ordersRef = ref.child("stores").child(store.getUsername()).child("orders");
                                         Order storeOrder = new Order(cartProducts, now);
                                         ordersRef.child(now).setValue(storeOrder);
+                                        ordersRef.child(now).child("user").setValue(mParam1);
                                     }
                                     clearCart();
                                 }
