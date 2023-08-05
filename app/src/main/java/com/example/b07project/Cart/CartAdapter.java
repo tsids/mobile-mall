@@ -39,29 +39,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         holder.productNameView.setText(products.get(position).getTitle());
         holder.priceView.setText(String.valueOf("$" + products.get(position).getPrice()));
-        holder.quantityView.setText("1");
+        holder.quantityView.setText("" + products.get(position).getQuantity());
 
-        holder.incBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                int count = Integer.parseInt(holder.quantityView.getText().toString());
-                count++;
-                holder.quantityView.setText("" + count);
 
-            }
-        });
-
-        holder.decBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                int count = Integer.parseInt(holder.quantityView.getText().toString());
-                if (count > 1) {
-                    count--;
-                }
-                holder.quantityView.setText("" + count);
-
-            }
-        });
     }
 
     @Override

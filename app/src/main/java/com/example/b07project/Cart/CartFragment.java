@@ -58,6 +58,8 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
     // TODO: Rename and change types of parameters
     private String mParam1;
 
+    List<CartProduct> cartProducts;
+
 
     public CartFragment() {
         // Required empty public constructor
@@ -103,6 +105,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_cart, container, false);
 
+
         Button checkout = v.findViewById(R.id.checkout);
         TextView cart_empty = v.findViewById(R.id.cart_empty_text);
         checkout.setVisibility(View.INVISIBLE);
@@ -123,7 +126,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int count = 0;
-                List<CartProduct> cartProducts = new ArrayList<>();
+                cartProducts = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     cartProducts.add(dataSnapshot.getValue(CartProduct.class));
                     count++;
@@ -268,5 +271,35 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
             }
         });
 
+    }
+
+    public void adjustQuantity(int position, int adjustment, boolean add) {
+
+        CartProduct cartProduct = cartProducts.get(position);
+        int quantity = adjustment;
+
+        if (add){
+            quantity += cartProduct.getQuantity();
+        }
+
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("users").child(mParam1).child("cart").child(cartProduct.getStoreID() + ":" + cartProduct.getProductID()).child("quantity");
+
+        if (quantity > 0) {
+            query.setValue(quantity);
+        }
+
+
+
+    }
+
+    public void removeFromCart(int position) {
+        CartProduct cartProduct = cartProducts.get(position);
+
+
+        DatabaseReference ref= db.getReference();
+        DatabaseReference query = ref.child("users").child(mParam1).child("cart").child(cartProduct.getStoreID() + ":" + cartProduct.getProductID());
+
+        query.removeValue();
     }
 }

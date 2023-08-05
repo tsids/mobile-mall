@@ -22,6 +22,14 @@
         android:textColor="@color/black"
         tools:text="Price" />
 
+    <ImageView
+        android:id="@+id/prod_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-37dp"
+        android:layout_toRightOf="@id/product_name"
+        app:srcCompat="@android:drawable/ic_delete" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -41,14 +49,15 @@
         android:text="-"
         app:iconPadding="0dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/quantity"
-        android:layout_width="30dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/decrement_btn"
+        android:inputType="number"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -76,8 +85,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/price"
+        android:layout_alignParentEnd="true"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="0dp"
+        android:layout_marginEnd="138dp"
         android:text="Preview" />
 
 

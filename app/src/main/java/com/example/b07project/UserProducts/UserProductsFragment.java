@@ -46,6 +46,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
     private String mParam2;
 
     List<Product> products = new ArrayList<>();
+    List<CartProduct> cartProducts;
     FirebaseDatabase db;
 
 
