@@ -87,10 +87,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
     public void onResume() {
         super.onResume();
 
-        AppCompatActivity activity = (AppCompatActivity) requireActivity();
-        Toolbar toolbar = activity.findViewById(R.id.toolbar);
-        toolbar.setTitle("Cart");
-        toolbar.setNavigationIcon(null);
+
     }
 
     @Override
@@ -103,8 +100,16 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
         Button checkout = v.findViewById(R.id.checkout);
         Button clear_cart = v.findViewById(R.id.clear_cart);
         TextView cart_empty = v.findViewById(R.id.cart_empty_text);
+        TextView total_price = v.findViewById(R.id.total_price);
         checkout.setVisibility(View.INVISIBLE);
         cart_empty.setVisibility(View.INVISIBLE);
+        total_price.setVisibility(View.INVISIBLE);
+        clear_cart.setVisibility(View.INVISIBLE);
+
+        AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+        toolbar.setTitle("Cart");
+        toolbar.setNavigationIcon(null);
 
 
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
@@ -121,21 +126,28 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int count = 0;
+                float price = 0;
                 cartProducts = new ArrayList<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    cartProducts.add(dataSnapshot.getValue(CartProduct.class));
+                    CartProduct cartProduct = dataSnapshot.getValue(CartProduct.class);
+                    cartProducts.add(cartProduct);
+                    price += cartProduct.getQuantity() * cartProduct.getPrice();
                     count++;
                 }
 
                 if (count == 0) {
                     checkout.setVisibility(View.INVISIBLE);
                     clear_cart.setVisibility(View.INVISIBLE);
+                    total_price.setVisibility(View.INVISIBLE);
                     cart_empty.setVisibility(View.VISIBLE);
                 } else {
                     checkout.setVisibility(View.VISIBLE);
                     clear_cart.setVisibility(View.VISIBLE);
+                    total_price.setVisibility(View.VISIBLE);
                     cart_empty.setVisibility(View.INVISIBLE);
-                }
+                } 
+
+                total_price.setText("Total Price: " +price);
 
                 recyclerView.setAdapter(new CartAdapter(CartFragment.this.getContext(), cartProducts, CartFragment.this));
             }
@@ -245,37 +257,45 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
     // Recycler View stuff
     @Override
     public void onItemClick(int position) {
-        DatabaseReference ref= db.getReference();
-        DatabaseReference query = ref.child("users").child(mParam1).child("cart");
-        List<String> keys = new ArrayList<>();
+//        DatabaseReference ref= db.getReference();
+//        DatabaseReference query = ref.child("users").child(mParam1).child("cart");
+//        List<String> keys = new ArrayList<>();
+//
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//
+//                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+//                    String key = postSnapshot.getKey();
+//                    keys.add(key);
+//                }
+//
+//                CartProductPreview fragment = CartProductPreview.newInstance(keys.get(position), mParam1);
+//
+//// Then, you can add this fragment to your activity using FragmentManager
+//                FragmentManager fragmentManager = getParentFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.frameLayout, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    String key = postSnapshot.getKey();
-                    keys.add(key);
-                }
-
-                CartProductPreview fragment = CartProductPreview.newInstance(keys.get(position), mParam1);
-
-// Then, you can add this fragment to your activity using FragmentManager
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, fragment);
-                fragmentTransaction.commit();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        CartProduct cartProduct = cartProducts.get(position);
+        CartProductPreview fragment = CartProductPreview.newInstance(cartProduct.getTitle(), String.valueOf(cartProduct.getPrice()), cartProduct.getDescription());
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     public void adjustQuantity(int position, int adjustment, boolean add) {
