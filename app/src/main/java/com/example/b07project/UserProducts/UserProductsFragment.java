@@ -17,9 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.b07project.Cart.CartProduct;
-import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
-import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.Stores.StoresFragment;

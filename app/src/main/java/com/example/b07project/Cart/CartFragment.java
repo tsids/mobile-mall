@@ -1,6 +1,5 @@
 package com.example.b07project.CartPackage;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,15 +18,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.b07project.Cart.CartAdapter;
-import com.example.b07project.Cart.CartProduct;
 import com.example.b07project.Order;
-import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.Stores.Store;
-import com.example.b07project.UserProducts.ProductAdapter;
-import com.example.b07project.UserProducts.UserProductsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
