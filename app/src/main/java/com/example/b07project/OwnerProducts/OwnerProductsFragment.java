@@ -44,7 +44,7 @@ public class OwnerProductsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList<Product> products = new ArrayList<>();
+    public static ArrayList<Product> products = new ArrayList<>();
     public OwnerProductsFragment() {
         // Required empty public constructor
     }
@@ -113,11 +113,11 @@ public class OwnerProductsFragment extends Fragment {
                         child(getActivity().getIntent().getExtras().get("USERNAME").toString());
 
                 DatabaseReference children = store.child("products");
-                store.addValueEventListener(new ValueEventListener() {
+                store.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         DataSnapshot prods = snapshot.child("products");
-                        int storeID = Integer.parseInt(snapshot.child("storeID").toString());
+                        int storeID = Integer.parseInt(snapshot.child("storeID").getValue().toString());
                         int queryLen = (int) (prods.getChildrenCount());
                         int newID=genID();
 

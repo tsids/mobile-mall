@@ -103,7 +103,6 @@ public class OrdersFragment extends Fragment {
 
         RecyclerView recycler = v.findViewById(R.id.order_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,6 +114,7 @@ public class OrdersFragment extends Fragment {
 
             }
         });
+
 
         return v;
     }

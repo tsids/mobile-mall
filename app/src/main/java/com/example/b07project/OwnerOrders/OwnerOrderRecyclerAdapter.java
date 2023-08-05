@@ -1,6 +1,7 @@
 package com.example.b07project.OwnerOrders;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.OwnerProducts.OwnerProductsFragment;
 import com.example.b07project.Product;
 import com.example.b07project.R;
 import com.example.b07project.UserOrders.UserOrder;
@@ -41,54 +43,37 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.order_layout,parent,false);
 
-        return new CustomViewHolder(view,caller);
+        return new OwnerOrderRecyclerAdapter.CustomViewHolder(view,caller);
     }
 
     @Override
     public void onBindViewHolder(@NonNull OwnerOrderRecyclerAdapter.CustomViewHolder holder, int position) {
-        DatabaseReference query = db.getReference().child("stores").
-                child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString());
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("orders").getChildrenCount() > 0){
-                    UserOrder orders = userOrders.get(holder.getBindingAdapterPosition());
-                    Order o;
-                    TableRow r;
-                    TextView itemName;
-                    TextView itemAmount;
-                    Product p;
+        UserOrder orders = userOrders.get(holder.getBindingAdapterPosition());
+        Order o;
+        TableRow r;
+        TextView itemName;
+        TextView itemAmount;
 
-                    holder.name.setText(orders.getUserID()); //Swap this for actual data looked up from database
+        holder.name.setText(orders.getUserID()); //Swap this for actual data looked up from database
+        double total = 0;
+        for (int i = 0; i < orders.getOrders().size(); i++) {
+            o = orders.getOrders().get(i);
 
-                    for (int i = 0; i < orders.getOrders().size(); i++) {
-                        o = orders.getOrders().get(i);
-                        p = getProduct(snapshot,o.getProductID());
+            total += o.quantity*o.price;
+            r = new TableRow(caller.getContext());
+            //r.generateLayoutParams();
+            itemName = new TextView(caller.getContext());
+            itemAmount = new TextView(caller.getContext());
+            itemName.setText(o.getTitle());
+            itemName.setGravity(Gravity.START);
+            itemAmount.setText(o.getQuantity() + "");
+            itemAmount.setGravity(Gravity.END);
 
-
-                        r = new TableRow(caller.getContext());
-                        itemName = new TextView(caller.getContext());
-                        itemAmount = new TextView(caller.getContext());
-                        if (p!=null){
-
-                            itemName.setText(p.getTitle());
-                            itemAmount.setText(o.getQuantity() + "");
-
-
-                            r.addView(itemName);
-                            r.addView(itemAmount);
-                            holder.table.addView(r);
-                        }
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+            r.addView(itemName);
+            r.addView(itemAmount);
+            holder.table.addView(r);
+        }
+        holder.price.setText("$"+total);
     }
 
     private Product getProduct(DataSnapshot snapshot, int productID) {
@@ -109,11 +94,13 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
     public static class CustomViewHolder extends RecyclerView.ViewHolder{
         TableLayout table;
         TextView name;
+        TextView price;
         int orderNum;
         public CustomViewHolder(@NonNull View itemView,OrdersFragment caller) {
             super(itemView);
             table = itemView.findViewById(R.id.order_detail_table);
             name = itemView.findViewById(R.id.order_user_id);
+            price = itemView.findViewById(R.id.order_total);
         }
     }
 }

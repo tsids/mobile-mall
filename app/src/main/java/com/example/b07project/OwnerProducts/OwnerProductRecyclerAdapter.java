@@ -21,11 +21,15 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
     Context context;
     ArrayList<Product> products;
     OwnerProductsFragment caller;
+    public static DatabaseReference db;
 
     public OwnerProductRecyclerAdapter(Context context, ArrayList<Product> products,OwnerProductsFragment caller) {
         this.context = context;
         this.products = products;
         this.caller = caller;
+        db = FirebaseDatabase.
+                getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/").
+                getReference();
     }
 
     @NonNull
@@ -73,9 +77,6 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
             itemView.findViewById(R.id.prod_delete).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DatabaseReference db = FirebaseDatabase.
-                            getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/").
-                            getReference();
                     db.child("stores").
                             child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
                             child("products").child(getBindingAdapterPosition()+"").removeValue();
