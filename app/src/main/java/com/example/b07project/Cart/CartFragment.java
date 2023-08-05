@@ -87,7 +87,6 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
     public void onResume() {
         super.onResume();
 
-
     }
 
     @Override
@@ -197,10 +196,12 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                                         // objects ordered from the same store get put in one order
                                         DatabaseReference ordersRef = ref.child("stores").child(store.getUsername()).child("orders");
                                         Order storeOrder = new Order(cartProducts, now);
-                                        ordersRef.child(now).setValue(storeOrder);
-                                        ordersRef.child(now).child("user").setValue(mParam1);
+                                        if (cartProducts.size() > 0) {
+                                            ordersRef.child(now).setValue(storeOrder);
+                                            ordersRef.child(now).child("user").setValue(mParam1);
+                                        }
                                     }
-                                    clearCart();
+                                    cart.removeValue();
                                 }
 
                                 @Override
