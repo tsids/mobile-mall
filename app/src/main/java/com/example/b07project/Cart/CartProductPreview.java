@@ -127,7 +127,7 @@ public class CartProductPreview extends Fragment {
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle("Preview");
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
-
+        
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

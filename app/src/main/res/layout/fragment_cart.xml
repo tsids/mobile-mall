@@ -28,12 +28,22 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/clear_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cart_recyclerview"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:text="Clear Cart" />
+
+    <Button
         android:id="@+id/checkout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/cart_recyclerview"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+        android:layout_marginLeft="200dp"
         android:onClick="onCheckout"
         android:text="Checkout" />
 

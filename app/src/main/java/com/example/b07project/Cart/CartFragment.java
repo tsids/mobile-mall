@@ -107,6 +107,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
 
 
         Button checkout = v.findViewById(R.id.checkout);
+        Button clear_cart = v.findViewById(R.id.clear_cart);
         TextView cart_empty = v.findViewById(R.id.cart_empty_text);
         checkout.setVisibility(View.INVISIBLE);
         cart_empty.setVisibility(View.INVISIBLE);
@@ -134,9 +135,11 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
 
                 if (count == 0) {
                     checkout.setVisibility(View.INVISIBLE);
+                    clear_cart.setVisibility(View.INVISIBLE);
                     cart_empty.setVisibility(View.VISIBLE);
                 } else {
                     checkout.setVisibility(View.VISIBLE);
+                    clear_cart.setVisibility(View.VISIBLE);
                     cart_empty.setVisibility(View.INVISIBLE);
                 }
 
@@ -151,7 +154,6 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
 
 
         // Checkout Logic
-
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +212,15 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                         // Handle onCancelled if needed
                     }
                 });
+            }
+        });
+
+        // clears cart if clear_cart button is clicked
+        clear_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearCart();
+                StyleableToast.makeText(getContext(), "Cleared cart!", Toast.LENGTH_LONG, R.style.success).show();
             }
         });
 
