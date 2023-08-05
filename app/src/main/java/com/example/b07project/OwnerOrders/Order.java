@@ -1,16 +1,12 @@
 package com.example.b07project.OwnerOrders;
 
-import com.example.b07project.Cart.CartProduct;
+import com.example.b07project.Product;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-
-public class Order implements Serializable {
-
-    private ArrayList<CartProduct> orders = new ArrayList<>();
-    private String createdAt = "";
+public class Order {
+    int productID,storeID,userID, quantity;
+    String imageURL, title, description;
+    float price;
+    boolean verified,pickedUp;
 
     public Order() {
     }
