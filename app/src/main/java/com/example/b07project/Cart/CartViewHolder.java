@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.Cart.CartFragment;
 import com.example.b07project.R;
-import com.example.b07project.UserProducts.UserProductsFragment;
+import com.example.b07project.RecyclerViewInterface;
 
 public class CartViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,7 +19,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
     EditText quantityView;
     Button incBtn, decBtn;
 
-    public CartViewHolder(@NonNull View itemView, CartFragment cartFragment) {
+    public CartViewHolder(@NonNull View itemView, CartRecyclerViewInterface recyclerViewInterface) {
         super(itemView);
         productNameView = itemView.findViewById(R.id.product_name);
         priceView = itemView.findViewById(R.id.price);
@@ -45,11 +44,11 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
                 int quantity = Integer.parseInt(quantityText);
 
                 // Call the cartFragment.adjustQuantity() method with the new quantity
-                if (cartFragment != null) {
+                if (recyclerViewInterface != null) {
                     int pos = getAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION) {
-                        cartFragment.adjustQuantity(pos, quantity, false);
+                        recyclerViewInterface.adjustQuantity(pos, quantity, false);
                     }
                 }
             }
@@ -60,11 +59,11 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         itemView.findViewById(R.id.preview_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cartFragment != null) {
+                if (recyclerViewInterface != null) {
                     int pos = getAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION) {
-                        cartFragment.onItemClick(pos);
+                        recyclerViewInterface.onItemClick(pos);
                     }
                 }
             }
@@ -73,11 +72,11 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         itemView.findViewById(R.id.increment_btn).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (cartFragment != null) {
+                if (recyclerViewInterface != null) {
                     int pos = getAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION) {
-                        cartFragment.adjustQuantity(pos, 1, true);
+                        recyclerViewInterface.adjustQuantity(pos, 1, true);
                     }
                 }
 
@@ -87,13 +86,13 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         itemView.findViewById(R.id.decrement_btn).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (cartFragment != null) {
+                if (recyclerViewInterface != null) {
                     int pos = getAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION) {
 
 
-                            cartFragment.adjustQuantity(pos, -1, true);
+                            recyclerViewInterface.adjustQuantity(pos, -1, true);
 
 
                     }
@@ -105,13 +104,13 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         itemView.findViewById(R.id.prod_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cartFragment != null) {
+                if (recyclerViewInterface != null) {
                     int pos = getAdapterPosition();
 
                     if (pos != RecyclerView.NO_POSITION) {
 
 
-                        cartFragment.removeFromCart(pos);
+                        recyclerViewInterface.removeFromCart(pos);
 
 
                     }

@@ -2,37 +2,35 @@ package com.example.b07project.Cart;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.Product;
 import com.example.b07project.R;
-import com.example.b07project.UserProducts.ProductViewHolder;
-import com.example.b07project.UserProducts.UserProductsFragment;
+import com.example.b07project.RecyclerViewInterface;
 
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
+    private final CartRecyclerViewInterface recyclerViewInterface;
 
     Context context;
     List<CartProduct> products;
     CartFragment cartFragment;
 
-    public CartAdapter(Context context, List<CartProduct> products, CartFragment cartFragment) {
+    public CartAdapter(Context context, List<CartProduct> products, CartRecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.products = products;
-        this.cartFragment = cartFragment;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
 
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CartViewHolder(LayoutInflater.from(context).inflate(R.layout.cart_view, parent,  false), cartFragment);
+        return new CartViewHolder(LayoutInflater.from(context).inflate(R.layout.cart_view, parent,  false), recyclerViewInterface);
     }
 
     @Override

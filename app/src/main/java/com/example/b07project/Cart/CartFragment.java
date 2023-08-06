@@ -22,6 +22,9 @@ import com.example.b07project.Order;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.Stores.Store;
+import com.example.b07project.Stores.StoreAdapter;
+import com.example.b07project.Stores.StoresFragment;
+import com.example.b07project.UserProducts.UserProductsFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +43,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment implements RecyclerViewInterface {
+public class CartFragment extends Fragment implements CartRecyclerViewInterface {
 
     FirebaseDatabase db;
 
@@ -201,7 +204,7 @@ public class CartFragment extends Fragment implements RecyclerViewInterface {
                                             ordersRef.child(now).child("user").setValue(mParam1);
                                         }
                                     }
-                                    cart.removeValue();
+                                    clearCart();
                                 }
 
                                 @Override
