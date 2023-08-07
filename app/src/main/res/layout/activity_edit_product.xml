@@ -6,16 +6,50 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context=".OwnerProducts.EditProductActivity"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/edit_prod_save"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
+
+        <ImageView
+            android:id="@+id/edit_prod_cancel"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:foregroundTint="#E63E3E"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/product_name_title"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/edit_prod_name"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="ItemName" />
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/product_price_title"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/edit_prod_price"
@@ -23,7 +57,14 @@
         android:layout_height="80dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name" />
+        app:prefixText="$" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/product_description_title"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/edit_prod_description"
@@ -33,15 +74,4 @@
         android:gravity="start|top"
         android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/edit_prod_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Edits" />
-
-    <Button
-        android:id="@+id/edit_prod_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cancel" />
 </LinearLayout>

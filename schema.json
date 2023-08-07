@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "stores": {
         "admin":{
@@ -127,3 +128,48 @@
         }
     }
 }
+=======
+"stores": [
+    {
+        "username": "",
+        "password": "",
+        "store": "",
+        "products": [
+            "ObjectId",
+            "ObjectId"
+        ],
+    },
+],
+"users": [
+    {
+        "username": "",
+        "password": "",
+        "cart": [
+            {
+                "object": {},
+                // extra fields
+                "quantity": "",
+                "ordered": false,
+                "verified": false,
+            },
+            {
+                "object": {},
+                // extra fields
+                "quantity": "",
+                "ordered": false,
+                "verified": false,
+            },
+        ],
+    },
+],
+"products": [
+    {
+        "id": "",
+        "store": "",
+        "title": "",
+        "description": "",
+        "image": "",
+        "price": 0,
+    },
+]
+>>>>>>> b3a92e2 (Added add item, delete item, edit item functionality)

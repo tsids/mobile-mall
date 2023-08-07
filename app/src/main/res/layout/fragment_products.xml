@@ -7,11 +7,27 @@
     tools:context=".OwnerProducts.OwnerProductsFragment">
 
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/prod_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-2dp" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="-2dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/prod_add_new"
+            android:layout_width="86dp"
+            android:layout_height="88dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>

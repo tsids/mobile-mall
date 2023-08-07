@@ -1,5 +1,30 @@
 <resources>
     <string name="app_name">b07project</string>
+    <string name="save_edits">Save Edits</string>
+    <string-array name="prod_names">
+        <item>Apple</item>
+        <item>Bannana</item>
+        <item>Watermelon</item>
+        <item>Pineapple</item>
+        <item>Kiwi</item>
+    </string-array>
+    <string-array name="prod_descriptions">
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+        <item>Fruit</item>
+    </string-array>
+    <string-array name="prod_prices">
+        <item>$1.99</item>
+        <item>$2.99</item>
+        <item>$3.99</item>
+        <item>$4.99</item>
+        <item>$2.49</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_name_title">Product Name</string>
+    <string name="product_price_title">Product Price</string>
+    <string name="product_description_title">Product Description</string>
 </resources>
