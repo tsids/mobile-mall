@@ -47,7 +47,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
         String price = "$"+products.get(position).getPrice();
         holder.price.setText(price);
 
-        holder.prod_id = products.get(position).getProductID()+"";
+        holder.prod_key = products.get(position).getKey();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
     public static class CustomViewHolder extends RecyclerView.ViewHolder{
         TextView name,price,desciption;
         ImageView img;
-        String prod_id;
+        String prod_key;
         public CustomViewHolder(@NonNull View itemView,OwnerProductsFragment caller) {
             super(itemView);
             name = itemView.findViewById(R.id.prod_name);
@@ -70,7 +70,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
                 @Override
                 public void onClick(View view) {
                     EditProductActivity.newProd = false;
-                    caller.loadEdit(getAdapterPosition());
+                    caller.loadEdit(getAbsoluteAdapterPosition());
                 }
             });
 
@@ -79,7 +79,7 @@ public class OwnerProductRecyclerAdapter extends RecyclerView.Adapter<OwnerProdu
                 public void onClick(View view) {
                     db.child("stores").
                             child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                            child("products").child(getBindingAdapterPosition()+"").removeValue();
+                            child("products").child(prod_key).removeValue();
                 }
             });
         }
