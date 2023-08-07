@@ -1,4 +1,4 @@
-package com.example.b07project.CartPackage;
+package com.example.b07project.Cart;
 
 import android.os.Bundle;
 

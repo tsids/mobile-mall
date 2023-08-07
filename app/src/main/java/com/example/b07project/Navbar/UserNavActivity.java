@@ -17,8 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.b07project.CartPackage.CartFragment;
-import com.example.b07project.CartPackage.CartFragment;
+import com.example.b07project.Cart.CartFragment;
 import com.example.b07project.Login.LoginView;
 import com.example.b07project.UserOrders.PastOrdersFragment;
 import com.example.b07project.R;

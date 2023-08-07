@@ -13,12 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.UserOrders.UserOrder;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import com.example.b07project.R;
+import com.example.b07project.UserOrders.UserOrder;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +43,6 @@ public class OrdersFragment extends Fragment {
     private String mParam1;
 
     private ArrayList<UserOrder> userOrders;
-    FirebaseDatabase db;
-
     public OrdersFragment() {
         // Required empty public constructor
     }
