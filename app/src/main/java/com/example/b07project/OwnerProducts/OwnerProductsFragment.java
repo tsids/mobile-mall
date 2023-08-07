@@ -79,8 +79,9 @@ public class OwnerProductsFragment extends Fragment {
 
     private void setProducts(DataSnapshot snapshot, RecyclerView recycler){
         ArrayList<Product> products = new ArrayList<>();
-        for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-            Product product = postSnapshot.getValue(Product.class);
+        for (DataSnapshot prodSnapshot: snapshot.getChildren()) {
+            Product product = prodSnapshot.getValue(Product.class);
+            product.setKey(prodSnapshot.getKey());
             products.add(product);
         }
         recycler.setAdapter(new OwnerProductRecyclerAdapter(this.getContext(),products,this));
@@ -121,7 +122,7 @@ public class OwnerProductsFragment extends Fragment {
                         int queryLen = (int) (prods.getChildrenCount());
                         int newID=genID();
 
-                        DatabaseReference newProd = children.child(queryLen+"");
+                        DatabaseReference newProd = children.push();
                         newProd.setValue(new Product("", "Product Title", 0f,
                                 "Product Description", storeID, newID));
                         EditProductActivity.newProd = true;
@@ -156,7 +157,7 @@ public class OwnerProductsFragment extends Fragment {
         Random r = new Random();
 
         while (!unique){
-            newID = r.nextInt();
+            newID = Math.abs(r.nextInt());
             unique = true;
             for(Product p:products){
                 if (p.getProductID() == newID)

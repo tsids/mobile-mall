@@ -9,6 +9,7 @@ public class Product implements Serializable {
     private String description;
     private int storeID;
     private int productID;
+    private String key;
 
     public Product() {}
 
@@ -57,4 +58,11 @@ public class Product implements Serializable {
         return ((this.productID == otherProd.productID) && (this.storeID == otherProd.storeID));
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }

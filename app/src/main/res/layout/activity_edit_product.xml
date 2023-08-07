@@ -30,12 +30,26 @@
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/product_name_title"
+        android:textSize="24sp" />
+
     <EditText
         android:id="@+id/edit_prod_name"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:ems="10"
         android:inputType="text" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/product_price_title"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/edit_prod_price"
@@ -44,6 +58,13 @@
         android:ems="10"
         android:inputType="text"
         app:prefixText="$" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/product_description_title"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/edit_prod_description"
