@@ -87,7 +87,7 @@ public class ProductPreview extends Fragment {
 // Get the text from the EditText as a String
                 int quantity = Integer.parseInt(editText.getText().toString());
                 if (quantity <= 0) {
-                    StyleableToast.makeText(getContext(), "Quantity must be greater than zero", Toast.LENGTH_LONG, R.style.quantityWarning).show();
+                    StyleableToast.makeText(getContext(), "Quantity must be greater than zero", Toast.LENGTH_LONG, R.style.error).show();
                 } else {
                     addToCart(quantity);
                 }
@@ -175,9 +175,9 @@ public class ProductPreview extends Fragment {
                     CartProduct existingProduct = snapshot.getValue(CartProduct.class);
                     int currentQuantity = existingProduct.getQuantity();
                     cartProduct.setQuantity(currentQuantity + quantity);
-                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 } else {
-                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
                 query.setValue(cartProduct);

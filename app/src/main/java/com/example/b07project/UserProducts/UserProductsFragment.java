@@ -176,10 +176,10 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
                     // Product already exists in the cart, update the quantity
                     CartProduct existingProduct = snapshot.getValue(CartProduct.class);
                     int currentQuantity = existingProduct.getQuantity();
-                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " more " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                     cartProduct.setQuantity(currentQuantity + quantity);
                 } else {
-                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.addedToCart).show();
+                    StyleableToast.makeText(getContext(), "Successfully added " + quantity + " " + product.getTitle() + "s to the cart", Toast.LENGTH_LONG, R.style.success).show();
                 }
                 // Set the cartProduct with the updated or initial quantity
                 query.setValue(cartProduct);

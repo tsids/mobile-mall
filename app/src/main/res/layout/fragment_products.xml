@@ -6,23 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".OwnerProducts.OwnerProductsFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:title="My Products"
-        app:titleTextColor="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/prod_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="-2dp" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="-2dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
