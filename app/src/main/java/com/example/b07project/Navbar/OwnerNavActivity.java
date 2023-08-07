@@ -45,10 +45,12 @@ public class OwnerNavActivity extends AppCompatActivity {
         binding.ownerNavigationView.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.products) {
-                replaceFragment(OwnerProductsFragment.newInstance(username));
+                toolbar.setTitle("My Products");
+                replaceFragment(new OwnerProductsFragment());
             }
             else if (item.getItemId() == R.id.orders) {
-                replaceFragment(OrdersFragment.newInstance(username));
+                toolbar.setTitle("My Orders");
+                replaceFragment(new OrdersFragment());
             }
 
             return true;
