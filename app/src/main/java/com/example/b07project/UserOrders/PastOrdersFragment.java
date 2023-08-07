@@ -2,9 +2,15 @@ package com.example.b07project.UserOrders;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+<<<<<<< HEAD
+=======
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+>>>>>>> b8c134b (Created past orders for user)
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +18,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+<<<<<<< HEAD
 import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
+=======
+import com.example.b07project.OwnerOrders.Order;
+>>>>>>> b8c134b (Created past orders for user)
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -34,7 +51,10 @@ public class PastOrdersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList<Product> products = new ArrayList<>();
+
+    private ArrayList<UserOrder> userOrders;
+    FirebaseDatabase db;
+
     public PastOrdersFragment() {
         // Required empty public constructor
     }
@@ -61,6 +81,23 @@ public class PastOrdersFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
+        db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+    }
+
+    public void setOrders(DataSnapshot snapshot, RecyclerView recyclerView) {
+        userOrders = new ArrayList<UserOrder>();
+        for (DataSnapshot orderBundle: snapshot.getChildren()) {
+            UserOrder userOrder = new UserOrder();
+            userOrders.add(userOrder);
+            userOrder.setUserID(orderBundle.child("user").getValue().toString());
+            for (DataSnapshot itemOrder:orderBundle.child("pastOrders").getChildren()) {
+                Order order = itemOrder.getValue(Order.class);
+                if (order != null) {
+                    userOrder.getOrders().add(order);
+                }
+            }
+        }
+        recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this));
     }
 
 
@@ -79,7 +116,26 @@ public class PastOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_past_orders, container, false);
+        View v = inflater.inflate(R.layout.fragment_past_orders, container, false);
+
+        DatabaseReference query = db.getReference().child("users").
+                child(getActivity().getIntent().getExtras().get("USERNAME").toString()).child("pastOrders");
+
+        RecyclerView recyclerView = v.findViewById(R.id.order_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                setOrders(snapshot, recyclerView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return v;
     }
 
     @Override
