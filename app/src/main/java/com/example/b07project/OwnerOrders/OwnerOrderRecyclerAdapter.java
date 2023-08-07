@@ -73,7 +73,7 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
             r.addView(itemAmount);
             holder.table.addView(r);
         }
-        holder.price.setText("$"+total);
+        holder.price.setText("Total: $"+total);
     }
 
     private Product getProduct(DataSnapshot snapshot, int productID) {
