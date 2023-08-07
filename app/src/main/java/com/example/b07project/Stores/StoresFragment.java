@@ -1,6 +1,7 @@
 package com.example.b07project.Stores;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.UserProducts.UserProductsFragment;
@@ -28,7 +30,9 @@ import java.util.List;
 
 public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
+    private static final String ARG_PARAM1 = "param1";
 
+    private String mParam1;
     FirebaseDatabase db;
     public StoresFragment() {
         // Required empty public constructor
@@ -36,16 +40,21 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
 
 
     // TODO: Rename and change types and number of parameters
-    public static StoresFragment newInstance() {
+    public static StoresFragment newInstance(String param1) {
         StoresFragment fragment = new StoresFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+        }
     }
 
     @Override
@@ -102,13 +111,18 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
                     keys.add(key);
                 }
 
-                UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position));
+                try {
+                    UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position), mParam1);
 
 // Then, you can add this fragment to your activity using FragmentManager
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, fragment);
-                fragmentTransaction.commit();
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, fragment);
+                    fragmentTransaction.commit();
+                }
+                catch (Exception e) {
+                    Log.d("Exception", String.valueOf(e));
+                }
 
 
             }

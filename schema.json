@@ -1,130 +1,215 @@
 <<<<<<< HEAD
 {
     "stores": {
-        "admin":{
-            "username": "admin",
-            "password": "admin",
+        "0": {
             "category": "Electronics",
-            "store": "Apple",
-            "storeid": 10,
-            "products": {
-                "1":{
+            "email": "admin@gmail.com",
+            "password": "admin",
+            "products": [
+                {
                     "description": "MAX IPHONE",
-                    "image": "",
+                    "imageURL": "",
                     "price": 1000,
-                    "productid": 1,
-                    "storeid": 10,
+                    "productID": 1,
+                    "storeID": 10,
                     "title": "iPhone 20"
                 },
-                "2":{
+                {
                     "description": "Some really advanced Macbook",
-                    "image": "",
+                    "imageURL": "",
                     "price": 3000,
-                    "productid": 2,
-                    "storeid": 10,
+                    "productID": 2,
+                    "storeID": 10,
                     "title": "MacBook Air Plus Ultra Extra"
+                },
+                {
+                    "description": "Scams just for you",
+                    "imageURL": "",
+                    "price": 0,
+                    "productID": 3,
+                    "storeID": 10,
+                    "title": "Free Scams"
                 }
-            }
-            
-            
-            
+            ],
+            "store": "Apple",
+            "storeID": 10,
+            "username": "admin"
         },
-        "admin2": {
-            "username": "admin2",
-            "password": "admin2",
+        "1": {
             "category": "General",
-            "store": "Walmart",
-            "storeid": 20,
-            "products": {
-                "3":{
+            "email": "admin2@gmail.com",
+            "password": "admin2",
+            "products": [
+                {
                     "description": "A bunch of bananas",
-                    "image": "",
+                    "imageURL": "",
                     "price": 15,
-                    "productid": 3,
-                    "storeid": 20,
+                    "productID": 3,
+                    "storeID": 20,
                     "title": "Bananas"
                 },
-                "4":{
+                {
                     "description": "some random shirt",
-                    "image": "",
+                    "imageURL": "",
                     "price": 10,
-                    "productid": 4,
-                    "storeid": 20,
+                    "productID": 4,
+                    "storeID": 20,
                     "title": "Shirt"
                 }
-            }
+            ],
+            "store": "Walmart",
+            "storeID": 20,
+            "username": "admin2"
+        },
+        "a": {
+            "category": "d",
+            "password": "b",
+            "store": "c",
+            "storeID": 0,
+            "username": "a"
+        },
+        "danish": {
+            "category": "danish",
+            "password": "danish",
+            "store": "danish",
+            "username": "danish"
+        },
+        "test": {
+            "category": "test",
+            "password": "test",
+            "store": "test",
+            "storeID": 0,
+            "username": "test"
         }
     },
     "users": {
-        "test":{
-            "username": "test",
-            "password": "test",
+        "user": {
             "cart": {
-                "10:1":{
+                "0": {
                     "ordered": false,
                     "pickedUp": false,
-                    "productid": 1,
+                    "productID": 1,
                     "quantity": 4,
-                    "storeid": 10,
+                    "storeID": 10,
                     "verified": false
                 },
-                "20:3": {
+                "1": {
                     "ordered": false,
                     "pickedUp": false,
-                    "productid": 3,
+                    "productID": 3,
                     "quantity": 1,
-                    "storeid": 20,
-                    "verified": false
-                }
-            },            
-            "pastOrders": {
-                "100:20:4": {
-                    "ordered": true,
-                    "orderid": 100,
-                    "pickedUp": false,
-                    "productid": 4,
-                    "storeid": 20,
-                    "verified": false
-                }
-            }   
-            
-        },
-        "test2":{
-            "username": "test2",
-            "password": "test2",
-            "cart": {
-                "10:1": {
-                    "ordered": false,
-                    "orderid": 100,
-                    "pickedUp": false,
-                    "productid": 1,
-                    "quantity": 4,
-                    "storeid": 10,
+                    "storeID": 20,
                     "verified": false
                 },
-                "10:2": {
-                    "ordered": false,
-                    "orderid": 200,
+                "0:0": {
+                    "description": "MAX IPHONE",
                     "pickedUp": false,
-                    "productid": 2,
+                    "price": 1000,
+                    "productID": 0,
                     "quantity": 3,
-                    "storeid": 10,
+                    "storeID": 0,
+                    "title": "iPhone 20",
                     "verified": false
                 }
             },
-            
-            "pastOrders": {
-                "200:10:2": {
+            "password": "user",
+            "pastOrders": [
+                {
+                    "ordered": true,
+                    "orderid": 100,
+                    "pickedUp": false,
+                    "productID": 4,
+                    "storeID": 20,
+                    "verified": false
+                }
+            ],
+            "username": "user"
+        },
+        "user2": {
+            "cart": {
+                "0:0": {
+                    "description": "MAX IPHONE",
+                    "ordered": false,
+                    "pickedUp": false,
+                    "price": 1000,
+                    "productID": 0,
+                    "quantity": 6,
+                    "storeID": 0,
+                    "title": "iPhone 20",
+                    "verified": false
+                }
+            },
+            "email": "user2@gmail.com",
+            "password": "user2",
+            "pastOrders": [
+                {
                     "ordered": true,
                     "orderid": 200,
                     "pickedUp": false,
-                    "productid": 2,
+                    "productID": 2,
                     "quantity": 5,
-                    "storeid": 10,
+                    "storeID": 10,
                     "verified": false
                 }
-            }
-            
+            ],
+            "username": "user2"
+        },
+        "H": {
+            "password": "h",
+            "username": "H"
+        },
+        "a": {
+            "cart": {
+                "0:0": {
+                    "description": "Some really advanced Macbook",
+                    "pickedUp": false,
+                    "price": 3000,
+                    "productID": 0,
+                    "quantity": 1,
+                    "storeID": 0,
+                    "title": "MacBook Air Plus Ultra Extra",
+                    "verified": false
+                }
+            },
+            "password": "a",
+            "username": "a"
+        },
+        "awais": {
+            "password": "awais",
+            "username": "awais"
+        },
+        "d": {
+            "cart": {
+                "0:0": {
+                    "description": "A bunch of bananas",
+                    "pickedUp": false,
+                    "price": 15,
+                    "productID": 0,
+                    "quantity": 2,
+                    "storeID": 20,
+                    "title": "Bananas",
+                    "verified": false
+                }
+            },
+            "password": "d",
+            "pastOrders": {
+                "2023-07-31T20:11:040Z": {
+                    "createdAt": "2023-07-31T20:11:040Z",
+                    "orders": {
+                        "0:0": {
+                            "description": "A bunch of bananas",
+                            "pickedUp": false,
+                            "price": 15,
+                            "productID": 0,
+                            "quantity": 2,
+                            "storeID": 20,
+                            "title": "Bananas",
+                            "verified": false
+                        }
+                    }
+                }
+            },
+            "username": "d"
         }
     }
 }

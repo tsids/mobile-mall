@@ -1,5 +1,6 @@
 package com.example.b07project.Login;
 
+import com.example.b07project.Product;
 import com.example.b07project.Stores.Store;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -108,13 +109,12 @@ public class LoginPresenter implements LoginContract.Presenter {
         } else {
             //List<Product> products = new ArrayList<Product>();
             Random random = new Random();
-            int id = random.nextInt(1000000);
+            int id = 0;
 
-            storeIDExists(id);
-            while (storeIDExists) {
+            do {
                 id = random.nextInt(1000000);
                 storeIDExists(id);
-            }
+            } while (storeIDExists);
 
             Store store = new Store(category, password, null, storeName, id, username);
             model.addAccount(store, userType, username);

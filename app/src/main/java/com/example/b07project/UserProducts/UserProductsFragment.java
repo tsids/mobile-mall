@@ -16,9 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07project.CartPackage.CartProduct;
+import com.example.b07project.Cart.CartProduct;
 import com.example.b07project.Product;
-import com.example.b07project.ProductPreview;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.Stores.StoresFragment;
@@ -36,11 +35,16 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class UserProductsFragment extends Fragment implements RecyclerViewInterface {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    String username = "0"; // ((UserNavActivity) requireActivity()).getUsername();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+    private String mParam2;
 
     List<Product> products = new ArrayList<>();
+    List<CartProduct> cartProducts;
     FirebaseDatabase db;
 
 
@@ -50,10 +54,11 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
 
 
 
-    public static UserProductsFragment newInstance(String param1) {
+    public static UserProductsFragment newInstance(String param1, String param2) {
         UserProductsFragment fragment = new UserProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,6 +76,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
 
@@ -118,7 +124,7 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
                     keys.add(key);
                 }
 
-                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position));
+                ProductPreview fragment = ProductPreview.newInstance(mParam1, keys.get(position), mParam2);
 
 // Then, you can add this fragment to your activity using FragmentManager
                 FragmentManager fragmentManager = getParentFragmentManager();
@@ -151,9 +157,11 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
             @Override
             public void onClick(View view) {
 
+                StoresFragment fragment = StoresFragment.newInstance(mParam2);
+
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.replace(R.id.frameLayout, fragment);
                 fragmentTransaction.commit();
 
             }
@@ -164,10 +172,10 @@ public class UserProductsFragment extends Fragment implements RecyclerViewInterf
     public void onAddToCartClick(int position, int quantity) {
         Product product = products.get(position);
         Log.d("Quantity", "" + quantity);
-        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
+        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
+        DatabaseReference query = ref.child("users").child(mParam2).child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

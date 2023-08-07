@@ -2,6 +2,7 @@ package com.example.b07project.Login;
 
 import androidx.annotation.NonNull;
 
+import com.example.b07project.Stores.Store;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -79,8 +80,12 @@ public class LoginModel implements LoginContract.Model {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    int storeID = Integer.parseInt(postSnapshot.child("storeID").getValue().toString());
+                    Long integerValue = postSnapshot.child("storeid").getValue(Long.class);
+                    int storeID = 0;
 
+                    if (integerValue != null) {
+                        storeID = integerValue.intValue();
+                    }
 
                     if (storeID == id) {
                         callback.onStoreIDExists(true);

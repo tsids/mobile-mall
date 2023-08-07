@@ -17,8 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.b07project.CartPackage.CartFragment;
-import com.example.b07project.CartPackage.CartFragment;
+import com.example.b07project.Cart.CartFragment;
 import com.example.b07project.Login.LoginView;
 import com.example.b07project.UserOrders.PastOrdersFragment;
 import com.example.b07project.R;
@@ -31,34 +30,35 @@ public class UserNavActivity extends AppCompatActivity {
 
     ActivityUserNavBinding binding;
 
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra("USERNAME");
+
         binding = ActivityUserNavBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        replaceFragment(new StoresFragment());
+        StoresFragment fragment = StoresFragment.newInstance(username);
+        replaceFragment(fragment);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.getOverflowIcon().setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
 
-
-
-
-
-
-
         binding.userNavActivity.setOnItemSelectedListener(item -> {
 
             if (item.getItemId() == R.id.stores) {
-                replaceFragment(new StoresFragment());
+                replaceFragment(StoresFragment.newInstance(username));
             }
             else if (item.getItemId() == R.id.cart) {
-                replaceFragment(new CartFragment());
+                replaceFragment(CartFragment.newInstance(username));
             }
             else if (item.getItemId() == R.id.past_orders) {
-                replaceFragment(new PastOrdersFragment());
+                replaceFragment(PastOrdersFragment.newInstance(username));
             }
 
             return true;
@@ -69,6 +69,7 @@ public class UserNavActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -99,5 +100,4 @@ public class UserNavActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

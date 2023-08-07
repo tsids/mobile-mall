@@ -1,4 +1,4 @@
-package com.example.b07project;
+package com.example.b07project.UserProducts;
 
 import android.os.Bundle;
 
@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.UserProducts.UserProductsFragment;
+import com.example.b07project.Cart.CartProduct;
+import com.example.b07project.Product;
+import com.example.b07project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +40,7 @@ public class ProductPreview extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
 
     FirebaseDatabase db;
 
@@ -46,6 +49,7 @@ public class ProductPreview extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String mParam3;
 
 
 
@@ -54,11 +58,12 @@ public class ProductPreview extends Fragment {
     }
 
 
-    public static ProductPreview newInstance(String param1, String param2) {
+    public static ProductPreview newInstance(String param1, String param2, String param3) {
         ProductPreview fragment = new ProductPreview();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM3, param3);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,6 +74,7 @@ public class ProductPreview extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam3 = getArguments().getString(ARG_PARAM3);
         }
     }
 
@@ -148,7 +154,7 @@ public class ProductPreview extends Fragment {
             @Override
             public void onClick(View view) {
 
-                UserProductsFragment fragment = UserProductsFragment.newInstance(mParam1);
+                UserProductsFragment fragment = UserProductsFragment.newInstance(mParam1, mParam3);
 
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -162,10 +168,10 @@ public class ProductPreview extends Fragment {
 
     private void addToCart(int quantity) {
         Log.d("Quantity", "" + quantity);
-        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false, false);
+        CartProduct cartProduct = new CartProduct(product.getImageURL(), product.getTitle(), product.getPrice(), product.getDescription(), product.getStoreID(), product.getProductID(), quantity, false, false);
 
         DatabaseReference ref = db.getReference();
-        DatabaseReference query = ref.child("users").child("1").child("cart").child(product.getStoreID() + ":" + product.getProductID());
+        DatabaseReference query = ref.child("users").child(mParam2).child("cart").child(product.getStoreID() + ":" + product.getProductID());
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

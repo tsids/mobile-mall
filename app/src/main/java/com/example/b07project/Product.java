@@ -23,29 +23,53 @@ public class Product implements Serializable {
 
     }
 
-    public String getImageURL() { return imageURL; }
+    public String getImageURL() {
+        return imageURL;
+    }
 
-    public String getTitle() { return title; }
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
-    public float getPrice() { return price; }
+    public String getTitle() {
+        return title;
+    }
 
-    public String getDescription() { return description; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public int getStoreID() { return storeID; }
+    public float getPrice() {
+        return price;
+    }
 
-    public int getProductID() { return productID; }
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
-    public void setImageURL(String imageURL) { this.imageURL = imageURL; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public void setPrice(float price) { this.price = price; }
+    public int getStoreID() {
+        return storeID;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setStoreID(int storeID) {
+        this.storeID = storeID;
+    }
 
-    public void setStoreID(int storeID) { this.storeID = storeID; }
+    public int getProductID() {
+        return productID;
+    }
 
-    public void setProductID(int productID) { this.productID = productID; }
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
 
     @Override
     public int hashCode() { return (storeID * 13 + productID * 31); }
