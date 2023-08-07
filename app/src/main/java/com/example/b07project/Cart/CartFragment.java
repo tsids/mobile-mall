@@ -197,9 +197,9 @@ public class CartFragment extends Fragment implements CartRecyclerViewInterface 
                                             }
                                         }
                                         // objects ordered from the same store get put in one order
-                                        DatabaseReference ordersRef = ref.child("stores").child(store.getUsername()).child("orders");
                                         Order storeOrder = new Order(cartProducts, now);
                                         if (cartProducts.size() > 0) {
+                                            DatabaseReference ordersRef = ref.child("stores").child(store.getUsername()).child("orders");
                                             ordersRef.child(now).setValue(storeOrder);
                                             ordersRef.child(now).child("user").setValue(mParam1);
                                         }

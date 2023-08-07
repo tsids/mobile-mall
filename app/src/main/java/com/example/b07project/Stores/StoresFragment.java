@@ -1,6 +1,7 @@
 package com.example.b07project.Stores;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,13 +111,18 @@ public class StoresFragment extends Fragment implements RecyclerViewInterface {
                     keys.add(key);
                 }
 
-                UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position), mParam1);
+                try {
+                    UserProductsFragment fragment = UserProductsFragment.newInstance(keys.get(position), mParam1);
 
 // Then, you can add this fragment to your activity using FragmentManager
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, fragment);
-                fragmentTransaction.commit();
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, fragment);
+                    fragmentTransaction.commit();
+                }
+                catch (Exception e) {
+                    Log.d("Exception", String.valueOf(e));
+                }
 
 
             }
