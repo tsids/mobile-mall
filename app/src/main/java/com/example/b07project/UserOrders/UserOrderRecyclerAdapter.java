@@ -51,13 +51,17 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
         TextView itemName;
         TextView itemAmount;
 
-        holder.name.setText(orders.getUserID()); //Swap this for actual data looked up from database
+        holder.name.setText(orders.getUserID());
         double total = 0;
         for (int i = 0; i < orders.getOrders().size(); i++) {
             o = orders.getOrders().get(i);
 
             total += o.getQuantity()*o.getPrice();
             r = new TableRow(caller.getContext());
+
+            int backgroundColor = o.isVerified() ? R.color.verified_product_background : R.color.default_product_background_color;
+            r.setBackgroundResource(backgroundColor);
+
             //r.generateLayoutParams();
             itemName = new TextView(caller.getContext());
             itemAmount = new TextView(caller.getContext());

@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="default_product_background_color">#FFFFFF</color>
+    <color name="verified_product_background">#00FF00</color> <!-- Green color for verified products -->
+
 </resources>
