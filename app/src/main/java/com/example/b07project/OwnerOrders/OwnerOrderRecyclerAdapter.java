@@ -5,6 +5,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -72,8 +74,61 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
             r.addView(itemName);
             r.addView(itemAmount);
             holder.table.addView(r);
+            if (i==0){
+                holder.verified.setChecked(o.verified);
+                holder.pickedup.setChecked(o.pickedUp);
+            }
         }
         holder.price.setText("Total: $"+total);
+
+        holder.pickedup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                DatabaseReference q = db.getReference().child("stores")
+                        .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                        child("orders").child(orders.getKey());
+                compoundButton.setChecked(b);
+                q.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int i = 0;
+                        for (DataSnapshot order:snapshot.child("orders").getChildren()){
+                            orders.getOrders().get(i).pickedUp = b;
+                            order.getRef().setValue(orders.getOrders().get(i++));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+        holder.verified.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                DatabaseReference q = db.getReference().child("stores")
+                        .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                        child("orders").child(orders.getKey());
+                compoundButton.setChecked(b);
+                q.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int i = 0;
+                        for (DataSnapshot order:snapshot.child("orders").getChildren()){
+                            orders.getOrders().get(i).verified = b;
+                            order.getRef().setValue(orders.getOrders().get(i++));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
     }
 
                         r = new TableRow(caller.getContext());
@@ -116,12 +171,16 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         TableLayout table;
         TextView name;
         TextView price;
+        CheckBox verified;
+        CheckBox pickedup;
         int orderNum;
         public CustomViewHolder(@NonNull View itemView,OrdersFragment caller) {
             super(itemView);
             table = itemView.findViewById(R.id.order_detail_table);
             name = itemView.findViewById(R.id.order_user_id);
             price = itemView.findViewById(R.id.order_total);
+            verified = itemView.findViewById(R.id.order_verified);
+            pickedup=itemView.findViewById(R.id.order_picked_up);
         }
     }
 }

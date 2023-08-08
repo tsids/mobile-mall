@@ -22,4 +22,11 @@
         <item>$4.99</item>
         <item>$2.49</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_name_title">Product Name</string>
+    <string name="product_price_title">Product Price</string>
+    <string name="product_description_title">Product Description</string>
+    <string name="picked_up">Picked Up</string>
+    <string name="verified">Verified</string>
 </resources>

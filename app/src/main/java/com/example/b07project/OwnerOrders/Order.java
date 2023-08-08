@@ -3,7 +3,7 @@ package com.example.b07project.OwnerOrders;
 import com.example.b07project.Product;
 
 public class Order {
-    int productID,storeID,userID, quantity;
+    int productID,storeID, quantity;
     String imageURL, title, description;
     float price;
     boolean verified,pickedUp;
@@ -14,7 +14,6 @@ public class Order {
     public Order(int productID, int storeID, int userID, int quantity) {
         this.productID = productID;
         this.storeID = storeID;
-        this.userID = userID;
         this.quantity = quantity;
     }
 
@@ -42,9 +41,6 @@ public class Order {
         this.storeID = storeID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -88,10 +84,6 @@ public class Order {
 
     public int getStoreID() {
         return storeID;
-    }
-
-    public int getUserID() {
-        return userID;
     }
 
     public int getQuantity() {
