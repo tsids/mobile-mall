@@ -19,6 +19,11 @@ public class LoginPresenter implements LoginContract.Presenter {
         this.model = model;
     }
 
+    /*public LoginPresenter() {
+        this.view = new LoginView();
+        this.model = new LoginModel();
+    }*/
+
     @Override
     public void validLogin(String username, String userType, String password) {
 
@@ -64,7 +69,6 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void validNewAccount(String username, String userType, String password, String storeName, String category) {
-
 
         if (username.equals("") || password.equals("") || (userType.equals("stores") && (category.equals("") || storeName.equals("")))) {
             view.setErrorText("All fields must be filled in");
@@ -112,15 +116,17 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
     }
     public void storeIDExists(int id) {
-        setStoreIDExists(false);
+        //setStoreIDExists(false);
+        storeIDExists = false;
         model.storeIDExists(id, new LoginContract.StoreIDExistsCallback() {
             public void onStoreIDExists(boolean exists) {
-                setStoreIDExists(exists);
+                storeIDExists = exists;
+                //setStoreIDExists(exists);
             }
         });
     }
 
-    public void setStoreIDExists(boolean exists) {
+    /*public void setStoreIDExists(boolean exists) {
         this.storeIDExists = exists;
-    }
+    }*/
 }
