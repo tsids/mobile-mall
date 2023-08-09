@@ -13,7 +13,10 @@
         android:id="@+id/cart_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-2dp" />
+        android:layout_marginTop="-2dp"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbarSize="5dp"/>
 
     <TextView
         android:id="@+id/total_price"
