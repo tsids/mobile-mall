@@ -11,9 +11,9 @@
         android:id="@+id/prod_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="-2dp">
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@android:color/darker_gray" />
 
-    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,3 +31,5 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
+
+

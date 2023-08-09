@@ -8,7 +8,6 @@ import java.io.Serializable;
 public class Store implements Serializable{
         private String category;
         private String password;
-        private List<Product> products;
         private String store;
         private int storeID;
         private String username;
@@ -16,10 +15,9 @@ public class Store implements Serializable{
         public Store() {
         }
 
-        public Store(String category, String password, List<Product> products, String store, int storeID, String username) {
+        public Store(String category, String password,  String store, int storeID, String username) {
                 this.category = category;
                 this.password = password;
-                this.products = products;
                 this.store = store;
                 this.storeID = storeID;
                 this.username = username;
@@ -39,14 +37,6 @@ public class Store implements Serializable{
 
         public void setPassword(String password) {
                 this.password = password;
-        }
-
-        public List<Product> getProducts() {
-                return products;
-        }
-
-        public void setProducts(List<Product> products) {
-                this.products = products;
         }
 
         public String getStore() {

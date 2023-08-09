@@ -116,7 +116,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 storeIDExists(id);
             } while (storeIDExists);
 
-            Store store = new Store(category, password, null, storeName, id, username);
+            Store store = new Store(category, password, storeName, id, username);
             model.addAccount(store, userType, username);
         }
     }
