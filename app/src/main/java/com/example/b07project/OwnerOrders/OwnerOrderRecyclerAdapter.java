@@ -84,17 +84,22 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         holder.pickedup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                DatabaseReference q = db.getReference().child("stores")
-                        .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                        child("orders").child(orders.getKey());
+                DatabaseReference q = db.getReference();
                 compoundButton.setChecked(b);
                 q.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int i = 0;
-                        for (DataSnapshot order:snapshot.child("orders").getChildren()){
+                        for (DataSnapshot order:snapshot.child("stores")
+                                .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                                child("orders").child(orders.getKey()).child("orders").getChildren()){
                             orders.getOrders().get(i).pickedUp = b;
                             order.getRef().setValue(orders.getOrders().get(i++));
+                        }
+                        for (DataSnapshot orderBundle:snapshot.child("users").child(orders.getUserID()).child("pastOrders").getChildren()){
+                            for (DataSnapshot order:orderBundle.child("orders").getChildren()){
+                                order.child("pickedUp").getRef().setValue(b);
+                            }
                         }
                     }
 
@@ -116,12 +121,18 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int i = 0;
-                        for (DataSnapshot order:snapshot.child("orders").getChildren()){
+                        for (DataSnapshot order:snapshot.child("stores")
+                                .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
+                                child("orders").child(orders.getKey()).child("orders").getChildren()){
                             orders.getOrders().get(i).verified = b;
                             order.getRef().setValue(orders.getOrders().get(i++));
                         }
+                        for (DataSnapshot orderBundle:snapshot.child("users").child(orders.getUserID()).child("pastOrders").getChildren()){
+                            for (DataSnapshot order:orderBundle.child("orders").getChildren()){
+                                order.child("verified").getRef().setValue(b);
+                            }
+                        }
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
