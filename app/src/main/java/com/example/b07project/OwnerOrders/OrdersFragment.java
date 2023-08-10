@@ -69,8 +69,8 @@ public class OrdersFragment extends Fragment {
         for (DataSnapshot orderBundle:snapshot.getChildren()){
             UserOrder userOrder = new UserOrder();
             userOrders.add(userOrder);
+            userOrder.setKey(orderBundle.getKey());
             if (orderBundle.child("user").getValue() != null) {
-                userOrder.setKey(orderBundle.getKey());
                 userOrder.setUserID(orderBundle.child("user").getValue().toString());
                 for (DataSnapshot itemOrder : orderBundle.child("orders").getChildren()) {
                     Order o = itemOrder.getValue(Order.class);

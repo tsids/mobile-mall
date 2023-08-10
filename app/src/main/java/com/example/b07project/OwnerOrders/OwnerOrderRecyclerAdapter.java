@@ -113,9 +113,7 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         holder.verified.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                DatabaseReference q = db.getReference().child("stores")
-                        .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                        child("orders").child(orders.getKey());
+                DatabaseReference q = db.getReference();
                 compoundButton.setChecked(b);
                 q.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
