@@ -8,24 +8,24 @@ import java.util.Random;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
-
     LoginContract.View view;
     LoginContract.Model model;
     public boolean usernameExists;
     public boolean passwordMatches;
     public boolean storeIDExists;
-    FirebaseDatabase db;
 
     public LoginPresenter(LoginContract.View view, LoginContract.Model model) {
         this.view = view;
         this.model = model;
     }
 
+    /*public LoginPresenter() {
+        this.view = new LoginView();
+        this.model = new LoginModel();
+    }*/
+
     @Override
-    public void validLogin() {
-        String username = view.getUsername();
-        String userType = view.getUserType();
-        String password = view.getPassword();
+    public void validLogin(String username, String userType, String password) {
 
         this.usernameExists = false;
         this.passwordMatches = false;
@@ -68,12 +68,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     //////////CREATING NEW ACCOUNT FUNCTIONS/////////
 
     @Override
-    public void validNewAccount() {
-        String username = view.getUsername();
-        String userType = view.getUserType();
-        String password = view.getPassword();
-        String storeName = view.getStoreName();
-        String category = view.getCategory();
+    public void validNewAccount(String username, String userType, String password, String storeName, String category) {
 
         if (username.equals("") || password.equals("") || (userType.equals("stores") && (category.equals("") || storeName.equals("")))) {
             view.setErrorText("All fields must be filled in");
@@ -121,15 +116,17 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
     }
     public void storeIDExists(int id) {
-        setStoreIDExists(false);
+        //setStoreIDExists(false);
+        storeIDExists = false;
         model.storeIDExists(id, new LoginContract.StoreIDExistsCallback() {
             public void onStoreIDExists(boolean exists) {
-                setStoreIDExists(exists);
+                storeIDExists = exists;
+                //setStoreIDExists(exists);
             }
         });
     }
 
-    public void setStoreIDExists(boolean exists) {
+    /*public void setStoreIDExists(boolean exists) {
         this.storeIDExists = exists;
-    }
+    }*/
 }

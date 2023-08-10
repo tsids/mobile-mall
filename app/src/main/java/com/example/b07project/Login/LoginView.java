@@ -53,14 +53,23 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
 
     public void onClickLogin(View view){
         setErrorText("");
-        presenter.validLogin();
+        String username = getUsername();
+        String userType = getUserType();
+        String password = getPassword();
+
+        presenter.validLogin(username, userType, password);
         //emptyFields();
     }
 
     public void onClickCreateAccount(View view){
-
         setErrorText("");
-        presenter.validNewAccount();
+        String username = getUsername();
+        String userType = getUserType();
+        String password = getPassword();
+        String storeName = getStoreName();
+        String category = getCategory();
+
+        presenter.validNewAccount(username, userType, password, storeName, category);
         //emptyFields();
     }
 
@@ -92,24 +101,24 @@ public class LoginView extends AppCompatActivity implements LoginContract.View {
 
     @Override
     public void onClickSwitchToNewAccount(View view) {
-        emptyFields();
+        //emptyFields();
         setContentView(R.layout.register);
     }
 
     @Override
     public void onClickSwitchToLogin(View view) {
-        emptyFields();
+        //emptyFields();
         setContentView(R.layout.login);
         RadioButton rb_customer = (RadioButton) findViewById(R.id.radia_customer);
         rb_customer.setChecked(true);
     }
 
-    public void emptyFields() {
+    /*public void emptyFields() {
         EditText userTextUser = (EditText) findViewById(R.id.editUsername);
         EditText userTextPass = (EditText) findViewById(R.id.editPassword);
         userTextUser.setText("");
         userTextPass.setText("");
-    }
+    }*/
     public String getUsername() {
         EditText userText = (EditText) findViewById(R.id.editUsername);
         String username = userText.getText().toString();

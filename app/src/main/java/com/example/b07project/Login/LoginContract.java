@@ -15,11 +15,11 @@ public interface LoginContract {
     }
 
     public interface Presenter{
-        public void validLogin();
+        public void validLogin(String username, String userType, String password);
         //public void login();
         //public void usernameExists();
         //public void passwordMatches();
-        public void validNewAccount();
+        public void validNewAccount(String username, String userType, String password, String storeName, String category);
         void createAccount(String username, String userType, String password, String storeName, String category);
     }
 
