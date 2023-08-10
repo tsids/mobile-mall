@@ -97,8 +97,11 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
                             order.getRef().setValue(orders.getOrders().get(i++));
                         }
                         for (DataSnapshot orderBundle:snapshot.child("users").child(orders.getUserID()).child("pastOrders").getChildren()){
-                            for (DataSnapshot order:orderBundle.child("orders").getChildren()){
-                                order.child("pickedUp").getRef().setValue(b);
+                            if (orderBundle.child("createdAt").getValue().toString().equals(orders.getKey())) {
+                                for (DataSnapshot order : orderBundle.child("orders").getChildren()) {
+                                            order.child("pickedUp").getRef().setValue(b);
+                                            break;
+                                }
                             }
                         }
                     }
@@ -126,8 +129,11 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
                             order.getRef().setValue(orders.getOrders().get(i++));
                         }
                         for (DataSnapshot orderBundle:snapshot.child("users").child(orders.getUserID()).child("pastOrders").getChildren()){
-                            for (DataSnapshot order:orderBundle.child("orders").getChildren()){
-                                order.child("verified").getRef().setValue(b);
+                            if (orderBundle.child("createdAt").getValue().toString().equals(orders.getKey())) {
+                                for (DataSnapshot order : orderBundle.child("orders").getChildren()) {
+                                    order.child("verified").getRef().setValue(b);
+                                    break;
+                                }
                             }
                         }
                     }
