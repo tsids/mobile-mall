@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <TableLayout
                 android:id="@+id/past_order_detail_table"
                 android:layout_width="match_parent"
