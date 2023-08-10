@@ -5,16 +5,19 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.b07project.Navbar.UserNavActivity;
+import com.example.b07project.Product;
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +33,8 @@ public class PastOrdersFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+    private String mParam2;
+    ArrayList<Product> products = new ArrayList<>();
     public PastOrdersFragment() {
         // Required empty public constructor
     }
@@ -58,6 +63,18 @@ public class PastOrdersFragment extends Fragment {
         }
     }
 
+
+    private void setProducts(){
+        //This way of assigning data is temporary, and will need to be connected to a database
+        String[] names = getResources().getStringArray(R.array.prod_names);
+        String[] descs = getResources().getStringArray(R.array.prod_descriptions);
+        String[] prices = getResources().getStringArray(R.array.prod_prices);
+
+        for (int i = 0; i < names.length; i++) {
+            float price = Float.parseFloat(prices[i].substring(1));
+            products.add(new Product(null,names[i],price,descs[i],0,0));
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

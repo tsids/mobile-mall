@@ -3,6 +3,7 @@ package com.example.b07project.OwnerOrders;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.OwnerProducts.OwnerProductsFragment;
+import com.example.b07project.R;
 import com.example.b07project.UserOrders.UserOrder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,9 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import com.example.b07project.R;
-import com.example.b07project.UserOrders.UserOrder;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +43,7 @@ public class OrdersFragment extends Fragment {
     private String mParam1;
 
     private ArrayList<UserOrder> userOrders;
+
     public OrdersFragment() {
         // Required empty public constructor
     }
@@ -68,6 +69,7 @@ public class OrdersFragment extends Fragment {
         for (DataSnapshot orderBundle:snapshot.getChildren()){
             UserOrder userOrder = new UserOrder();
             userOrders.add(userOrder);
+            userOrder.setKey(orderBundle.getKey());
             userOrder.setUserID(orderBundle.child("user").getValue().toString());
             for (DataSnapshot itemOrder:orderBundle.child("orders").getChildren()){
                 Order o = itemOrder.getValue(Order.class);

@@ -10,7 +10,6 @@
         android:id="@+id/order_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@android:color/darker_gray" />
+        android:paddingTop="?attr/actionBarSize"/>
 
 </RelativeLayout>

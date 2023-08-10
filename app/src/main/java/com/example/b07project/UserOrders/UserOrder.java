@@ -5,6 +5,11 @@ import com.example.b07project.OwnerOrders.Order;
 import java.util.ArrayList;
 
 public class UserOrder {
+    public String getKey() {
+        return key;
+    }
+
+    private String key;
     public void setUserID(String userID) {
         this.userID = userID;
     }
@@ -24,4 +29,9 @@ public class UserOrder {
     public ArrayList<Order> getOrders() {
         return orders;
     }
+
+    public void setKey(String key) {
+        this.key =key;
+    }
+
 }

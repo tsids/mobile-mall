@@ -1,12 +1,19 @@
 package com.example.b07project.OwnerOrders;
 
+import android.widget.ArrayAdapter;
+
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.Product;
 
+import java.util.ArrayList;
+
 public class Order {
-    int productID,storeID,userID, quantity;
+    int productID,storeID, quantity;
     String imageURL, title, description;
     float price;
     boolean verified,pickedUp;
+    ArrayList products;
+    String now;
 
     public Order() {
     }
@@ -14,8 +21,28 @@ public class Order {
     public Order(int productID, int storeID, int userID, int quantity) {
         this.productID = productID;
         this.storeID = storeID;
-        this.userID = userID;
         this.quantity = quantity;
+    }
+
+    public Order(ArrayList<CartProduct> products, String now) {
+        this.products = products;
+        this.now = now;
+    }
+
+    public ArrayList getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList products) {
+        this.products = products;
+    }
+
+    public String getNow() {
+        return now;
+    }
+
+    public void setNow(String now) {
+        this.now = now;
     }
 
     public boolean isVerified() {
@@ -42,9 +69,6 @@ public class Order {
         this.storeID = storeID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -88,10 +112,6 @@ public class Order {
 
     public int getStoreID() {
         return storeID;
-    }
-
-    public int getUserID() {
-        return userID;
     }
 
     public int getQuantity() {

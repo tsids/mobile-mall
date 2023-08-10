@@ -1,4 +1,4 @@
-package com.example.b07project.Cart;
+package com.example.b07project.CartPackage;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +19,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
     EditText quantityView;
     Button incBtn, decBtn;
 
-    public CartViewHolder(@NonNull View itemView, CartRecyclerViewInterface recyclerViewInterface) {
+    public CartViewHolder(@NonNull View itemView, com.example.b07project.CartPackage.CartRecyclerViewInterface recyclerViewInterface) {
         super(itemView);
         productNameView = itemView.findViewById(R.id.product_name);
         priceView = itemView.findViewById(R.id.price);

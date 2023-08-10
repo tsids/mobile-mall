@@ -1,4 +1,4 @@
-package com.example.b07project.Cart;
+package com.example.b07project.CartPackage;
 
 public interface CartRecyclerViewInterface {
     void onItemClick(int position);

@@ -1,4 +1,4 @@
-package com.example.b07project.Cart;
+package com.example.b07project.CartPackage;
 
 // import java.io.Serializable; Don't need to implement this as Product already does
 

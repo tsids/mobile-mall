@@ -1,4 +1,4 @@
-package com.example.b07project.Cart;
+package com.example.b07project.CartPackage;
 
 import android.os.Bundle;
 
@@ -18,7 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.b07project.Order;
+
+import com.example.b07project.OwnerOrders.Order;
 import com.example.b07project.R;
 import com.example.b07project.RecyclerViewInterface;
 import com.example.b07project.Stores.Store;
@@ -43,7 +44,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment implements CartRecyclerViewInterface {
+public class CartFragment extends Fragment implements com.example.b07project.CartPackage.CartRecyclerViewInterface {
 
     FirebaseDatabase db;
 
@@ -295,7 +296,7 @@ public class CartFragment extends Fragment implements CartRecyclerViewInterface 
 //        });
 
         CartProduct cartProduct = cartProducts.get(position);
-        CartProductPreview fragment = CartProductPreview.newInstance(cartProduct.getTitle(), String.valueOf(cartProduct.getPrice()), cartProduct.getDescription());
+        com.example.b07project.CartPackage.CartProductPreview.CartProductPreview fragment = com.example.b07project.CartPackage.CartProductPreview.CartProductPreview.newInstance(cartProduct.getTitle(), String.valueOf(cartProduct.getPrice()), cartProduct.getDescription());
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
