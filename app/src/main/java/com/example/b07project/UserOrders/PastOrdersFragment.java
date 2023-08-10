@@ -13,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.b07project.Navbar.UserNavActivity;
+import com.example.b07project.Product;
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +35,7 @@ public class PastOrdersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Product> products = new ArrayList<>();
-    public ProductsFragment() {
+    public PastOrdersFragment() {
         // Required empty public constructor
     }
 

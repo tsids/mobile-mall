@@ -1,4 +1,4 @@
-package com.example.b07project.Cart;
+package com.example.b07project.CartPackage.CartProductPreview;
 
 import android.os.Bundle;
 
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

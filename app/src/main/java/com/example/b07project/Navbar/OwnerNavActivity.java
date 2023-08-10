@@ -25,22 +25,21 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class OwnerNavActivity extends AppCompatActivity {
 
     ActivityOwnerNavBinding binding;
-    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        username = intent.getStringExtra("USERNAME");
-
         binding = ActivityOwnerNavBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(OwnerProductsFragment.newInstance(username));
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.getOverflowIcon().setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+
+        replaceFragment(new OwnerProductsFragment());
+
+
 
         binding.ownerNavigationView.setOnItemSelectedListener(item -> {
 

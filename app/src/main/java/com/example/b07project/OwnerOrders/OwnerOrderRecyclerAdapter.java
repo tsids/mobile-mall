@@ -131,27 +131,6 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
         });
     }
 
-                        r = new TableRow(caller.getContext());
-                        itemName = new TextView(caller.getContext());
-                        itemAmount = new TextView(caller.getContext());
-                        if (p!=null){
-
-                            itemName.setText(p.getTitle());
-                            itemAmount.setText(o.getQuantity() + "");
-
-
-                            r.addView(itemName);
-                            r.addView(itemAmount);
-                            holder.table.addView(r);
-                        }
-                    }
-
-                }
-            }
-        }
-        return null;
-    }
-
     private Product getProduct(DataSnapshot snapshot, int productID) {
         for (DataSnapshot prodSnap:snapshot.child("products").getChildren()){
             Product p = prodSnap.getValue(Product.class);
