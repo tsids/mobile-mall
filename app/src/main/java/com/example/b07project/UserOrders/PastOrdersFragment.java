@@ -82,14 +82,17 @@ public class PastOrdersFragment extends Fragment {
         for (DataSnapshot orderBundle: snapshot.getChildren()) {
             UserOrder userOrder = new UserOrder();
             userOrders.add(userOrder);
-            date = orderBundle.child("createdAt").getValue().toString();
-            // userOrder.setUserID(orderBundle.child("user").getValue().toString());
-            for (DataSnapshot itemOrder:orderBundle.child("orders").getChildren()) {
-                Order order = itemOrder.getValue(Order.class);
-                if (order != null) {
-                    userOrder.getOrders().add(order);
+            if (orderBundle.child("createdAt").getValue() != null) {
+                date = orderBundle.child("createdAt").getValue().toString();
+                // userOrder.setUserID(orderBundle.child("user").getValue().toString());
+                for (DataSnapshot itemOrder:orderBundle.child("orders").getChildren()) {
+                    Order order = itemOrder.getValue(Order.class);
+                    if (order != null) {
+                        userOrder.getOrders().add(order);
+                    }
                 }
             }
+
         }
         recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this, date));
     }
