@@ -6,11 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-<<<<<<< HEAD
-=======
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
->>>>>>> b8c134b (Created past orders for user)
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-<<<<<<< HEAD
+
 import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
-=======
 import com.example.b07project.OwnerOrders.Order;
->>>>>>> b8c134b (Created past orders for user)
 import com.example.b07project.R;
 import com.example.b07project.Stores.StoresFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -61,14 +57,7 @@ public class PastOrdersFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PastOrdersFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static PastOrdersFragment newInstance(String param1) {
         PastOrdersFragment fragment = new PastOrdersFragment();
@@ -105,18 +94,6 @@ public class PastOrdersFragment extends Fragment {
         recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this, date));
     }
 
-
-    private void setProducts(){
-        //This way of assigning data is temporary, and will need to be connected to a database
-        String[] names = getResources().getStringArray(R.array.prod_names);
-        String[] descs = getResources().getStringArray(R.array.prod_descriptions);
-        String[] prices = getResources().getStringArray(R.array.prod_prices);
-
-        for (int i = 0; i < names.length; i++) {
-            float price = Float.parseFloat(prices[i].substring(1));
-            products.add(new Product(null,names[i],price,descs[i],0,0));
-        }
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
