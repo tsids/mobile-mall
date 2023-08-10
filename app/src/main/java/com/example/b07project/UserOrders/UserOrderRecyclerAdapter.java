@@ -53,6 +53,11 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
         TableRow r;
         TextView itemName;
         TextView itemAmount;
+        TextView dateView = new TextView(caller.getContext());
+        dateView.setText(date.substring(0, 10));
+        r = new TableRow(caller.getContext());
+        r.addView(dateView);
+        holder.table.addView(r);
 
         // holder.name.setText(orders.getUserID());
         double total = 0;
@@ -86,7 +91,6 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
             holder.table.addView(r);
         }
         holder.price.setText("Total: $"+total);
-        holder.date.setText(date.substring(0, 9));
     }
 
     @Override
@@ -114,7 +118,6 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
             table = itemView.findViewById(R.id.past_order_detail_table);
             // name = itemView.findViewById(R.id.past_order_user_id);
             price = itemView.findViewById(R.id.past_order_total);
-            date = itemView.findViewById(R.id.past_order_date);
         }
     }
 }
