@@ -27,18 +27,21 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
     ArrayList<UserOrder> userOrders;
     PastOrdersFragment caller;
 
-    public UserOrderRecyclerAdapter(Context context, ArrayList<UserOrder> userOrders, PastOrdersFragment caller) {
+    String date;
+
+    public UserOrderRecyclerAdapter(Context context, ArrayList<UserOrder> userOrders, PastOrdersFragment caller, String date) {
         this.context = context;
         this.userOrders = userOrders;
         this.caller = caller;
         this.db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
+        this.date = date;
     }
 
     @NonNull
     @Override
     public UserOrderRecyclerAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.order_layout, parent, false);
+        View view = inflater.inflate(R.layout.past_order_layout, parent, false);
 
         return new UserOrderRecyclerAdapter.CustomViewHolder(view, caller);
     }
@@ -51,7 +54,7 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
         TextView itemName;
         TextView itemAmount;
 
-        holder.name.setText(orders.getUserID());
+        // holder.name.setText(orders.getUserID());
         double total = 0;
         for (int i = 0; i < orders.getOrders().size(); i++) {
             o = orders.getOrders().get(i);
@@ -59,7 +62,15 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
             total += o.getQuantity()*o.getPrice();
             r = new TableRow(caller.getContext());
 
-            int backgroundColor = o.isVerified() ? R.color.verified_product_background : R.color.default_product_background_color;
+            int backgroundColor;
+
+            if (o.isPickedUp()) {
+                backgroundColor = R.color.pickedup_product_background;
+            } else if (o.isVerified()) {
+                backgroundColor = R.color.verified_product_background;
+            } else {
+                backgroundColor = R.color.default_product_background_color;
+            }
             r.setBackgroundResource(backgroundColor);
 
             //r.generateLayoutParams();
@@ -75,6 +86,7 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
             holder.table.addView(r);
         }
         holder.price.setText("Total: $"+total);
+        holder.date.setText(date.substring(0, 9));
     }
 
     @Override
@@ -94,14 +106,15 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
 
     public static class CustomViewHolder extends RecyclerView.ViewHolder{
         TableLayout table;
-        TextView name;
+        TextView date;
         TextView price;
         int orderNum;
         public CustomViewHolder(@NonNull View itemView, PastOrdersFragment caller) {
             super(itemView);
-            table = itemView.findViewById(R.id.order_detail_table);
-            name = itemView.findViewById(R.id.order_user_id);
-            price = itemView.findViewById(R.id.order_total);
+            table = itemView.findViewById(R.id.past_order_detail_table);
+            // name = itemView.findViewById(R.id.past_order_user_id);
+            price = itemView.findViewById(R.id.past_order_total);
+            date = itemView.findViewById(R.id.past_order_date);
         }
     }
 }

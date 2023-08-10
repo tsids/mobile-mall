@@ -55,6 +55,8 @@ public class PastOrdersFragment extends Fragment {
     private ArrayList<UserOrder> userOrders;
     FirebaseDatabase db;
 
+    private String date;
+
     public PastOrdersFragment() {
         // Required empty public constructor
     }
@@ -64,6 +66,7 @@ public class PastOrdersFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
      * @return A new instance of fragment PastOrdersFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -80,6 +83,7 @@ public class PastOrdersFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
         db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
     }
@@ -89,17 +93,16 @@ public class PastOrdersFragment extends Fragment {
         for (DataSnapshot orderBundle: snapshot.getChildren()) {
             UserOrder userOrder = new UserOrder();
             userOrders.add(userOrder);
-            if (orderBundle.child("user").getValue() != null) {
-                userOrder.setUserID(orderBundle.child("user").getValue().toString());
-                for (DataSnapshot itemOrder : orderBundle.child("pastOrders").getChildren()) {
-                    Order order = itemOrder.getValue(Order.class);
-                    if (order != null) {
-                        userOrder.getOrders().add(order);
-                    }
+            date = orderBundle.child("createdAt").getValue().toString();
+            // userOrder.setUserID(orderBundle.child("user").getValue().toString());
+            for (DataSnapshot itemOrder:orderBundle.child("orders").getChildren()) {
+                Order order = itemOrder.getValue(Order.class);
+                if (order != null) {
+                    userOrder.getOrders().add(order);
                 }
             }
         }
-        recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this));
+        recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this, date));
     }
 
 
@@ -122,8 +125,9 @@ public class PastOrdersFragment extends Fragment {
 
         DatabaseReference query = db.getReference().child("users").
                 child(getActivity().getIntent().getExtras().get("USERNAME").toString()).child("pastOrders");
+        //child(getActivity().getIntent().getExtras().get("created_at").toString()).child("orders");
 
-        RecyclerView recyclerView = v.findViewById(R.id.order_recycler);
+        RecyclerView recyclerView = v.findViewById(R.id.past_order_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -147,6 +151,17 @@ public class PastOrdersFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) requireActivity();
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setTitle("My Orders");
-        toolbar.setNavigationIcon(null);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, new StoresFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
     }
 }
