@@ -181,9 +181,10 @@ public class CartFragment extends Fragment implements com.example.b07project.Car
                                 products.add(dataSnapshot.getValue(CartProduct.class));
                             }
 
-                            Order order = new Order(products, now);
+
                             // Save the cart in pastOrders
-                            pastOrders.child(now).setValue(order);
+                            pastOrders.child(now).child("orders").setValue(products);
+                            pastOrders.child(now).child("createdAt").setValue(now);
 
                             // loop over all stores and find where each storeID matches the correct store
                             stores.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout2"
@@ -7,57 +8,59 @@
     android:layout_height="match_parent"
     tools:context=".Cart">
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cart_recyclerview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-2dp"
-        android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@android:color/darker_gray"
-        android:scrollbarSize="5dp"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/total_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Price: "
-        android:layout_below="@id/cart_recyclerview"
-        android:layout_marginTop="5dp"
-        android:textStyle="bold"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cart_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-2dp"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbarSize="5dp"/>
 
+        <TextView
+            android:id="@+id/total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Price: "
+            android:layout_below="@id/cart_recyclerview"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/cart_empty_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/checkout"
-        android:layout_marginTop="26dp"
-        android:layout_centerHorizontal="true"
-        android:text="Your cart is empty"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/cart_empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkout"
+            android:layout_marginTop="26dp"
+            android:layout_centerHorizontal="true"
+            android:text="Your cart is empty"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/clear_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cart_recyclerview"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/design_default_color_error"
-        android:text="Clear Cart" />
+        <Button
+            android:id="@+id/clear_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cart_recyclerview"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/design_default_color_error"
+            android:text="Clear Cart" />
 
-    <Button
-        android:id="@+id/checkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cart_recyclerview"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="200dp"
-        android:onClick="onCheckout"
-        android:text="Checkout" />
+        <Button
+            android:id="@+id/checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cart_recyclerview"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="200dp"
+            android:onClick="onCheckout"
+            android:text="Checkout" />
 
+    </RelativeLayout>
 
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>
