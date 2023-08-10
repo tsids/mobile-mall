@@ -89,11 +89,13 @@ public class PastOrdersFragment extends Fragment {
         for (DataSnapshot orderBundle: snapshot.getChildren()) {
             UserOrder userOrder = new UserOrder();
             userOrders.add(userOrder);
-            userOrder.setUserID(orderBundle.child("user").getValue().toString());
-            for (DataSnapshot itemOrder:orderBundle.child("pastOrders").getChildren()) {
-                Order order = itemOrder.getValue(Order.class);
-                if (order != null) {
-                    userOrder.getOrders().add(order);
+            if (orderBundle.child("user").getValue() != null) {
+                userOrder.setUserID(orderBundle.child("user").getValue().toString());
+                for (DataSnapshot itemOrder : orderBundle.child("pastOrders").getChildren()) {
+                    Order order = itemOrder.getValue(Order.class);
+                    if (order != null) {
+                        userOrder.getOrders().add(order);
+                    }
                 }
             }
         }
