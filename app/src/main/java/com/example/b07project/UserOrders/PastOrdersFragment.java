@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.Navbar.UserNavActivity;
 import com.example.b07project.Product;
 import com.example.b07project.OwnerOrders.Order;
@@ -79,6 +80,7 @@ public class PastOrdersFragment extends Fragment {
 
     public void setOrders(DataSnapshot snapshot, RecyclerView recyclerView) {
         userOrders = new ArrayList<UserOrder>();
+        ArrayList<String> dates = new ArrayList<>();
         for (DataSnapshot orderBundle: snapshot.getChildren()) {
             UserOrder userOrder = new UserOrder();
             userOrders.add(userOrder);
@@ -86,15 +88,16 @@ public class PastOrdersFragment extends Fragment {
                 date = orderBundle.child("createdAt").getValue().toString();
                 // userOrder.setUserID(orderBundle.child("user").getValue().toString());
                 for (DataSnapshot itemOrder:orderBundle.child("orders").getChildren()) {
-                    Order order = itemOrder.getValue(Order.class);
+                    CartProduct order = itemOrder.getValue(CartProduct.class);
                     if (order != null) {
                         userOrder.getOrders().add(order);
+                        dates.add(date);
                     }
                 }
             }
 
         }
-        recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this, date));
+        recyclerView.setAdapter(new UserOrderRecyclerAdapter(getContext(), userOrders, this, dates));
     }
 
     @Override

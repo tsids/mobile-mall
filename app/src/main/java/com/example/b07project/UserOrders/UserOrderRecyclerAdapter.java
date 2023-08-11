@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.OwnerOrders.Order;
 import com.example.b07project.Product;
 import com.example.b07project.R;
@@ -27,14 +28,14 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
     ArrayList<UserOrder> userOrders;
     PastOrdersFragment caller;
 
-    String date;
+    ArrayList<String> dates;
 
-    public UserOrderRecyclerAdapter(Context context, ArrayList<UserOrder> userOrders, PastOrdersFragment caller, String date) {
+    public UserOrderRecyclerAdapter(Context context, ArrayList<UserOrder> userOrders, PastOrdersFragment caller, ArrayList<String> dates) {
         this.context = context;
         this.userOrders = userOrders;
         this.caller = caller;
         this.db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
-        this.date = date;
+        this.dates = dates;
     }
 
     @NonNull
@@ -49,7 +50,8 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
     @Override
     public void onBindViewHolder(@NonNull UserOrderRecyclerAdapter.CustomViewHolder holder, int position) {
         UserOrder orders = userOrders.get(holder.getBindingAdapterPosition());
-        Order o;
+        String date = dates.get(position);
+        CartProduct o;
         TableRow r;
         TextView itemName;
         TextView itemAmount;
@@ -69,9 +71,9 @@ public class UserOrderRecyclerAdapter extends RecyclerView.Adapter<UserOrderRecy
 
             int backgroundColor;
 
-            if (o.isPickedUp()) {
+            if (o.getPickedUp()) {
                 backgroundColor = R.color.pickedup_product_background;
-            } else if (o.isVerified()) {
+            } else if (o.getVerified()) {
                 backgroundColor = R.color.verified_product_background;
             } else {
                 backgroundColor = R.color.default_product_background_color;

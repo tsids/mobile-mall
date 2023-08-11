@@ -1,6 +1,7 @@
 package com.example.b07project.OwnerOrders;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.OwnerProducts.OwnerProductsFragment;
 import com.example.b07project.Product;
 import com.example.b07project.R;
@@ -30,12 +32,14 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
     FirebaseDatabase db;
     Context context;
     ArrayList<UserOrder> userOrders;
+    ArrayList<String> orderIDs;
     OrdersFragment caller;
 
-    public OwnerOrderRecyclerAdapter(Context context, ArrayList<UserOrder> userOrders, OrdersFragment caller) {
+    public OwnerOrderRecyclerAdapter(Context context, ArrayList<UserOrder> userOrders, ArrayList<String> orderIDs, OrdersFragment caller) {
         this.context = context;
         this.userOrders = userOrders;
         this.caller = caller;
+        this.orderIDs = orderIDs;
         this.db = FirebaseDatabase.getInstance("https://b07project-4cc9c-default-rtdb.firebaseio.com/");
     }
 
@@ -51,17 +55,20 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
     @Override
     public void onBindViewHolder(@NonNull OwnerOrderRecyclerAdapter.CustomViewHolder holder, int position) {
         UserOrder orders = userOrders.get(holder.getBindingAdapterPosition());
-        Order o;
+        CartProduct o;
         TableRow r;
         TextView itemName;
         TextView itemAmount;
+        holder.table.removeAllViews();
 
         holder.name.setText(orders.getUserID()); //Swap this for actual data looked up from database
+        holder.pickedup.setChecked(orders.getOrders().get(0).getPickedUp());
+        holder.verified.setChecked(orders.getOrders().get(0).getVerified());
         double total = 0;
         for (int i = 0; i < orders.getOrders().size(); i++) {
             o = orders.getOrders().get(i);
 
-            total += o.quantity*o.price;
+            total += o.getQuantity()*o.getPrice();
             r = new TableRow(caller.getContext());
             //r.generateLayoutParams();
             itemName = new TextView(caller.getContext());
@@ -74,10 +81,6 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
             r.addView(itemName);
             r.addView(itemAmount);
             holder.table.addView(r);
-            if (i==0){
-                holder.verified.setChecked(o.verified);
-                holder.pickedup.setChecked(o.pickedUp);
-            }
         }
         holder.price.setText("Total: $"+total);
 
@@ -85,63 +88,64 @@ public class OwnerOrderRecyclerAdapter extends RecyclerView.Adapter<OwnerOrderRe
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 DatabaseReference q = db.getReference();
-                compoundButton.setChecked(b);
-                q.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int i = 0;
-                        for (DataSnapshot order:snapshot.child("stores")
-                                .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                                child("orders").child(orders.getKey()).child("orders").getChildren()){
-                            orders.getOrders().get(i).pickedUp = b;
-                            order.getRef().setValue(orders.getOrders().get(i++));
-                        }
-                        for (DataSnapshot orderBundle:snapshot.child("users").child(orders.getUserID()).child("pastOrders").getChildren()){
-                            if (orderBundle.child("createdAt").getValue().toString().equals(orders.getKey())) {
-                                for (DataSnapshot order : orderBundle.child("orders").getChildren()) {
-                                            order.child("pickedUp").getRef().setValue(b);
-                                            break;
+
+                if (holder.verified.isChecked()) {
+                    q.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot orderSnapshot: snapshot.child("users").child(orders.getUserID()).child("pastOrders").child(orderIDs.get(position)).child("orders").getChildren()) {
+                                CartProduct order = orderSnapshot.getValue(CartProduct.class);
+                                int i = 0;
+                                if (order.getStoreID() == userOrders.get(position).getOrders().get(0).getStoreID()) {
+                                    orderSnapshot.child("pickedUp").getRef().setValue(b);
+                                    userOrders.get(position).getOrders().get(i).setVerified(b);
+                                    i++;
+
                                 }
+
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    holder.pickedup.setChecked(false);
+                }
+
+
             }
         });
         holder.verified.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 DatabaseReference q = db.getReference();
-                compoundButton.setChecked(b);
-                q.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int i = 0;
-                        for (DataSnapshot order:snapshot.child("stores")
-                                .child(caller.getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                                child("orders").child(orders.getKey()).child("orders").getChildren()){
-                            orders.getOrders().get(i).verified = b;
-                            order.getRef().setValue(orders.getOrders().get(i++));
-                        }
-                        for (DataSnapshot orderBundle:snapshot.child("users").child(orders.getUserID()).child("pastOrders").getChildren()){
-                            if (orderBundle.child("createdAt").getValue().toString().equals(orders.getKey())) {
-                                for (DataSnapshot order : orderBundle.child("orders").getChildren()) {
-                                    order.child("verified").getRef().setValue(b);
-                                    break;
+                if (!holder.pickedup.isChecked()) {
+                    q.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot orderSnapshot: snapshot.child("users").child(orders.getUserID()).child("pastOrders").child(orderIDs.get(position)).child("orders").getChildren()) {
+                                CartProduct order = orderSnapshot.getValue(CartProduct.class);
+                                int i = 0;
+                                if (order.getStoreID() == userOrders.get(position).getOrders().get(0).getStoreID()) {
+                                    orderSnapshot.child("verified").getRef().setValue(b);
+                                    userOrders.get(position).getOrders().get(i).setVerified(b);
+                                    i++;
+
                                 }
                             }
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    holder.verified.setChecked(true);
+                }
+
             }
         });
     }

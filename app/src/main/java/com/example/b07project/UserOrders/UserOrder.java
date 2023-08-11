@@ -1,5 +1,6 @@
 package com.example.b07project.UserOrders;
 
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.OwnerOrders.Order;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class UserOrder {
         this.userID = userID;
     }
 
-    ArrayList<Order> orders;
+    ArrayList<CartProduct> orders;
 
     public String getUserID() {
         return userID;
@@ -26,7 +27,7 @@ public class UserOrder {
         orders = new ArrayList<>();
     }
 
-    public ArrayList<Order> getOrders() {
+    public ArrayList<CartProduct> getOrders() {
         return orders;
     }
 

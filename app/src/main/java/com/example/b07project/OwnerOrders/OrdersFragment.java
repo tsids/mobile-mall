@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.b07project.CartPackage.CartProduct;
 import com.example.b07project.OwnerProducts.OwnerProductsFragment;
 import com.example.b07project.R;
 import com.example.b07project.UserOrders.UserOrder;
@@ -24,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -64,24 +67,7 @@ public class OrdersFragment extends Fragment {
         return fragment;
     }
 
-    public void setOrders(DataSnapshot snapshot, RecyclerView recycler){
-        userOrders = new ArrayList<UserOrder>();
-        for (DataSnapshot orderBundle:snapshot.getChildren()){
-            UserOrder userOrder = new UserOrder();
-            userOrders.add(userOrder);
-            userOrder.setKey(orderBundle.getKey());
-            if (orderBundle.child("user").getValue() != null) {
-                userOrder.setUserID(orderBundle.child("user").getValue().toString());
-                for (DataSnapshot itemOrder : orderBundle.child("orders").getChildren()) {
-                    Order o = itemOrder.getValue(Order.class);
-                    if (o != null) {
-                        userOrder.getOrders().add(o);
-                    }
-                }
-            }
-        }
-        recycler.setAdapter(new OwnerOrderRecyclerAdapter(getContext(), userOrders,this));
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,16 +83,41 @@ public class OrdersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.fragment_orders, container, false);
         // Inflate the layout for this fragment
-        DatabaseReference query = db.getReference().child("stores")
-                .child(getActivity().getIntent().getExtras().get("USERNAME").toString()).
-                child("orders");
+        DatabaseReference query = db.getReference();
 
         RecyclerView recycler = v.findViewById(R.id.order_recycler);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        String username = getActivity().getIntent().getExtras().get("USERNAME").toString();
+
+
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                setOrders(snapshot,recycler);
+                int storeID = snapshot.child("stores").child(username).child("storeID").getValue(Integer.class);
+                ArrayList<String> orderIDs = new ArrayList<>();
+                userOrders = new ArrayList<UserOrder>();
+                for (DataSnapshot userSnapshot: snapshot.child("users").getChildren()) {
+
+                    String user = userSnapshot.child("username").getValue(String.class);
+                    for(DataSnapshot pastOrderSnapshot: userSnapshot.child("pastOrders").getChildren()) {
+                        String orderID = pastOrderSnapshot.child("createdAt").getValue(String.class);
+                        UserOrder userOrder = new UserOrder();
+                        for (DataSnapshot userOrderSnapshot: pastOrderSnapshot.child("orders").getChildren()) {
+                            CartProduct order = userOrderSnapshot.getValue(CartProduct.class);
+                            if (order.getStoreID() == storeID) {
+                                userOrder.getOrders().add(order);
+                            }
+                        }
+                        if (userOrder.getOrders().size() > 0) {
+                            userOrder.setUserID(user);
+                            userOrders.add(userOrder);
+                            orderIDs.add(orderID);
+                        }
+
+                    }
+                }
+                recycler.setAdapter(new OwnerOrderRecyclerAdapter(getContext(), userOrders, orderIDs,OrdersFragment.this));
             }
 
             @Override
